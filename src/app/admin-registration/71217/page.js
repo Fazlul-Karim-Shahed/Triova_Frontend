@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/src/app/White_Logo.png";
+import Logo from "@/public/Logo.svg";
 import { signupApi } from "@/src/api/AuthApi";
 import { saveToken } from "@/src/functions/AuthFunctions";
 import Image from "next/image";

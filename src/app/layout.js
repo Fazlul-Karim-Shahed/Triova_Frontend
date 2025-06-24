@@ -13,11 +13,11 @@ const inter = Montserrat({ subsets: ["latin"], weight: "400", display: "swap", v
 
 // SEO config using Next.js Metadata API
 export const metadata = {
-    metadataBase: new URL("https://palsbd.vercel.app"),
+    metadataBase: new URL("https://triova.vercel.app/"),
     title: "Triova Limited - Shop Top Brands with Discounts",
     description: "Explore Triova Limited for trendy fashion, top accessories, and best offers in Bangladesh.",
     keywords: ["fashion", "ecommerce", "Bangladesh", "Triova", "clothing", "accessories", "Triova Limited", "palsbd", "pals fashion"],
-    authors: [{ name: "Triova Limited", url: "https://palsbd.vercel.app" }],
+    authors: [{ name: "Triova Limited", url: "https://triova.vercel.app/" }],
     creator: "Triova Limited",
     robots: "index, follow",
     icons: {
@@ -26,12 +26,12 @@ export const metadata = {
     openGraph: {
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        url: "https://palsbd.vercel.app",
+        url: "https://triova.vercel.app/",
         siteName: "Triova Limited",
         type: "website",
         images: [
             {
-                url: "https://palsbd.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75",
+                url: "https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75",
                 width: 384,
                 height: 384,
                 alt: "Triova Limited Logo",
@@ -42,15 +42,15 @@ export const metadata = {
         card: "summary_large_image",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://palsbd.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
+        images: ["https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
     },
 
     facebook: {
-        url: "https://palsbd.vercel.app/",
+        url: "https://triova.vercel.app/",
         type: "website",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://palsbd.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
+        images: ["https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
     },
 
     verification: {
@@ -61,11 +61,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-
             <body className={`${inter.className} bg-white`}>
                 {/* Google Analytics */}
                 {/* Google Analytics */}
-
 
                 <ReduxProvider>
                     <ClientErrorBoundary>

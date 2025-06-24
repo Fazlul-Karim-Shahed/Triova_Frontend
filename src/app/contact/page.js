@@ -5,12 +5,12 @@ export const metadata = {
     description: "Contact Triova Limited for fashion inquiries, support, or business partnerships. Email, call, or send us a message through the form.",
     robots: "index, follow",
     alternates: {
-        canonical: "https://palsbd.vercel.app/contact",
+        canonical: "https://triova.vercel.app/contact",
     },
     openGraph: {
         title: "Contact Us | Triova Limited",
         description: "Reach out to the Triova Limited team by email, phone, or contact form. We're here to help.",
-        url: "https://palsbd.vercel.app/contact",
+        url: "https://triova.vercel.app/contact",
         type: "website",
         images: [
             {

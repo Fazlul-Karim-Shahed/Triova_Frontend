@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import React from "react";
-import Logo from "@/public/favicon.png";
+import Logo from "@/public/Logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Subscribe from "../Subscribe/Subscribe";
@@ -21,7 +21,7 @@ export default function Footer() {
             <footer className="bg-gray-900 text-gray-200 py-10 px-5 md:px-16">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                     <div>
-                        <Image src={Logo} height={40} width={40} alt="Logo" className="mb-4" />
+                        <Image src={Logo} width={100} alt="Logo" className="mb-4 -ms-2" />
                         <p className="text-sm">
                             <strong>Triova Limited</strong>
                             <br />
@@ -72,7 +72,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-                    <p className="text-sm text-center md:text-left mb-4 md:mb-0">&copy; {new Date().getFullYear()} PALS Bangladesh Ltd. All rights reserved.</p>
+                    <p className="text-sm text-center md:text-left mb-4 md:mb-0">&copy; {new Date().getFullYear()} Triova Bangladesh Ltd. All rights reserved.</p>
 
                     <div className="flex space-x-5">
                         {/* Facebook */}

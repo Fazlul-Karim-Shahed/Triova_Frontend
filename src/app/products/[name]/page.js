@@ -47,7 +47,7 @@ const ProductDetailsPage = async ({ params }) => {
                         },
                         offers: {
                             "@type": "Offer",
-                            url: `https://palsbd.vercel.app/products/${encodeURIComponent(product.name)}`,
+                            url: `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`,
                             priceCurrency: "BDT",
                             price: discountedPrice,
                             itemCondition: "https://schema.org/NewCondition",

@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "@/src/app/Logo.png";
+import Logo from "@/public/Logo.svg";
 import Image from "next/image";
 
 const InvoiceTemplate = ({ order }) => {

@@ -20,7 +20,7 @@ export async function generateMetadata({ searchParams }) {
         openGraph: {
             title,
             description,
-            url: `https://palsbd.vercel.app/products`,
+            url: `https://triova.vercel.app/products`,
             siteName: "Triova Limited",
             type: "website",
         },

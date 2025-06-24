@@ -1,7 +1,7 @@
 
 "use client"
 
-import Logo from '@/src/app/favicon.ico';
+import Logo from "@/public/Logo.svg";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

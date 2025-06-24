@@ -2,8 +2,7 @@
 
 import { getAllCategoryApi } from "@/src/api/SuperAdminApi/CategoryApi";
 import { getAllDepartmentApi } from "@/src/api/SuperAdminApi/DepartmentApi";
-import Logo from "@/src/app/Logo.png";
-import boy from "@/public/boy.png";
+import Logo from "@/public/Logo.svg";
 import {
     faAddressBook,
     faAngleRight,
@@ -104,7 +103,7 @@ export default function MainHeader({ searchParams }) {
             <nav className="dark:bg-gray-900 bg-slate-50">
                 <div style={{ maxWidth: "97%" }} className="flex flex-wrap items-center justify-between mx-auto p-4 bg-slate-50">
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <Image width="130" src={Logo} className="" alt="Triova Logo" />
+                        <Image width="130" src={Logo} className="object-cover" alt="Triova Logo" />
                     </Link>
                     <div className="flex md:order-2">
                         <div className="relative hidden md:block md:flex items-center">
@@ -117,7 +116,7 @@ export default function MainHeader({ searchParams }) {
                                         id="search-navbar"
                                         className="w-[350px] px-5 py-3 pr-14 text-sm text-gray-800 rounded-full 
                        bg-white/30 backdrop-blur-md border border-black/30  placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 hover:shadow-md"
-                                        placeholder="Search at PALS's largest store"
+                                        placeholder="Search at Triova's largest store"
                                     />
                                     <button
                                         type="submit"
@@ -270,7 +269,7 @@ export default function MainHeader({ searchParams }) {
                                     value={search}
                                     id="search-navbar-small"
                                     className="block w-full p-3 pr-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Search at PALS's largest store"
+                                    placeholder="Search at Triova's largest store"
                                 />
                                 <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3 text-gray-500 dark:text-gray-400">
                                     <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

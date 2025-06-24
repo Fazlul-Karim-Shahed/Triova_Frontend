@@ -4,7 +4,7 @@ const path = require("path");
 const { getAllProductApi } = require("../src/api/SuperAdminApi/ProductApi");
 require("dotenv").config();
 
-const baseUrl = "https://palsbd.vercel.app";
+const baseUrl = "https://triova.vercel.app/";
 
 const staticUrls = ["", "about", "contact", "privacy", "terms", "branding", "design", "marketing", "advertisement", "job", "press", "cookie"];
 
