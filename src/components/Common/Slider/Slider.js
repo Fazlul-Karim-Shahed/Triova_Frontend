@@ -140,7 +140,7 @@ const Slider = ({ products }) => {
                                         }}
                                     />
                                     {item.discount > 0 && (
-                                        <span className="absolute top-0 left-0 m-2 rounded-full bg-yellow-600 px-2 text-center text-sm font-medium text-white" aria-label={`${item.discount}% off`}>
+                                        <span style={{color: "white"}} className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-center text-sm font-medium text-white" aria-label={`${item.discount}% off`}>
                                             {item.discount}% OFF
                                         </span>
                                     )}
