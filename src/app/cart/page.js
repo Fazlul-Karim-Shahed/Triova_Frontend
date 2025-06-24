@@ -99,7 +99,7 @@ export default function CartPage() {
         <div>
             <section className="bg-gradient-to-br from-white  py-5 antialiased dark:bg-gray-900 md:py-12">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"> <FontAwesomeIcon icon={faCartShopping} className="me-2 text-gray-500" />   Yout Cart</h2>
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"> <FontAwesomeIcon icon={faCartShopping} className="me-2 text-brand-500" />   Yout Cart</h2>
 
                     <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
                         <div className="mx-auto w-full flex-none lg:max-w-2xl">
@@ -112,7 +112,7 @@ export default function CartPage() {
                                     cart.map((item, index) => {
                                         if (item.product) {
                                             return (
-                                                <div className="rounded-lg border border-gray-200 bg-white  p-4 shadow-md hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                                                <div className="rounded-lg border border-brand-200 bg-white  p-4 shadow-md hover:bg-gray-50 dark:border-brand-700 dark:bg-gray-800 md:p-6">
                                                     <div className="space-y-4 md:flex md:justify-between md:gap-6 md:space-y-0">
                                                         <a href="#" className="shrink-0 md:order-1">
                                                             <ClientImageWithLoader
@@ -134,7 +134,7 @@ export default function CartPage() {
                                                                     type="button"
                                                                     id="decrement-button"
                                                                     data-input-counter-decrement="counter-input"
-                                                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-brand-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-brand-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                                                                 >
                                                                     <svg
                                                                         className="h-2.5 w-2.5 text-gray-900 dark:text-white"
@@ -162,7 +162,7 @@ export default function CartPage() {
                                                                     type="button"
                                                                     id="increment-button"
                                                                     data-input-counter-increment="counter-input"
-                                                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                                                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-brand-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-brand-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                                                                 >
                                                                     <svg
                                                                         className="h-2.5 w-2.5 text-gray-900 dark:text-white"
@@ -230,7 +230,7 @@ export default function CartPage() {
 
                         <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
                             <div
-                                className="space-y-4 rounded-lg border border-gray-200 
+                                className="space-y-4 rounded-lg border border-brand-200 
                                bg-white
 
 
@@ -238,7 +238,7 @@ export default function CartPage() {
 
 
 
- p-4 shadow-md backdrop-blur-md dark:border-gray-700 dark:bg-gray-800 sm:p-6"
+ p-4 shadow-md backdrop-blur-md dark:border-brand-700 dark:bg-gray-800 sm:p-6"
                             >
                                 <p className=" font-semibold text-gray-900 dark:text-white">Order summary</p>
 
@@ -251,7 +251,7 @@ export default function CartPage() {
 
                                         <dl className="flex items-center justify-between gap-4">
                                             <dt className="text-sm font-normal text-gray-900 dark:text-gray-400">Savings</dt>
-                                            <dd className="text-sm font-medium text-green-600">- {cart.length != 0 && savings} ৳</dd>
+                                            <dd className="text-sm font-medium text-brand-400">- {cart.length != 0 && savings} ৳</dd>
                                         </dl>
 
                                         {/* <dl className="flex items-center justify-between gap-4">
@@ -265,7 +265,7 @@ export default function CartPage() {
                                         </dl>
                                     </div>
 
-                                    <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+                                    <dl className="flex items-center justify-between gap-4 border-t border-brand-200 pt-2 dark:border-brand-700">
                                         <dt className="text-sm font-bold text-gray-900 dark:text-white">Total</dt>
                                         <dd className="text-sm font-bold text-gray-900 dark:text-white"> {cart.length != 0 && total} ৳</dd>
                                     </dl>
@@ -273,14 +273,14 @@ export default function CartPage() {
 
                                 <Link
                                     href={total > 0 ? "/checkout" : ""}
-                                    className="flex w-full items-center justify-center rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-900 dark:focus:ring-primary-800"
+                                    className="flex w-full items-center justify-center rounded-lg bg-brand-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-900 dark:focus:ring-primary-800"
                                 >
                                     Proceed to Checkout
                                 </Link>
 
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
-                                    <a href="/products" title="" className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
+                                    <a href="/products" title="" className="inline-flex items-center gap-2 text-sm font-medium text-brand-500 underline hover:no-underline dark:text-brand-500">
                                         Continue Shopping
                                         <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
@@ -289,7 +289,7 @@ export default function CartPage() {
                                 </div>
                             </div>
 
-                            {/* <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800 sm:p-6">
+                            {/* <div className="space-y-4 rounded-lg border border-brand-200 bg-white p-4 shadow dark:border-brand-700 dark:bg-gray-800 sm:p-6">
                                 <form className="space-y-4">
                                     <div>
                                         <label for="voucher" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -300,7 +300,7 @@ export default function CartPage() {
                                             disabled
                                             type="text"
                                             id="voucher"
-                                            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                                            className="block w-full rounded-lg border border-brand-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-brand-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                                             placeholder=""
                                             required
                                         />

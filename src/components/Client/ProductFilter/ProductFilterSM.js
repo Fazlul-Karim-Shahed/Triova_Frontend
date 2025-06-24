@@ -77,7 +77,7 @@ export default function ProductFilterSM({ products, categoryId }) {
                                 for (const key in val) {
                                     if (val[key]) params.set(key, val[key]);
                                 }
-                                router.push(`/products?${params.toString()}`);
+                                router.push(`/products?${new URLSearchParams(params).toString()}`);
                                 document.getElementById("filterModal").close();
                             }}
                         >
