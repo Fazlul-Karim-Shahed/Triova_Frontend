@@ -1,6 +1,8 @@
 import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 import ProductDetailsForm from "@/src/components/Client/ProductDetails/ProductDetailsForm";
 import ProductImageGallery from "@/src/components/Client/ProductImageGallery/ProductImageGallery";
+import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
+import { imageSrc } from "@/src/functions/CustomFunction";
 import Script from "next/script";
 
 export async function generateMetadata({ params }) {
@@ -78,7 +80,14 @@ const ProductDetailsPage = async ({ params }) => {
                         <p className="font-medium text-indigo-600 mb-4">
                             {product.categoryId.name} / {product.subCategoryId.name}
                         </p>
-                        <h2 className="mb-2 font-bold text-xl leading-10 text-gray-900">{product.name}</h2>
+                        <div className="grid grid-cols-5 gap-4 mb-5 ">
+                            <div className="col-span-full md:col-span-4 ">
+                                <h2 className="font-bold text-xl text-gray-900 ">{product.name}</h2>
+                            </div>
+                            <div className="col-span-full md:col-span-1 my-5 md:my-0">
+                                <ClientImageWithLoader height={100} width={100} className="object-contain" src={imageSrc(product.brandId.logo.name)} alt={product.brandId.name} />
+                            </div>
+                        </div>
                         <div className="flex flex-col sm:flex-row sm:items-center mb-6">
                             <h6 className="leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
                                 <span className="font-bold">Tk {discountedPrice}</span>
