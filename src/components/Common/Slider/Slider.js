@@ -7,6 +7,8 @@ import styles from "./Slider.module.css";
 import ClientImageWithLoader from "../ImageLoader/ClientImageWithLoader";
 
 const Slider = ({ products }) => {
+    console.log(products);
+
     const wrapperRef = useRef(null);
     const carouselRef = useRef(null);
     const [extendedProducts, setExtendedProducts] = useState([]);
@@ -140,7 +142,11 @@ const Slider = ({ products }) => {
                                         }}
                                     />
                                     {item.discount > 0 && (
-                                        <span style={{color: "white"}} className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-center text-sm font-medium text-white" aria-label={`${item.discount}% off`}>
+                                        <span
+                                            style={{ color: "white" }}
+                                            className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-center text-sm font-medium text-white"
+                                            aria-label={`${item.discount}% off`}
+                                        >
                                             {item.discount}% OFF
                                         </span>
                                     )}
