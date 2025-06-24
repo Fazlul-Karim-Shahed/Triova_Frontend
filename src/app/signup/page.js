@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/Logo_Trans.svg";
 import { signupApi } from "@/src/api/AuthApi";
 import { saveToken } from "@/src/functions/AuthFunctions";
 import Image from "next/image";
@@ -57,7 +57,7 @@ export default function Signup() {
 
     return (
         <div className="">
-            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-[#0A0619] px-3 md:px-8 py-12 h-[320px]">
+            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-brand-500 to-brand-600 px-3 md:px-8 py-12 h-[320px]">
                 <div>
                     <Link href="/">
                         <Image width="100" height="100" src={Logo} alt="logo" className="md:w-40 w-28" />
@@ -217,17 +217,17 @@ export default function Signup() {
                         <div>
                             <button
                                 type="submit"
-                                className="w-full py-3 px-4 text-sm font-semibold text-white bg-gradient-to-r from-[#FA1768] to-[#FA1768] hover:shadow-xl focus:outline-none focus:bg-green-900 rounded-md"
+                                className="w-full py-3 px-4 text-sm font-semibold text-white bg-brand-500  hover:bg-brand-600 hover:shadow-xl focus:outline-none transition-all duration-200 focus:brand rounded-md"
                             >
                                 {loading ? <div className="loading loading-spinner loading-md"></div> : "Sign up"}
                             </button>
                         </div>
 
                         <div className="mt-8">
-                            <p className="text-center text-sm text-gray-800 font-medium">
+                            <p className="text-center text-sm text-brand-500 font-medium">
                                 Already have an account?
                                 <Link href="/signin">
-                                    <span className="text-gray-600 font-semibold hover:underline ml-1 whitespace-nowrap">Log in</span>
+                                    <span className="text-brand-600 font-semibold hover:underline ml-1 whitespace-nowrap">Log in</span>
                                 </Link>
                             </p>
                         </div>

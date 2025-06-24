@@ -27,7 +27,19 @@ module.exports = {
                     900: "#1e3a8a",
                     950: "#172554",
                 },
+                brand: {
+                    100: "#dbece8",
+                    200: "#b7d9d1",
+                    300: "#93c6ba",
+                    400: "#6fb3a3",
+                    500: "#4b9f8c", // main brand color
+                    600: "#3c8070",
+                    700: "#2d6054",
+                    800: "#1e4038",
+                    900: "#0f201c",
+                },
             },
+
             fontSize: {
                 h1: ["32px", { lineHeight: "40px" }],
                 h2: ["28px", { lineHeight: "36px" }],

@@ -1,7 +1,7 @@
 "use client";
 
 import { signinApi } from "@/src/api/AuthApi";
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/Logo_Trans.svg";
 import { saveToken } from "@/src/functions/AuthFunctions";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,7 +45,7 @@ export default function Signin() {
 
     return (
         <div className="font-[sans-serif]">
-            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-[#0A0619] to-white px-3 md:px-8 py-12 h-[320px] ">
+            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-brand-500 to-brand-700 px-3 md:px-8 py-12 h-[320px] ">
                 <div>
                     <Link href="/">
                         <Image width="100" height="100" src={Logo} alt="logo" className="md:w-40 w-28" />
@@ -126,17 +126,14 @@ export default function Signin() {
                         </div> */}
 
                         <div className="mt-8">
-                            <button
-                                type="submit"
-                                className="w-full py-3 px-6 text-sm font-semibold rounded-md text-white bg-gradient-to-r from-[#FA1768] to-[#F001FF] hover:shadow-xl focus:outline-none"
-                            >
+                            <button type="submit" className="w-full py-3 px-6 text-sm font-semibold rounded-md text-white bg-brand-500 hover:bg-600 transition-all duration-200 hover:shadow-xl focus:outline-none">
                                 {loading ? <div className="loading loading-spinner loading-md"></div> : "Log in"}
                             </button>
                         </div>
 
-                        <p className="text-sm mt-8 text-center text-gray-800">
+                        <p className="text-sm mt-8 text-center text-brand-500">
                             Don&apos;t have an account?
-                            <Link href="/signup" className="text-gray-500 font-semibold hover:underline ml-1 whitespace-nowrap">
+                            <Link href="/signup" className="text-brand-600 font-semibold hover:underline ml-1 whitespace-nowrap">
                                 Register here
                             </Link>
                         </p>
