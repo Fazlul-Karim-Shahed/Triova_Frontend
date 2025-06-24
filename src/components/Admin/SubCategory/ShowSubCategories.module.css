@@ -1,0 +1,13 @@
+
+
+.total{}
+
+.test{
+    display: none;
+}
+
+.total:hover .test{
+    display: block;
+}
+
+

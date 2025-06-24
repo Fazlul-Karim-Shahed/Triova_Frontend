@@ -1,0 +1,45 @@
+{
+    "name": "triova",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "postbuild": "node scripts/generate-sitemap.js"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.5.2",
+        "@fortawesome/free-solid-svg-icons": "^6.5.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "@plaiceholder/next": "^3.0.0",
+        "@reduxjs/toolkit": "^2.2.5",
+        "@tailwindcss/typography": "^0.5.15",
+        "axios": "^1.7.2",
+        "daisyui": "^4.12.7",
+        "dotenv": "^16.5.0",
+        "file-saver": "^2.0.5",
+        "flowbite": "^3.1.2",
+        "formik": "^2.4.6",
+        "jodit-react": "^4.1.2",
+        "jszip": "^3.10.1",
+        "jwt-decode": "^4.0.0",
+        "next": "14.2.4",
+        "next-seo": "^6.8.0",
+        "number-to-text": "^0.3.9",
+        "react": "^18",
+        "react-dom": "^18",
+        "react-google-charts": "^5.2.1",
+        "react-redux": "^9.1.2",
+        "react-responsive-carousel": "^3.2.23",
+        "redux": "^5.0.1",
+        "yup": "^1.4.0"
+    },
+    "devDependencies": {
+        "eslint": "^8",
+        "eslint-config-next": "14.2.4",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.1"
+    }
+}

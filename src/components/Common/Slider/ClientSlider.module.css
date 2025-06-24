@@ -1,0 +1,35 @@
+.slider {
+  background: white;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slideTrack {
+  display: flex;
+  width: fit-content;
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.slide {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .slide {
+    width: 170px;
+  }
+}

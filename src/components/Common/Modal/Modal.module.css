@@ -1,0 +1,119 @@
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 45%;
+  width: 100%;
+  max-height: 90%;
+  overflow-y: auto;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: fadeInScale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.errorBorder {
+  border-left: 10px solid #ff6b6b;
+}
+
+.successBorder {
+  border-left: 10px solid #51cf66;
+}
+
+.modalIcon {
+  width: 4rem;
+  height: 4rem;
+  margin: 2rem auto;
+  animation: pulseIcon 1.5s infinite;
+}
+
+.modalButton {
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 100px;
+  margin: 1rem auto 0;
+}
+
+.errorButton:hover {
+  background-color: #ff6b6b;
+}
+
+.successButton:hover {
+  background-color: #51cf66;
+}
+
+.modalButton:hover {
+  filter: brightness(0.9);
+  color: white;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseIcon {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.typingEffect {
+  display: inline-block;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  overflow: hidden;
+  animation: typing 1.5s steps(30, end), blink 0.75s step(30, end) infinite;
+  max-width: 100%;
+  
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgba(0, 0, 0, 0.75);
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .modalContent {
+    max-width: 90%;
+  }
+  
+}
