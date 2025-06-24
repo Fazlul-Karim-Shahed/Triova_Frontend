@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/Logo_Trans.svg";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -12,8 +12,8 @@ export default function SuperAdminHeader() {
             <div className="grid grid-cols-2 items-center py-2 px-4 md:px-8 bg-white/80 backdrop-blur-xl border-b border-emerald-100 shadow-md rounded-b-3xl">
                 {/* Logo & Title */}
                 <div className="flex items-center gap-4">
-                    <div className="rounded-xl overflow-hidden shadow-sm border border-emerald-200 bg-white p-1">
-                        <Image src={Logo} alt="Logo" width={90} height={50} className="rounded" />
+                    <div className="rounded-xl overflow-hidden shadow-sm border border-emerald-200 bg-white">
+                        <Image src={Logo} alt="Logo" width={60} height={50} className="rounded bg-brand-500" />
                     </div>
                     <span className="text-xl font-bold text-emerald-800 font-sans">Super Admin Panel</span>
                 </div>

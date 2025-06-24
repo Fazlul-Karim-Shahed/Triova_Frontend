@@ -80,7 +80,10 @@ export default function ShowDepartments({ departments }) {
                 ) : (
                     departments.map((dept) => (
                         <div key={dept._id} className="bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border transition-all relative">
-                            <ClientImageWithLoader src={imageSrc(dept.featureImage?.name)} alt={dept.name} className="w-full h-48 object-cover" />
+                            <div className="w-full h-48 overflow-hidden">
+                                <ClientImageWithLoader src={imageSrc(dept.featureImage?.name)} alt={dept.name} className="w-full h-48 object-cover" />
+                            </div>
+
                             <div className="p-4 space-y-2">
                                 <h3 className="text-lg font-bold text-gray-800">{dept.name}</h3>
                                 <p className="text-sm text-gray-600">{dept.description.length > 150 ? dept.description.slice(0, 150) + "..." : dept.description}</p>

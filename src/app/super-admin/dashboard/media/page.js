@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
+import Spinner from "@/src/components/Common/Spinner/Spinner";
 
 export default function MediaPage() {
     const [files, setFiles] = useState([]);
@@ -334,8 +335,7 @@ export default function MediaPage() {
 
             {loading ? (
                 <div className="flex justify-center items-center p-20 space-x-4">
-                    <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
-                    <p className="text-xl font-semibold text-gray-700">Loading media...</p>
+                    <Spinner message="Loading files..." />
                 </div>
             ) : filteredFiles.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">

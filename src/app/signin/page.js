@@ -48,7 +48,7 @@ export default function Signin() {
             <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-brand-500 to-brand-700 px-3 md:px-8 py-12 h-[320px] ">
                 <div>
                     <Link href="/">
-                        <Image width="100" height="100" src={Logo} alt="logo" className="md:w-40 w-28" />
+                        <Image width="120" height="100" src={Logo} alt="logo" className="md:w-40 w-28" />
                     </Link>
                     <div className="max-w-2xl mt-16 max-lg:hidden">
                         <h3 className="text-3xl font-bold text-white">Sign In</h3>
