@@ -22,7 +22,7 @@ export default function SuperAdmin() {
             <style jsx>{`
                 /* Container: full screen flex center with light gradient background */
                 .container {
-                    min-height: 100vh;
+                    min-height: 95vh;
                     display: flex;
                     justify-content: center;
                     align-items: center;
