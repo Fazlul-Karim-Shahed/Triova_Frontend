@@ -15,6 +15,9 @@ module.exports = {
             },
             colors: {
                 primary: {
+                    20: "#f8fcfb", // ultra light
+                    30: "#f2f9f7",
+                    40: "#ebf7f5",
                     50: "#eff6ff",
                     100: "#dbeafe",
                     200: "#bfdbfe",
@@ -28,6 +31,7 @@ module.exports = {
                     950: "#172554",
                 },
                 brand: {
+                    50: "#edf6f4",
                     100: "#dbece8",
                     200: "#b7d9d1",
                     300: "#93c6ba",

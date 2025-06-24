@@ -12,7 +12,7 @@ export default function Subscribe() {
 
     return (
         <div>
-            <div className="bg-gradient-to-br from-gray-900 via-indigo-800 to-gray-900">
+            <div className="bg-gradient-to-br from-brand-900 via-brand-700 to-brand-900">
                 <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
                     <div className="px-6 py-6 rounded-lg md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
                         <div className="xl:w-0 xl:flex-1">

@@ -99,9 +99,9 @@ export default function MainHeader({ searchParams }) {
     };
 
     return (
-        <div style={{ backgroundColor: "white" }} className="sticky top-0 z-50 bg-slate-50">
-            <nav className="dark:bg-gray-900 bg-slate-50">
-                <div style={{ maxWidth: "97%" }} className="flex flex-wrap items-center justify-between mx-auto p-4 bg-slate-50">
+        <div className="sticky top-0 z-50 bg-brand-50/20">
+            <nav className="bg-brand-50/20">
+                <div className="flex flex-wrap items-center justify-between mx-auto p-4 bg-brand-50 md:px-5">
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                         <Image width="130" src={Logo} className="object-cover" alt="Triova Logo" />
                     </Link>
@@ -114,14 +114,14 @@ export default function MainHeader({ searchParams }) {
                                         value={search}
                                         type="text"
                                         id="search-navbar"
-                                        className="w-[350px] px-5 py-3 pr-14 text-sm text-gray-800 rounded-full 
-                       bg-white/30 backdrop-blur-md border border-black/30  placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 hover:shadow-md"
+                                        className="w-[350px] px-5 py-3  pr-14 text-sm text-gray-800 rounded-full 
+                       bg-white/30 backdrop-blur-md border border-brand-800  placeholder-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-800 focus:border-brand-800 transition-all duration-300 hover:shadow-md"
                                         placeholder="Search at Triova's largest store"
                                     />
                                     <button
                                         type="submit"
                                         className="absolute inset-y-0 end-0 flex items-center justify-center px-4 
-                       text-pink-600 hover:text-white hover:bg-pink-500 rounded-full 
+                       text-brand-700 hover:text-white hover:bg-brand-700 rounded-full 
                        transition-colors duration-300"
                                     >
                                         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -138,7 +138,7 @@ export default function MainHeader({ searchParams }) {
                                         <div className="relative inline-flex group mt-1">
                                             <button
                                                 type="button"
-                                                className="flex items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                                className="flex items-center gap-x-2 text-sm font-medium rounded-full border border-brand-200 text-gray-800 shadow-sm bg-white focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
                                                 aria-haspopup="menu"
                                                 aria-expanded="false"
                                                 aria-label="Dropdown"
@@ -170,7 +170,7 @@ export default function MainHeader({ searchParams }) {
                                                 <Link
                                                     onClick={handleToggle}
                                                     href="/mytriova"
-                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                                                 >
                                                     <FontAwesomeIcon className="" icon={faUser} />
                                                     <span>My Triova</span>
@@ -179,7 +179,7 @@ export default function MainHeader({ searchParams }) {
                                                 <Link
                                                     onClick={handleToggle}
                                                     href="/cart"
-                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                                                 >
                                                     <FontAwesomeIcon className="" icon={faCartShopping} />
                                                     Cart
@@ -189,13 +189,13 @@ export default function MainHeader({ searchParams }) {
                                                 <Link
                                                     onClick={handleToggle}
                                                     href="/mytriova/history"
-                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                                                 >
                                                     <FontAwesomeIcon className="" icon={faClockRotateLeft} />
                                                     Puschase History
                                                 </Link>
 
-                                                {/* <Link onClick={handleToggle} href="#" className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                                                {/* <Link onClick={handleToggle} href="#" className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
                                                 <FontAwesomeIcon className='' icon={faAward} />
                                                 Claim Warrenty
                                             </Link> */}
@@ -203,7 +203,7 @@ export default function MainHeader({ searchParams }) {
                                                 <hr />
 
                                                 {store.authenticated && (store.decodedToken.role === "superAdmin" || store.decodedToken.role === "admin" || store.decodedToken.role === "employee") && (
-                                                    <div className="flex bg-red-100 font-bold items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                                                    <div className="flex bg-red-100 font-bold items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
                                                         <Link href={store.decodedToken.role === "superAdmin" ? "/super-admin" : store.decodedToken.role === "admin" ? "/admin" : "employee"}>
                                                             {" "}
                                                             <FontAwesomeIcon className="me-2" icon={faLock} />
@@ -214,7 +214,7 @@ export default function MainHeader({ searchParams }) {
 
                                                 {store.authenticated && (
                                                     <Link
-                                                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                                                         href="/logout"
                                                     >
                                                         <FontAwesomeIcon className="" icon={faRightFromBracket} />
@@ -246,7 +246,7 @@ export default function MainHeader({ searchParams }) {
                             onClick={handleToggle}
                             aria-controls="navbar-search"
                             aria-expanded={isMenuOpen}
-                            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-brand-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         >
                             <span className="sr-only">Open main menu</span>
                             <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -285,7 +285,7 @@ export default function MainHeader({ searchParams }) {
                                 <li className="mb-4">
                                     <div
                                         onClick={() => setDepartmentState(false)}
-                                        className="cursor-pointer md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="cursor-pointer md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faAnglesLeft} />
                                         Go back
@@ -296,7 +296,7 @@ export default function MainHeader({ searchParams }) {
 
                                 {departments.map((item) => (
                                     <li>
-                                        <div className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                        <div className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                                             <Link onClick={handleToggle} href={{ pathname: "/products", query: { department: item.name } }}>
                                                 {item.name}
                                             </Link>
@@ -309,7 +309,7 @@ export default function MainHeader({ searchParams }) {
                                 <li className="mb-4">
                                     <div
                                         onClick={() => setEventState(false)}
-                                        className="cursor-pointer md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="cursor-pointer md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faAnglesLeft} />
                                         Go back
@@ -320,7 +320,7 @@ export default function MainHeader({ searchParams }) {
 
                                 {events.map((item) => (
                                     <li>
-                                        <div className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                        <div className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                                             <Link onClick={handleToggle} href={`/event/${item.name}`}>
                                                 {item.name}
                                             </Link>
@@ -332,7 +332,7 @@ export default function MainHeader({ searchParams }) {
                             <ul className="flex flex-col md:hidden p-4 md:p-0 mt-4 md:text-base text-xs border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-inherit dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                                 <li
                                     onClick={() => setDepartmentState(true)}
-                                    className="md:hidden block py-2 px-3 text-gray-900 rounded cursor-pointer flex items-center justify-between hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                    className="md:hidden block py-2 px-3 text-gray-900 rounded cursor-pointer flex items-center justify-between hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                 >
                                     <div className="">
                                         <FontAwesomeIcon className="me-2" icon={faTableList} />
@@ -346,7 +346,7 @@ export default function MainHeader({ searchParams }) {
 
                                 <li
                                     onClick={() => setEventState(true)}
-                                    className="md:hidden block py-2 px-3 text-gray-900 rounded cursor-pointer flex items-center justify-between hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                    className="md:hidden block py-2 px-3 text-gray-900 rounded cursor-pointer flex items-center justify-between hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                 >
                                     <div className="">
                                         <FontAwesomeIcon className="me-2" icon={faCalendarCheck} />
@@ -362,7 +362,7 @@ export default function MainHeader({ searchParams }) {
                                     <Link
                                         onClick={handleToggle}
                                         href="/promo"
-                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faTag} />
                                         Promo Code
@@ -374,7 +374,7 @@ export default function MainHeader({ searchParams }) {
                                 <li>
                                     {store.authenticated && (store.decodedToken.role === "superAdmin" || store.decodedToken.role === "admin" || store.decodedToken.role === "employee") && (
                                         <Link
-                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                             onClick={handleToggle}
                                             href={store.decodedToken.role === "superAdmin" ? "/super-admin" : store.decodedToken.role === "admin" ? "/admin" : "employee"}
                                         >
@@ -388,7 +388,7 @@ export default function MainHeader({ searchParams }) {
                                     <Link
                                         onClick={handleToggle}
                                         href="/cart"
-                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faCartShopping} />
                                         Cart
@@ -401,7 +401,7 @@ export default function MainHeader({ searchParams }) {
                                         <Link
                                             onClick={handleToggle}
                                             href="/signin"
-                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                         >
                                             <FontAwesomeIcon className="me-2" icon={faRightFromBracket} />
                                             <span>Register</span>
@@ -414,7 +414,7 @@ export default function MainHeader({ searchParams }) {
                                         <Link
                                             onClick={handleToggle}
                                             href="/mytriova"
-                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                         >
                                             <FontAwesomeIcon className="me-2" icon={faUser} />
                                             <span>My Triova</span>
@@ -427,7 +427,7 @@ export default function MainHeader({ searchParams }) {
                                         <Link
                                             onClick={handleToggle}
                                             href="/mytriova/history"
-                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                         >
                                             <FontAwesomeIcon className="me-2" icon={faClockRotateLeft} />
                                             Puschase History
@@ -435,7 +435,7 @@ export default function MainHeader({ searchParams }) {
                                     )}
                                 </li>
                                 <li>
-                                    {/* {store.authenticated && <Link onClick={handleToggle} href="#" className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                                    {/* {store.authenticated && <Link onClick={handleToggle} href="#" className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                                     <FontAwesomeIcon className='me-2' icon={faAward} />
                                     Claim Warrenty
                                 </Link>} */}
@@ -447,7 +447,7 @@ export default function MainHeader({ searchParams }) {
                                     <Link
                                         onClick={handleToggle}
                                         href="/contact"
-                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faAddressBook} />
                                         Contact
@@ -457,7 +457,7 @@ export default function MainHeader({ searchParams }) {
                                     <Link
                                         onClick={handleToggle}
                                         href="/about"
-                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faScrewdriverWrench} />
                                         About
@@ -468,7 +468,7 @@ export default function MainHeader({ searchParams }) {
                                     <Link
                                         onClick={handleToggle}
                                         href="#"
-                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                        className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faComment} />
                                         Give Feedback
@@ -481,7 +481,7 @@ export default function MainHeader({ searchParams }) {
                                         <Link
                                             onClick={handleToggle}
                                             href="/logout"
-                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                            className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                         >
                                             <FontAwesomeIcon className="me-2" icon={faRightFromBracket} />
                                             Logout

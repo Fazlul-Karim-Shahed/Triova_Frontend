@@ -57,7 +57,7 @@ export default function AdminRegistration() {
 
     return (
         <div className="">
-            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-brand-800 to-brand-900 px-3 md:px-8 py-12 h-[320px]">
+            <div className="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-brand-800 to-brand-800 px-3 md:px-8 py-12 h-[320px]">
                 <div>
                     <Link href="/">
                         <Image width="100" height="100" src={Logo} alt="logo" className="md:w-40 w-28" />
