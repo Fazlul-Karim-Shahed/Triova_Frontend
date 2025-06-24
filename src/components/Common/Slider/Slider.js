@@ -5,14 +5,24 @@ import Link from "next/link";
 import { imageSrc } from "@/src/functions/CustomFunction";
 import styles from "./Slider.module.css";
 import ClientImageWithLoader from "../ImageLoader/ClientImageWithLoader";
+import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 
-const Slider = ({ products }) => {
-    console.log(products);
-
+const Slider = () => {
     const wrapperRef = useRef(null);
     const carouselRef = useRef(null);
     const [extendedProducts, setExtendedProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const cardWidthRef = useRef(300);
+
+    useEffect(() => {
+        getAllProductApi(10).then((data) => {
+            if (!data.error) {
+                setProducts(data.data);
+            } else {
+                setProducts([]);
+            }
+        });
+    }, []);
 
     useEffect(() => {
         if (!products?.length) return;
