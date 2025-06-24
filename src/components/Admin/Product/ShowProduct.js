@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Modal } from "../../Common/Modal/Modal";
 import { imageSrc } from "@/src/functions/CustomFunction";
+import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
 
 export default function ShowProduct({ product }) {
     const [modalState, setModalState] = useState({ error: false, message: "", open: false, loading: false });

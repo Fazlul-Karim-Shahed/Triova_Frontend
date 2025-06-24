@@ -70,6 +70,7 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                         }
                     }
                     router.push(`/products?${new URLSearchParams(query).toString()}`);
+                    
                     if (typeof onFilterChange === "function") {
                         onFilterChange(query);
                     }

@@ -174,7 +174,7 @@ const Slider = ({ products }) => {
                                 <div className="flex m-3 justify-content-center w-fit">
                                     <Link
                                         href={`/products/${encodeURIComponent(item.name)}`}
-                                        className="px-5 py-1 rounded-md bg-cyan-600 text-white font-semibold hover:bg-cyan-700 transition"
+                                        className="px-5 py-1 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700 transition"
                                         itemProp="url"
                                     >
                                         View More

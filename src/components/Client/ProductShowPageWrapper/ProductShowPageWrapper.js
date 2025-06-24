@@ -72,16 +72,8 @@ export default function ProductShowPageWrapper({ initialProducts, initialSubCate
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-5 items-center gap-2">
-                                            <div className="col-span-1"></div>
-                                            <div className="col-span-1 flex items-center justify-center">
-                                                <div className="bg-white/40 p-2 rounded-full hover:scale-110 transition cursor-pointer shadow-inner">
-                                                    <FontAwesomeIcon icon={faHeart} className="text-red-500 text-lg" />
-                                                </div>
-                                            </div>
-                                            <div className="col-span-3">
-                                                <AddtoCartBtn product={item} />
-                                            </div>
+                                        <div className="">
+                                            <AddtoCartBtn product={item} />
                                         </div>
                                     </div>
                                 </div>

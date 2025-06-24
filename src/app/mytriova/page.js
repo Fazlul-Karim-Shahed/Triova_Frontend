@@ -40,7 +40,7 @@ export default function MyTriovaPage() {
                                 <p className="text-sm text-gray-500 mt-1">{user.email || "No Email Provided"}</p>
                                 <Link
                                     href="/mytriova/history"
-                                    className="mt-6 inline-block w-full text-center py-2 px-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium hover:shadow-lg transition duration-300"
+                                    className="mt-6 inline-block w-full text-center py-2 px-4 rounded-full bg-gradient-to-r from-brand-500 to-green-500 text-white font-medium hover:shadow-lg transition duration-300"
                                 >
                                     Order History
                                 </Link>
@@ -83,9 +83,9 @@ export default function MyTriovaPage() {
                             </div>
 
                             {/* Edit Profile Button */}
-                            <div className="mt-10 text-right">
+                            {/* <div className="mt-10 text-right">
                                 <button className="py-2 px-6 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 text-white font-semibold hover:shadow-xl transition">Edit Profile</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

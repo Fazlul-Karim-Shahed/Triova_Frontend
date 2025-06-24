@@ -44,10 +44,10 @@ export default async function Home() {
                     <div className="col-span-2 lg:col-span-2 md:row-span-2 rounded-lg">
                         <HeroSlider />
                     </div>
-                    <div className="col-span-2 md:col-span-4 lg:col-span-6 row-span-1 bg-gradient-to-r from-[#FA1768] to-[#e51111] text-black flex flex-col justify-center items-center p-4 md:p-6 rounded-lg relative text-center">
+                    <div className="col-span-2 md:col-span-4 lg:col-span-6 row-span-1 bg-gradient-to-r from-brand-600 to-brand-800 text-brand-50 flex flex-col justify-center items-center p-4 md:p-6 rounded-lg relative text-center">
                         <h2 className="text-xl md:text-2xl font-bold text-white">Shop with Triova to get up to 50% discount</h2>
                         <p className="mt-2 text-lg font-bold">Every day & more</p>
-                        <Link href="/products" className="mt-4 bg-black text-white py-2 px-4 rounded-lg text-sm md:text-base">
+                        <Link href="/products" className="mt-4 font-semibold bg-brand-100 hover:bg-brand-200 transition-all duration-200 text-brand-900 py-2 px-4 rounded-lg text-sm md:text-base">
                             Explore Triova
                         </Link>
                     </div>

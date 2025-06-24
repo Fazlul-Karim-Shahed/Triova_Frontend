@@ -114,8 +114,8 @@ export default function MainHeader({ searchParams }) {
                                         value={search}
                                         type="text"
                                         id="search-navbar"
-                                        className="w-[350px] px-5 py-3  pr-14 text-sm text-gray-800 rounded-full 
-                       bg-white/30 backdrop-blur-md border border-brand-800  placeholder-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-800 focus:border-brand-800 transition-all duration-300 hover:shadow-md"
+                                        className="w-[350px] lg:w-[550px] px-5 py-3  pr-14 text-sm text-gray-800 rounded-full 
+                       bg-white/30 backdrop-blur-md border border-brand-700  placeholder-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-700 focus:border-brand-700 transition-all duration-300 hover:shadow-md"
                                         placeholder="Search at Triova's largest store"
                                     />
                                     <button
@@ -183,7 +183,7 @@ export default function MainHeader({ searchParams }) {
                                                 >
                                                     <FontAwesomeIcon className="" icon={faCartShopping} />
                                                     Cart
-                                                    <span className="transform -translate-x-1/2 -translate-y-1/3 bg-blue-500 rounded-full px-2 py-1 text-xs text-white">{store.cart}</span>
+                                                    <span className="transform -translate-x-1/2 -translate-y-1/3 bg-brand-500 rounded-full px-2 py-1 text-xs text-white">{store.cart}</span>
                                                 </Link>
 
                                                 <Link
@@ -237,7 +237,7 @@ export default function MainHeader({ searchParams }) {
                             <div className="relative inline-block">
                                 <Link href={"/cart"} className="px-4 py-2 relative">
                                     <FontAwesomeIcon className="text-2xl mt-1" icon={faCartPlus} />
-                                    <div className="absolute top-0 right-3 transform translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full px-2 py-1 text-xs text-white">{store.cart}</div>
+                                    <div className="absolute top-0 right-3 transform translate-x-1/2 -translate-y-1/2 bg-brand-500 rounded-full px-2 py-1 text-xs text-white">{store.cart}</div>
                                 </Link>
                             </div>
                         </div>
@@ -392,7 +392,7 @@ export default function MainHeader({ searchParams }) {
                                     >
                                         <FontAwesomeIcon className="me-2" icon={faCartShopping} />
                                         Cart
-                                        <span className="transform translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full px-2 py-1 text-xs text-white ms-2">{store.cart}</span>
+                                        <span className="transform translate-x-1/2 -translate-y-1/2 bg-brand-500 rounded-full px-2 py-1 text-xs text-white ms-2">{store.cart}</span>
                                     </Link>
                                 </li>
 

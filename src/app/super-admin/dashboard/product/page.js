@@ -18,13 +18,12 @@ export default function ProductPage() {
                 const res = await getAllProductApi();
                 if (res.error) {
                     setModalState({ error: res.error, message: res.message, open: true, loading: false });
-                    setError(res.message || "Failed to load products.");
                 } else {
                     setModalState({ error: res.error, message: res.message, open: false, loading: false });
                     setData(res);
                 }
             } catch (err) {
-                setError("Something went wrong while fetching products.");
+                setModalState({ error: true, message: "Something went wrong while fetching products.", open: true, loading: false });
             } finally {
                 setLoading(false);
             }
