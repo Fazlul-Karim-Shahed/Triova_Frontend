@@ -9,17 +9,17 @@ import Link from "next/link";
 export default function SuperAdminHeader() {
     return (
         <div className="">
-            <div className="grid grid-cols-2 items-center py-2 px-4 md:px-8 bg-white/80 backdrop-blur-xl border-b border-emerald-100 shadow-md rounded-b-3xl">
+            <div className="grid grid-cols-12 items-center py-2 px-4 md:px-8 bg-white/80 backdrop-blur-xl border-b border-emerald-100 shadow-md rounded-b-3xl">
                 {/* Logo & Title */}
-                <div className="flex items-center gap-4">
-                    <div className="rounded-xl overflow-hidden shadow-sm border border-emerald-200 bg-white">
-                        <Image src={Logo} alt="Logo" width={60} height={50} className="rounded bg-brand-500" />
+                <div className="col-span-8 flex items-center gap-3">
+                    <div className=" overflow-hidden shadow-sm  bg-white">
+                        <Image src={Logo} alt="Logo" width={60} height={50} className="mt-1 bg-brand-500 p-1" />
                     </div>
                     <span className="text-xl font-bold text-emerald-800 font-sans">Super Admin Panel</span>
                 </div>
 
                 {/* Exit Button */}
-                <div className="text-end">
+                <div className="col-span-4 text-end">
                     <Link
                         href="/"
                         className="inline-flex items-center gap-2 text-emerald-700 hover:text-white hover:bg-emerald-500 border border-emerald-500 px-4 py-2 rounded-xl transition font-semibold"
