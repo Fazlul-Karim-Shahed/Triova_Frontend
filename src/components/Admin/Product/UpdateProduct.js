@@ -40,6 +40,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
         colorName: "",
         colorQuantity: "",
         colorCode: "",
+        colorImage: null,
         rating: product.rating,
 
         departmentId: product.departmentId._id,
@@ -69,6 +70,11 @@ export default function UpdateProduct({ product, departments, categories, subCat
                 ...formData,
                 [name]: { name: files[0].name, contentType: files[0].type },
                 imageList: [...formData.imageList, files[0]],
+            });
+        } else if ((type === "file") & (name == "colorImage")) {
+            setFormData({
+                ...formData,
+                [name]: files[0],
             });
         } else if (name == "tags") {
             setFormData({
@@ -146,22 +152,25 @@ export default function UpdateProduct({ product, departments, categories, subCat
     };
 
     const addColor = () => {
-        setFormData({
-            ...formData,
-            colors: [
-                ...formData.colors,
-                {
-                    color: formData.colorName,
-                    stock: formData.colorQuantity,
-                    colorCode: formData.colorCode,
-                },
-            ],
-            // colorName: '',
-            // colorQuantity: '',
-            // colorCode: ''
-        });
+        if (formData.colorImage) {
+            setFormData({
+                ...formData,
+                colors: [
+                    ...formData.colors,
+                    {
+                        color: formData.colorName,
+                        stock: formData.colorQuantity,
+                        colorCode: formData.colorCode,
+                        image: formData.colorImage.name,
+                    },
+                ],
+                imageList: [...formData.imageList, formData.colorImage],
+            });
 
-        setColorQuantity((prev) => Number(prev) + Number(formData.colorQuantity));
+            setColorQuantity((prev) => Number(prev) + Number(formData.colorQuantity));
+        } else {
+            window.alert("Please select an image");
+        }
     };
 
     const deleteSize = (index) => {
@@ -178,6 +187,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
         setFormData({
             ...formData,
             sizes: formData.sizes.filter((item) => item.referenceColor !== formData.colors[index].color),
+            imageList: formData.imageList.filter((image) => image.name !== formData.colors[index].image),
             colors: formData.colors.toSpliced(index, 1),
         });
 
@@ -209,7 +219,9 @@ export default function UpdateProduct({ product, departments, categories, subCat
             ...formData,
             sizes: formData.sizes.length > 0 ? formData.sizes : [],
             description: content,
-            imageList: formData.imageList.filter((image) => image.name == formData.featuredImage.name || arr.map((image) => image.name).includes(image.name)),
+            imageList: formData.imageList.filter(
+                (image) => image.name == formData.featuredImage.name || arr.map((image) => image.name).includes(image.name) || formData.colors.map((color) => color.image).includes(image.name)
+            ),
             image: arr.length === 0 ? "none" : arr,
         }).then((data) => {
             setModalState({ error: data.error, message: data.message, open: true, loading: false });
@@ -390,7 +402,11 @@ export default function UpdateProduct({ product, departments, categories, subCat
 
                     <div className="border-2 border-slate-200 rounded-xl p-6 shadow-md mb-10">
                         <label className="block text-lg font-semibold text-gray-800 mb-5">🎨 Color Adjustments</label>
-                        <div className="grid md:grid-cols-5 gap-5 mb-6">
+                        <div className="grid md:grid-cols-6 gap-5 mb-6">
+                            <div>
+                                <label className="text-sm text-gray-600 mb-1 block">Product Image</label>
+                                <input type="file" name="colorImage" onChange={handleChange} className="w-full p-2 border rounded focus:ring focus:ring-green-200" />
+                            </div>
                             <div>
                                 <label className="text-sm text-gray-600 mb-1 block">Color Name</label>
                                 <input
@@ -440,6 +456,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
                             <table className="w-full border rounded-md text-sm">
                                 <thead className="bg-slate-100 text-gray-700">
                                     <tr>
+                                        <th className="border p-2 text-left">Product</th>
                                         <th className="border p-2 text-left">Name</th>
                                         <th className="border p-2 text-left">Color Code</th>
                                         <th className="border p-2 text-center">Color</th>
@@ -450,6 +467,9 @@ export default function UpdateProduct({ product, departments, categories, subCat
                                 <tbody>
                                     {formData.colors.map((item, index) => (
                                         <tr key={index}>
+                                            <td className="border p-2">
+                                                <img src={imageSrc(item.image)} alt={item.name} className="w-8 h-8 object-cover" />
+                                            </td>
                                             <td className="border p-2">{item.color}</td>
                                             <td className="border p-2">{item.colorCode}</td>
                                             <td className="border p-2 text-center">

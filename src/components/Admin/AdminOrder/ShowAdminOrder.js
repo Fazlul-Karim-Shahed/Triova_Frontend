@@ -6,6 +6,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { Modal } from "../../Common/Modal/Modal";
 import InvoiceTemplate from "@/src/app/mytriova/invoice/page";
+import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
+import { imageSrc } from "@/src/functions/CustomFunction";
 
 export default function ShowAdminOrder({ orders, courier }) {
     return (
@@ -101,14 +103,20 @@ function ShowAdminOrderContent({ orders, courier }) {
 
     const updateOrderStatus = (e, id) => {
         e.preventDefault();
-        setModalState({ message: "Updating...", open: 1, loading: 1 });
-        updateOrderStatusApi(id, statusFormData).then((res) => {
-            setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
-            if (!res.error) {
-                setOrderList(orders.filter((o) => o._id != id));
-                document.getElementById("order_details_modal").close();
-            }
-        });
+
+        if (statusFormData.deliveryMethod) {
+            setModalState({ message: "Updating...", open: 1, loading: 1 });
+            updateOrderStatusApi(id, statusFormData).then((res) => {
+                setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
+                if (!res.error) {
+                    setOrderList(orders.filter((o) => o._id != id));
+                    document.getElementById("order_details_modal").close();
+                }
+            });
+        }
+        else {
+            setModalState({ error: true, message: "Please select a delivery method", open: 1, loading: 0 });
+        }
     };
 
     const deleteOrder = (id) => {
@@ -130,7 +138,6 @@ function ShowAdminOrderContent({ orders, courier }) {
                     Search
                 </button>
             </form>
-
             <div className="flex flex-wrap gap-4 mb-6">
                 {["all", "Pending", "Processing", "Shipped", "Delivered", "Pending Return", "Returned"].map((status) => (
                     <label key={status} className="cursor-pointer">
@@ -141,7 +148,6 @@ function ShowAdminOrderContent({ orders, courier }) {
                     </label>
                 ))}
             </div>
-
             <div className="overflow-x-auto rounded-lg bg-white bg-opacity-70 backdrop-blur-md shadow-lg">
                 <table className="table table-zebra">
                     <thead>
@@ -185,6 +191,8 @@ function ShowAdminOrderContent({ orders, courier }) {
                 </table>
             </div>
 
+            {/* Modal */}
+
             <Modal
                 loading={modalState.loading}
                 open={modalState.open}
@@ -192,7 +200,6 @@ function ShowAdminOrderContent({ orders, courier }) {
                 error={modalState.error}
                 message={modalState.message}
             />
-
             <dialog id="order_details_modal" className="modal">
                 <div className="modal-box w-11/12 max-w-7xl">
                     <form method="dialog">
@@ -275,7 +282,10 @@ function ShowAdminOrderContent({ orders, courier }) {
                                             <thead className="bg-gray-100">
                                                 <tr>
                                                     <th>No.</th>
+                                                    <th></th>
                                                     <th>Name</th>
+                                                    <th>Color</th>
+                                                    <th>Size</th>
                                                     <th>Price</th>
                                                     <th>Quantity</th>
                                                     <th>Total</th>
@@ -287,7 +297,21 @@ function ShowAdminOrderContent({ orders, courier }) {
                                                     return (
                                                         <tr key={index} className={`hover:bg-green-50`}>
                                                             <td>{index + 1}</td>
+                                                            <td>
+                                                                <ClientImageWithLoader
+                                                                    src={imageSrc(
+                                                                        item.color && item.color != ""
+                                                                            ? item.productId.colors.find((color) => color.color === item.color).image
+                                                                            : item.productId.featuredImage.name
+                                                                    )}
+                                                                    width={500}
+                                                                    height={100}
+                                                                    className="w-40 h-40 rounded"
+                                                                />
+                                                            </td>
                                                             <td>{item.productId.name}</td>
+                                                            <td>{item.color}</td>
+                                                            <td>{item.size}</td>
                                                             <td>{item.price}</td>
                                                             <td>{item.quantity}</td>
                                                             <td>{item.total}</td>
@@ -355,7 +379,6 @@ function ShowAdminOrderContent({ orders, courier }) {
                     )}
                 </div>
             </dialog>
-
             <div className="invoice">{order && <InvoiceTemplate order={order} />}</div>
         </div>
     );

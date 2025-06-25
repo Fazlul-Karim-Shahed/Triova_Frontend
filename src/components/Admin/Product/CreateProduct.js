@@ -197,6 +197,16 @@ export default function CreateProduct({ departments, categories, subCategories, 
 
         setModalState({ message: "Creating new product. Please wait...", open: true, loading: true });
 
+        // console.log("formData: ", {
+        //     ...formData,
+        //     subBrands: formData.subBrandId,
+        //     description: content,
+        //     imageList: [formData.featuredImage, ...formData.image, ...formData.colors.map((item) => item.image)],
+        //     featuredImage: { name: formData.featuredImage.name, contentType: formData.featuredImage.type },
+        //     image: images,
+        //     colors: formData.colors.map((item) => ({ color: item.color, stock: item.stock, colorCode: item.colorCode, image: item.image })),
+        // });
+
         createProductpi({
             ...formData,
             subBrands: formData.subBrandId,
@@ -204,7 +214,7 @@ export default function CreateProduct({ departments, categories, subCategories, 
             imageList: [formData.featuredImage, ...formData.image, ...formData.colors.map((item) => item.image)],
             featuredImage: { name: formData.featuredImage.name, contentType: formData.featuredImage.type },
             image: images,
-            colors: formData.colors.map((item) => ({ color: item.color, stock: item.stock, colorCode: item.colorCode })),
+            colors: formData.colors.map((item) => ({ color: item.color, stock: item.stock, colorCode: item.colorCode, image: item.image.name })),
         }).then((data) => {
             //console.log(data)
             setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
@@ -372,7 +382,12 @@ export default function CreateProduct({ departments, categories, subCategories, 
 
                     <div className="border-2 border-slate-200 rounded py-7 px-5 shadow ">
                         <label className="block text-gray-700 mb-1 font-bold">Color Adjustments</label>
-                        <div className="grid md:grid-cols-5 mb-7 gap-5">
+                        <div className="grid md:grid-cols-6 mb-7 gap-5">
+                            <div>
+                                <label className="block text-gray-700 mb-1">Product Image</label>
+                                <input type="file" name="colorImage" onChange={handleChange} className="w-full p-2 border rounded focus:ring focus:ring-green-200" />
+                            </div>
+
                             <div>
                                 <label className="block text-gray-700 mb-1">Color Name</label>
                                 <input
@@ -413,7 +428,7 @@ export default function CreateProduct({ departments, categories, subCategories, 
 
                             <div>
                                 <button onClick={() => addColor()} className="btn btn-success btn-sm text-white md:mt-8" type="button">
-                                    Add Color & Quantity
+                                    Add Color
                                 </button>
                             </div>
                         </div>

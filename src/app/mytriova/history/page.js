@@ -9,14 +9,18 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import InvoiceTemplate from "../invoice/page";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
+import Spinner from "@/src/components/Common/Spinner/Spinner";
 
 const YourOrders = () => {
     const store = useSelector((state) => state.triova);
     const [orders, setOrders] = useState([]);
     const [order, setOrder] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         getAProfileApi(store.decodedToken._id, store.decodedToken.role).then((data) => {
+            setLoading(false);
             if (!data.error) {
                 getAllOrdersApi({ mobile: data.data.mobile }).then((data) => {
                     if (!data.error) {
@@ -63,7 +67,10 @@ const YourOrders = () => {
         }, 100);
     };
 
-    return (
+    if (loading) {
+        return <Spinner message="Loading your orders..." />;
+    }
+    else return (
         <AuthContext>
             <div className="min-h-screen py-6">
                 <div className="max-w-7xl mx-auto bg-white rounded-lg p-6">
@@ -141,7 +148,7 @@ const YourOrders = () => {
                                                                     <ClientImageWithLoader
                                                                         width={1000}
                                                                         height={1000}
-                                                                        src={imageSrc(product && product.productId && product.productId.featuredImage.name)}
+                                                                        src={imageSrc(product.color && product.color != "" ? product.productId.colors.find((c) => c.color == product.color).image : product.productId.featuredImage.name)}
                                                                         alt="Travelling Bag"
                                                                         className="object-cover border rounded-2xl"
                                                                     />

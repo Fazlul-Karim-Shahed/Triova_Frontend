@@ -28,6 +28,7 @@ export default function CartPage() {
         let arr = localStorage.getItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME) ? JSON.parse(localStorage.getItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME)) : [];
 
         getAllProductApi(null, { _id: arr.map((item) => item.productId) }).then((data) => {
+            console.log(data);
             setUpdating(false);
             if (!data.error) {
                 let newCart = arr.map((item) => {
@@ -41,6 +42,10 @@ export default function CartPage() {
                 setPrice(newCart[0].product && newCart.reduce((acc, item) => acc + item.quantity * item.product.sellingPrice, 0));
                 setSavings(newCart[0].product && newCart.reduce((acc, item) => acc + (item.quantity * item.product.sellingPrice * item.product.discount) / 100, 0));
                 setTotal(newCart[0].product && newCart.reduce((acc, item) => acc + item.quantity * (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100), 0));
+            }
+            else {
+                // console.log(data.message === "No products found");
+                data.message === "No products found" && localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
             }
         });
     }, []);
@@ -115,11 +120,15 @@ export default function CartPage() {
                                                 <div className="rounded-lg border border-brand-200 bg-white  p-4 shadow-md hover:bg-gray-50 dark:border-brand-700 dark:bg-gray-800 md:p-6">
                                                     <div className="space-y-4 md:flex md:justify-between md:gap-6 md:space-y-0">
                                                         <a href="#" className="shrink-0 md:order-1">
+                                                            {console.log(item)}
+
                                                             <ClientImageWithLoader
                                                                 height={500}
                                                                 width={500}
                                                                 className="h-20 w-28 dark:hidden rounded-md object-cover"
-                                                                src={imageSrc(item.product.featuredImage.name)}
+                                                                src={imageSrc(
+                                                                    item.color && item.color != "" ? item.product.colors.find((i) => i.color == item.color).image : item.product.featuredImage.name
+                                                                )}
                                                                 alt="image"
                                                             />
                                                         </a>

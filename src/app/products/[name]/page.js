@@ -72,7 +72,17 @@ const ProductDetailsPage = async ({ params }) => {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
                     {/* Images (Client) */}
                     <div className="col-span-1 md:col-span-5 w-full h-full rounded-2xl">
-                        <ProductImageGallery featuredImage={product.featuredImage} images={product.image} />
+                        <ProductImageGallery
+                            featuredImage={product.featuredImage}
+                            images={product.image}
+                            colorImages={
+                                product && product.colors && product.colors.length > 0
+                                    ? product.colors.map((item) => ({
+                                        name: item.image
+                                    }))
+                                    : []
+                            }
+                        />
                     </div>
 
                     {/* Product Details */}

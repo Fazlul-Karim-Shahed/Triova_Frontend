@@ -1,4 +1,4 @@
-import EventPage from "@/src/components/Client/EventPage/EventPage";
+import EventPage from "@/src/components/Client/Event/EventPage";
 
 export const generateMetadata = ({ params }) => {
     const eventName = decodeURIComponent(params.name);
