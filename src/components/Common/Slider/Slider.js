@@ -135,10 +135,11 @@ const Slider = () => {
                     const imgKey = `${item.featuredImage.name}-${index}`;
                     return (
                         <li key={imgKey} className={`${styles.card} inline-block mx-1`}>
-                            <article
+                            <Link
                                 className="h-full mx-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border-2 border-gray-100 bg-white hover:shadow-lg"
                                 itemScope
                                 itemType="https://schema.org/Product"
+                                href={`/products/${encodeURIComponent(item.name)}`}
                             >
                                 <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl text-center" itemProp="image">
                                     <ClientImageWithLoader
@@ -188,15 +189,15 @@ const Slider = () => {
                                     </div>
                                 </div>
                                 <div className="flex m-3 justify-content-center w-fit">
-                                    <Link
+                                    {/* <Link
                                         href={`/products/${encodeURIComponent(item.name)}`}
                                         className="px-5 py-1 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700 transition"
                                         itemProp="url"
                                     >
                                         View More
-                                    </Link>
+                                    </Link> */}
                                 </div>
-                            </article>
+                            </Link>
                         </li>
                     );
                 })}
