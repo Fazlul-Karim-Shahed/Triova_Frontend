@@ -145,8 +145,6 @@ export default function EventPage() {
     return (
         <div className="min-h-screen">
             <div className="mx-auto space-y-12">
-                
-
                 {/* Create / Edit Event Form */}
                 <div className="bg-white border-gray-200 rounded-xl py-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">{formData._id ? "✏️ Update Event" : "🎉 Create New Event"}</h2>
@@ -257,7 +255,11 @@ export default function EventPage() {
                         ) : (
                             events.map((event) => (
                                 <div key={event._id} className="bg-white border border-gray-200 rounded-lg shadow hover:shadow-md transition-all duration-300 overflow-hidden">
-                                    {event.promotionalImage && <ClientImageWithLoader src={imageSrc(event.promotionalImage.name)} alt={event.name} className="w-full h-40 object-cover" />}
+                                    {event.promotionalImage && (
+                                        <div className="w-full h-48 overflow-hidden">
+                                            <ClientImageWithLoader src={imageSrc(event.promotionalImage.name)} alt={event.name} className="w-full h-40 object-cover" />
+                                        </div>
+                                    )}
                                     <div className="p-4 space-y-2">
                                         <h4 className="text-lg font-semibold text-gray-800">{event.name}</h4>
                                         <p className="text-sm text-gray-600">{event.description}</p>
