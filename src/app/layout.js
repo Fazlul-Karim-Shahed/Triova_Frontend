@@ -61,6 +61,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
+            <meta name="google-site-verification" content="9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y" />
+
             <body className={`${inter.className} bg-white`}>
                 {/* Google Analytics */}
                 {/* Google Analytics */}
