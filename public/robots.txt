@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://triova.vercel.app/sitemap.xml
