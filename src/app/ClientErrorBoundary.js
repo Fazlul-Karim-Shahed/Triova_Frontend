@@ -7,7 +7,7 @@ export default function ClientErrorBoundary({ children }) {
         const handler = (e) => {
             if (e?.message?.includes("ChunkLoadError")) {
                 console.warn("ChunkLoadError detected. Reloading...");
-                // window.location.reload();
+                window.location.reload();
             }
         };
 

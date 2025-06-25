@@ -8,7 +8,7 @@ export default function Error({ error, reset }) {
         useEffect(() => {
             if (error?.message?.includes("__webpack_modules__") || error?.message?.includes("moduleId") || error?.message?.includes("ChunkLoadError")) {
                 console.warn("🔥 Detected stale module error — reloading page");
-                // window.location.reload();
+                window.location.reload();
             }
         }, [error]);
     }, [error]);
