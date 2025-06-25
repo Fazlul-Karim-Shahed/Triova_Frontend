@@ -31,7 +31,7 @@ export const metadata = {
         type: "website",
         images: [
             {
-                url: "https://triova.vercel.app/_next/static/media/Logo.607e2600.svg",
+                url: "https://triova.vercel.app/Logo_Bg.png",
                 width: 384,
                 height: 384,
                 alt: "Triova Limited Logo",
@@ -42,7 +42,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://triova.vercel.app/_next/static/media/Logo.607e2600.svg"],
+        images: ["https://triova.vercel.app/Logo_Bg.png"],
     },
 
     facebook: {
@@ -50,7 +50,7 @@ export const metadata = {
         type: "website",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://triova.vercel.app/_next/static/media/Logo.607e2600.svg"],
+        images: ["https://triova.vercel.app/Logo_Bg.png"],
     },
 
     verification: {
@@ -72,7 +72,7 @@ export default function RootLayout({ children }) {
                             "@type": "Organization",
                             name: "Triova Limited",
                             url: "https://triova.vercel.app",
-                            logo: "https://triova.vercel.app/_next/static/media/Logo.607e2600.svg",
+                            logo: "https://triova.vercel.app/Logo_Bg.png",
                         }),
                     }}
                 />

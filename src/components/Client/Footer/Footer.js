@@ -37,7 +37,7 @@ export default function Footer() {
                             { label: "Marketing", href: "/marketing" },
                             { label: "Advertisement", href: "/advertisement" },
                         ].map(({ label, href }) => (
-                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-pink-500 transition-all duration-200">
+                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-brand-200 transition-all duration-200">
                                 {label}
                             </Link>
                         ))}
@@ -51,7 +51,7 @@ export default function Footer() {
                             { label: "Jobs", href: "/job" },
                             { label: "Press kit", href: "/press" },
                         ].map(({ label, href }) => (
-                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-pink-500 transition-all duration-200">
+                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-brand-200 transition-all duration-200">
                                 {label}
                             </Link>
                         ))}
@@ -64,7 +64,7 @@ export default function Footer() {
                             { label: "Privacy policy", href: "/privacy" },
                             { label: "Cookie policy", href: "/cookie" },
                         ].map(({ label, href }) => (
-                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-pink-500 transition-all duration-200">
+                            <Link key={label} href={href} className="block mb-2 text-sm hover:text-brand-200 transition-all duration-200">
                                 {label}
                             </Link>
                         ))}
