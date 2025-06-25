@@ -1,7 +1,8 @@
 "use client";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
 import React from "react";
-import Logo from "@/public/Logo_Trans.svg";
+import Logo from "@/public/Logo_Bg.png";
+import Image from "next/image";
 
 export default function Branding() {
     return (
@@ -31,7 +32,7 @@ export default function Branding() {
                     <h2 className="text-3xl font-semibold text-indigo-700 mb-4">Download Our Branding Portfolio</h2>
                     <p className="text-gray-700 mb-6">Explore our recent branding projects to see how we elevate identities with creative design and strategy.</p>
 
-                    <ClientImageWithLoader src={"Logo_Bg.png"} />
+                    <Image src={Logo} quality={100} alt="Triova Limited Logo" width={1000} height={1000} className="w-full h-full" />
 
                     {/* Replace href with your actual file */}
                     {/* <a
