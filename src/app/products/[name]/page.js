@@ -117,7 +117,7 @@ const ProductDetailsPage = async ({ params }) => {
 
                         {product.discount > 0 && (
                             <p className="font-medium text-sm text-gray-500 mt-4">
-                                Get the {product.subCategoryId.name} and receive {product.discount}% off on your next purchase!
+                                Get the {product.subCategoryId.name} and receive {product.discount}% off right now. Don&apos;t miss this offer!
                             </p>
                         )}
                     </div>

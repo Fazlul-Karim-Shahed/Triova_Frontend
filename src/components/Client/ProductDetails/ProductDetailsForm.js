@@ -111,7 +111,7 @@ export default function ProductDetailsForm({ product }) {
                 </div>
                 <button
                     onClick={() => addToCart()}
-                    className="flex items-center justify-center w-full rounded-full bg-yellow-600 text-white text-sm font-medium shadow-yellow-200 hover:bg-yellow-500 transition-all duration-300 py-1"
+                    className="flex items-center justify-center w-full rounded-full bg-brand-600 text-white text-sm font-medium shadow-brand-200 hover:bg-brand-500 transition-all duration-300 py-1"
                 >
                     Add to Cart
                 </button>
