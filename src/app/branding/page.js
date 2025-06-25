@@ -1,5 +1,7 @@
 "use client";
+import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
 import React from "react";
+import Logo from "@/public/Logo_Trans.svg";
 
 export default function Branding() {
     return (
@@ -29,8 +31,10 @@ export default function Branding() {
                     <h2 className="text-3xl font-semibold text-indigo-700 mb-4">Download Our Branding Portfolio</h2>
                     <p className="text-gray-700 mb-6">Explore our recent branding projects to see how we elevate identities with creative design and strategy.</p>
 
+                    <ClientImageWithLoader src={"Logo_Bg.png"} />
+
                     {/* Replace href with your actual file */}
-                    <a
+                    {/* <a
                         href="/files/TriovaLimited-Branding-Portfolio.pdf"
                         download
                         className="inline-flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-full transition-shadow shadow-indigo-400 hover:shadow-indigo-600"
@@ -39,7 +43,7 @@ export default function Branding() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 12v8m0 0l-4-4m4 4l4-4M12 4v8" />
                         </svg>
                         Download Portfolio
-                    </a>
+                    </a> */}
                 </div>
             </div>
 
