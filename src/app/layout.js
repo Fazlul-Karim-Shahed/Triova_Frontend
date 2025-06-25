@@ -31,7 +31,7 @@ export const metadata = {
         type: "website",
         images: [
             {
-                url: "https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75",
+                url: "https://triova.vercel.app/_next/static/media/Logo.607e2600.svg",
                 width: 384,
                 height: 384,
                 alt: "Triova Limited Logo",
@@ -42,7 +42,7 @@ export const metadata = {
         card: "summary_large_image",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
+        images: ["https://triova.vercel.app/_next/static/media/Logo.607e2600.svg"],
     },
 
     facebook: {
@@ -50,18 +50,33 @@ export const metadata = {
         type: "website",
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
-        images: ["https://triova.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.daf7600e.png&w=384&q=75"],
+        images: ["https://triova.vercel.app/_next/static/media/Logo.607e2600.svg"],
     },
 
     verification: {
-        google: "js9Ma-X9-da9bOi1fBmSyLyCYR45DYesQTlmJOMVWfs",
+        google: "9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y",
     },
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <meta name="google-site-verification" content="9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y" />
+            <Head>
+                <meta name="google-site-verification" content="9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y" />
+
+                <Script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "Organization",
+                            name: "Triova Limited",
+                            url: "https://triova.vercel.app",
+                            logo: "https://triova.vercel.app/_next/static/media/Logo.607e2600.svg",
+                        }),
+                    }}
+                />
+            </Head>
 
             <body className={`${inter.className} bg-white`}>
                 {/* Google Analytics */}
