@@ -321,7 +321,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
 
                     <div>
                         <label className="block text-gray-700 mb-1">Feature Image</label>
-                        <ClientImageWithLoader className="my-4 rounded" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
+                        <img className="my-4 rounded object-cover" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
                         <input type="file" name="featuredImage" onChange={handleChange} className="w-full p-2 border rounded focus:ring focus:ring-green-200" />
                     </div>
 
@@ -479,7 +479,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
                                             </td>
                                             <td className="border p-2 text-right">{item.stock}</td>
                                             <td className="border p-2 text-center">
-                                                <button onClick={() => deleteColor(index)} className="btn btn-warning btn-sm">
+                                                <button type="button" onClick={() => deleteColor(index)} className="btn btn-warning btn-sm">
                                                     Delete
                                                 </button>
                                             </td>
