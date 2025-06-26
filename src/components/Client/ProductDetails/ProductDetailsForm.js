@@ -28,8 +28,15 @@ export default function ProductDetailsForm({ product }) {
             setSelectedSize("");
             setQuantity(1);
         }
+
         setSelectedColor(color);
         setQuantity(1);
+
+        // ✅ NEW: send image update to ProductImageGallery
+        const event = new CustomEvent("colorImageChange", {
+            detail: color.image, // image filename to show in feature image
+        });
+        window.dispatchEvent(event);
     };
 
     const handleSizeSelect = (size) => {
@@ -55,9 +62,8 @@ export default function ProductDetailsForm({ product }) {
                     <p className="font-bold leading-8 text-gray-900 mb-4">Color</p>
                     <div className="flex items-center gap-3 mb-6">
                         {product.colors.map((color) => (
-                            <div className="tooltip" data-tip={color.color}>
+                            <div key={color.color} className="tooltip" data-tip={color.color}>
                                 <button
-                                    key={color}
                                     className={`p-1 border rounded-full transition-all duration-300 ${selectedColor.colorCode === color.colorCode ? "border-brand-600" : "border-brand-100"}`}
                                     onClick={() => handleColorSelect(color)}
                                 >
@@ -84,7 +90,7 @@ export default function ProductDetailsForm({ product }) {
                                 }
                                 return (
                                     <button
-                                        key={size}
+                                        key={size.size}
                                         className={`border py-2 px-6 w-full rounded-full font-semibold transition-all duration-300 ${
                                             selectedSize === size ? "border-emerald-500 bg-gray-50" : "border-gray-200"
                                         }`}
@@ -115,16 +121,12 @@ export default function ProductDetailsForm({ product }) {
                 >
                     Add to Cart
                 </button>
-
-                {/* <button className="flex items-center justify-center w-full rounded-full bg-green-700 text-white text-sm font-medium shadow-green-200 hover:bg-green-600 transition-all duration-300 py-1">
-                    But Now
-                </button> */}
             </div>
 
             {messageShow && (
-                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <div className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400" role="alert">
                     Successfully added.{" "}
-                    <Link href="/cart" class="font-bold hover:underline">
+                    <Link href="/cart" className="font-bold hover:underline">
                         View Cart
                     </Link>
                 </div>

@@ -1,18 +1,28 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
 import { imageSrc } from "@/src/functions/CustomFunction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProductImageGallery({ featuredImage, images, colorImages }) {
-    console.log(featuredImage, images, colorImages);
     const allImages = [featuredImage, ...images, ...colorImages];
     const [mainImage, setMainImage] = useState(featuredImage.name);
     const scrollRef = useRef(null);
     const zoomWrapperRef = useRef(null);
     const zoomImageRef = useRef(null);
+
+    // ⬇️ Listen for color image changes from other components
+    useEffect(() => {
+        const handleColorImageChange = (e) => {
+            const imageName = e.detail;
+            if (imageName) setMainImage(imageName);
+        };
+
+        window.addEventListener("colorImageChange", handleColorImageChange);
+        return () => window.removeEventListener("colorImageChange", handleColorImageChange);
+    }, []);
 
     const scroll = (direction) => {
         const amount = 120;
