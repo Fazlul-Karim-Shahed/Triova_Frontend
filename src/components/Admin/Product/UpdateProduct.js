@@ -321,7 +321,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
 
                     <div>
                         <label className="block text-gray-700 mb-1">Feature Image</label>
-                        <img className="my-4 rounded object-cover" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
+                        <ClientImageWithLoader className="my-4 rounded object-cover" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
                         <input type="file" name="featuredImage" onChange={handleChange} className="w-full p-2 border rounded focus:ring focus:ring-green-200" />
                     </div>
 
@@ -468,7 +468,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
                                     {formData.colors.map((item, index) => (
                                         <tr key={index}>
                                             <td className="border p-2">
-                                                <img src={imageSrc(item.image)} alt={item.name} className="w-8 h-8 object-cover" />
+                                                <ClientImageWithLoader src={imageSrc(item.image)} alt={item.name} className="w-8 h-8 object-cover" />
                                             </td>
                                             <td className="border p-2">{item.color}</td>
                                             <td className="border p-2">{item.colorCode}</td>

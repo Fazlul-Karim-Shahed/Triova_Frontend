@@ -6,6 +6,7 @@ import { getAllProductApi } from "../api/SuperAdminApi/ProductApi";
 import EventPopup from "../components/Client/EventPopup/Eventpopup";
 import { imageSrc } from "../functions/CustomFunction";
 import Script from "next/script";
+import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageWithLoader";
 
 export default async function Home() {
     // const productRes = await getAllProductApi(10);
@@ -39,7 +40,7 @@ export default async function Home() {
                 {/* Grid Banners */}
                 <div className="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:auto-rows-fr">
                     <div className="col-span-2 md:col-span-4 lg:col-span-4 row-span-1 md:row-span-2 bg-white text-white flex justify-center items-center rounded-lg relative overflow-hidden">
-                        <img src="/banner.svg" alt="Promo GIF" className="w-full h-full object-cover" />
+                        <ClientImageWithLoader src="/banner.svg" alt="Promo GIF" className="w-full h-full object-cover" />
                     </div>
                     <div className="col-span-2 lg:col-span-2 md:row-span-2 rounded-lg">
                         <HeroSlider />

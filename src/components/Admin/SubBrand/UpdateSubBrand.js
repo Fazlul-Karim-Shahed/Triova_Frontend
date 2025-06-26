@@ -75,7 +75,9 @@ export default function UpdateSubBrand({ subBrands }) {
                     <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
                         {subBrands.map((subBrand) => (
                             <div class="items-center group bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg">
-                                <a href="#"><ClientImageWithLoader src={imageSrc(subBrand.logo.name)} alt="Bonnie Avatar" /></a>
+                                <a href="#">
+                                    <ClientImageWithLoader src={imageSrc(subBrand.logo.name)} alt="Bonnie Avatar" />
+                                </a>
                                 <div class="p-5">
                                     <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-green-600 ">
                                         <a onClick={() => handleClick(subBrand)} href="#">
