@@ -321,7 +321,7 @@ export default function UpdateProduct({ product, departments, categories, subCat
 
                     <div>
                         <label className="block text-gray-700 mb-1">Feature Image</label>
-                        <ClientImageWithLoader className="my-4 rounded object-cover" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
+                        <ClientImageWithLoader className="my-4 rounded" src={imageSrc(product.featuredImage.name)} width={300} height={300} alt={product.name} />
                         <input type="file" name="featuredImage" onChange={handleChange} className="w-full p-2 border rounded focus:ring focus:ring-green-200" />
                     </div>
 
@@ -336,11 +336,13 @@ export default function UpdateProduct({ product, departments, categories, subCat
                                             const newImages = formData.image.toSpliced(index, 1);
                                             setFormData({ ...formData, image: newImages });
                                         }}
-                                        className="absolute top-0 right-0 bg-red-500 text-white font-bold px-4 py-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        className="absolute z-10 top-0 right-0 bg-red-500 text-white font-bold px-4 py-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                     >
                                         X
                                     </button>
-                                    <ClientImageWithLoader className="rounded h-full" src={imageSrc(image.name)} width={300} height={300} alt={image.name} />
+                                    <div className="">
+                                        <ClientImageWithLoader className="rounded h-full" src={imageSrc(image.name)} width={300} height={300} alt={image.name} />
+                                    </div>
                                 </div>
                             ))}
                         </div>
