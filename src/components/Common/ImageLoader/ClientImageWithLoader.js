@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 export default function ClientImageWithLoader({ src, alt, width, height, className = "", loaderClass = "", ...props }) {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -12,7 +12,16 @@ export default function ClientImageWithLoader({ src, alt, width, height, classNa
 
         img.src = src;
         img.onload = () => {
-            if (isMounted) setIsLoaded(true);
+            if (isMounted) {
+                setIsLoaded(true);
+                setIsError(false);
+            }
+        };
+        img.onerror = () => {
+            if (isMounted) {
+                setIsLoaded(true); // Stop showing spinner
+                setIsError(true);
+            }
         };
 
         return () => {
@@ -22,7 +31,7 @@ export default function ClientImageWithLoader({ src, alt, width, height, classNa
 
     return (
         <div className={`relative w-full h-full ${loaderClass}`}>
-            {!isLoaded && (
+            {!isLoaded && !isError && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
                     <svg className="w-6 h-6 text-gray-400 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -31,15 +40,25 @@ export default function ClientImageWithLoader({ src, alt, width, height, classNa
                 </div>
             )}
 
-            <img
-                src={src}
-                alt={alt}
-                width={width}
-                height={height}
-                className={`${className} ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
-                onLoad={() => setIsLoaded(true)}
-                {...props}
-            />
+            {!isError ? (
+                <img
+                    src={src}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    className={`${className} ${isLoaded ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+                    onLoad={() => setIsLoaded(true)}
+                    onError={() => {
+                        setIsLoaded(true);
+                        setIsError(true);
+                    }}
+                    {...props}
+                />
+            ) : (
+                <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-400">
+                    <span className="text-sm">Image failed to load</span>
+                </div>
+            )}
         </div>
     );
 }

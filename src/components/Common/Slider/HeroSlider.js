@@ -10,6 +10,7 @@ export default function HeroSlider() {
     const [images, setImages] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loadedImages, setLoadedImages] = useState({});
+    const [loading, setLoading] = useState(false);
     const timeoutRef = useRef(null);
     const delay = 5000;
 
@@ -35,14 +36,19 @@ export default function HeroSlider() {
 
     useEffect(() => {
         const fetchImages = async () => {
+            setLoading(true);
             try {
                 const res = await getAllImageSliderApi();
                 if (!res.error) {
+                    setLoading(false);
                     const formatted = res.data.map((item) => imageSrc(item.promotionalImage.name));
                     setImages(formatted);
+                } else {
+                    setLoading(false);
                 }
             } catch (err) {
-                //console.error("Failed to load slider images:", err);
+                setLoading(false);
+                // Optionally handle error
             }
         };
 
@@ -56,10 +62,16 @@ export default function HeroSlider() {
         return () => resetTimeout();
     }, [currentIndex, images]);
 
+    if (loading) {
+        return (
+            <div className="w-full h-56 md:h-96 flex items-center justify-center bg-gray-100 rounded-lg">
+                <Spinner message="Loading Images..." />
+            </div>
+        );
+    }
+
     if (images.length === 0) {
-        return <div className="w-full h-56 md:h-96 flex items-center justify-center bg-gray-100 rounded-lg">
-            <Spinner message={"Loading images..."} />
-        </div>;
+        return <div className="w-full h-56 md:h-96 flex items-center justify-center bg-gray-100 rounded-lg">No images found</div>;
     }
 
     return (
@@ -80,14 +92,8 @@ export default function HeroSlider() {
                         <ClientImageWithLoader
                             src={img}
                             alt="Slider Image"
-                            onLoad={() => {
-                                //console.log("✅ Image loaded:", img);
-                                handleLoad(img);
-                            }}
-                            onError={() => {
-                                //console.error("❌ Image failed:", img);
-                                handleLoad(img);
-                            }}
+                            onLoad={() => handleLoad(img)}
+                            onError={() => handleLoad(img)}
                             className={`w-full h-full object-cover transition-opacity duration-500 ${loadedImages[img] ? "opacity-100" : "opacity-0"}`}
                         />
                     </div>
