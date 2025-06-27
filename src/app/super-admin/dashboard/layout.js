@@ -15,13 +15,18 @@ import {
     faFilm,
     faArrowRightArrowLeft,
     faTag,
+    faTachometerAlt,
+    faTasks,
+    faBoxesPacking,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
-    { label: "Batch", href: "/super-admin/dashboard/batch", icon: faLayerGroup },
+    { label: "Dashboard", href: "/super-admin/dashboard", icon: faTachometerAlt },
+    { label: "Task", href: "/super-admin/dashboard/task", icon: faTasks },
+    { label: "Batch", href: "/super-admin/dashboard/batch", icon: faBoxesPacking },
     { label: "Expense", href: "/super-admin/dashboard/expense", icon: faMoneyBillTrendUp },
     { label: "Courier", href: "/super-admin/dashboard/courier", icon: faTruck },
     { label: "Department", href: "/super-admin/dashboard/department", icon: faBuilding },
