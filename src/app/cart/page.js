@@ -2,6 +2,7 @@
 
 import cartImage from "@/public/empty-cart.png";
 import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
+import EmptyCart from "@/src/components/Client/Cart/EmptyCart";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
 import Spinner from "@/src/components/Common/Spinner/Spinner";
 import { imageSrc } from "@/src/functions/CustomFunction";
@@ -42,8 +43,7 @@ export default function CartPage() {
                 setPrice(newCart[0].product && newCart.reduce((acc, item) => acc + item.quantity * item.product.sellingPrice, 0));
                 setSavings(newCart[0].product && newCart.reduce((acc, item) => acc + (item.quantity * item.product.sellingPrice * item.product.discount) / 100, 0));
                 setTotal(newCart[0].product && newCart.reduce((acc, item) => acc + item.quantity * (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100), 0));
-            }
-            else {
+            } else {
                 // console.log(data.message === "No products found");
                 data.message === "No products found" && localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
             }
@@ -104,7 +104,12 @@ export default function CartPage() {
         <div>
             <section className="bg-gradient-to-br from-white  py-5 antialiased dark:bg-gray-900 md:py-12">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"> <FontAwesomeIcon icon={faCartShopping} className="me-2 text-brand-500" />   Yout Cart</h2>
+                    {cart && cart.length > 0 && (
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+                            {" "}
+                            <FontAwesomeIcon icon={faCartShopping} className="me-2 text-brand-500" /> Yout Cart
+                        </h2>
+                    )}
 
                     <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
                         <div className="mx-auto w-full flex-none lg:max-w-2xl">
@@ -231,7 +236,7 @@ export default function CartPage() {
                                 ) : (
                                     <div className="h-80">
                                         {" "}
-                                        <ClientImageWithLoader className="w-80 block mx-auto" width={500} height={500} src="empty-cart.png" />{" "}
+                                        <EmptyCart />
                                     </div>
                                 )}
                             </div>
