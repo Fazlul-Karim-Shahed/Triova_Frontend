@@ -87,24 +87,24 @@ const ProductDetailsPage = async ({ params }) => {
                         "@context": "https://schema.org",
                         "@type": "Product",
                         name: product.name,
-                        image: [imageSrc(product.featuredImage.name), ...product.image.map((img) => imageSrc(img.name))],
+                        image: [imageSrc(product.featuredImage?.name), ...product.image?.map((img) => imageSrc(img.name)).filter(Boolean)],
                         description: product.shortDescription || "High-quality product from Triova Limited.",
                         sku: product.sku || product._id,
                         mpn: product._id,
                         brand: {
                             "@type": "Brand",
-                            name: product.brandId.name,
-                            logo: imageSrc(product.brandId.logo.name),
+                            name: product.brandId?.name || "Triova Limited",
+                            logo: product.brandId?.logo?.name ? imageSrc(product.brandId.logo.name) : undefined,
                         },
                         offers: {
                             "@type": "Offer",
                             url: `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`,
                             priceCurrency: "BDT",
-                            price: discountedPrice,
+                            price: discountedPrice.toFixed(2), // Ensure it's a string formatted like "1798.00"
                             priceSpecification: {
                                 "@type": "UnitPriceSpecification",
                                 priceCurrency: "BDT",
-                                price: discountedPrice,
+                                price: discountedPrice.toFixed(2),
                                 priceBeforeDiscount: product.sellingPrice.toFixed(2),
                             },
                             itemCondition: "https://schema.org/NewCondition",
@@ -114,7 +114,47 @@ const ProductDetailsPage = async ({ params }) => {
                                 name: "Triova Limited",
                             },
                             validFrom: new Date().toISOString(),
-                            priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(), // 30 days from now
+                            priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
+
+                            // ✅ ADDED shippingDetails
+                            shippingDetails: {
+                                "@type": "OfferShippingDetails",
+                                shippingRate: {
+                                    "@type": "MonetaryAmount",
+                                    value: 60,
+                                    currency: "BDT",
+                                },
+                                shippingDestination: {
+                                    "@type": "DefinedRegion",
+                                    addressCountry: "BD",
+                                },
+                                deliveryTime: {
+                                    "@type": "ShippingDeliveryTime",
+                                    handlingTime: {
+                                        "@type": "QuantitativeValue",
+                                        minValue: 0,
+                                        maxValue: 1,
+                                        unitCode: "d",
+                                    },
+                                    transitTime: {
+                                        "@type": "QuantitativeValue",
+                                        minValue: 2,
+                                        maxValue: 5,
+                                        unitCode: "d",
+                                    },
+                                },
+                            },
+
+                            // ✅ ADDED hasMerchantReturnPolicy
+                            hasMerchantReturnPolicy: {
+                                "@type": "MerchantReturnPolicy",
+                                applicableCountry: "BD",
+                                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                                merchantReturnDays: 7,
+                                returnMethod: "https://schema.org/ReturnByMail",
+                                returnFees: "https://schema.org/FreeReturn",
+                                refundType: "https://schema.org/FullRefund",
+                            },
                         },
                         aggregateRating: {
                             "@type": "AggregateRating",
