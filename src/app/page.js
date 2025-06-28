@@ -9,7 +9,7 @@ import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageW
 
 export default async function Home() {
     const productRes = await getAllProductApi(10);
-    const products = productRes?.data || [];
+    const products = !productRes.error ? productRes.data : [];
 
     // Generate JSON-LD ItemList for SEO (server-side rendered)
 
@@ -22,7 +22,7 @@ export default async function Home() {
                 "@type": "Product",
                 name: item.name,
                 image: [imageSrc(item.featuredImage.name), ...item.image.map((img) => imageSrc(img.name))],
-                description: (item.description || "Product from Triova Limited").slice(0, 500), // truncate long desc
+                description: item.description || "Product from Triova Limited", // truncate long desc
                 sku: item.sku || item._id,
                 brand: {
                     "@type": "Brand",
@@ -88,7 +88,7 @@ export default async function Home() {
 
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
+            <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
 
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}
