@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
     }
 
     const productUrl = `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`;
-    const imageUrl = imageSrc(product.featuredImage); // ensure full URL
+    const imageUrl = imageSrc(product.featuredImage.name); // ensure full URL
 
     return {
         title: `${product.name} | Triova Limited`,
