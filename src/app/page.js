@@ -5,36 +5,35 @@ import Slider from "../components/Common/Slider/Slider";
 import { getAllProductApi } from "../api/SuperAdminApi/ProductApi";
 import EventPopup from "../components/Client/EventPopup/Eventpopup";
 import { imageSrc } from "../functions/CustomFunction";
-import Script from "next/script";
 import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageWithLoader";
 
 export default async function Home() {
-    // const productRes = await getAllProductApi(10);
-    // const products = productRes?.data || [];
+    const productRes = await getAllProductApi(10);
+    const products = productRes?.data || [];
 
     // Generate JSON-LD ItemList for SEO (server-side rendered)
 
-    // const productLD = products.map((item) => ({
-    //     "@context": "https://schema.org",
-    //     "@type": "Product",
-    //     name: item.name,
-    //     image: imageSrc(item.featuredImage.name),
-    //     description: item.description || "Product from Triova Limited",
-    //     brand: {
-    //         "@type": "Brand",
-    //         name: item.brand || "Triova Limited",
-    //     },
-    //     offers: {
-    //         "@type": "Offer",
-    //         priceCurrency: "BDT",
-    //         price: (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2),
-    //         availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-    //     },
-    // }));
+    const productLD = products.map((item) => ({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: item.name,
+        image: imageSrc(item.featuredImage.name),
+        description: item.description || "Product from Triova Limited",
+        brand: {
+            "@type": "Brand",
+            name: item.brand || "Triova Limited",
+        },
+        offers: {
+            "@type": "Offer",
+            priceCurrency: "BDT",
+            price: (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2),
+            availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        },
+    }));
 
     return (
         <>
-            {/* <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} /> */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
 
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}

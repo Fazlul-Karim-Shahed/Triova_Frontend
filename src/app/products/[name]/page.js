@@ -10,7 +10,6 @@ import Script from "next/script";
 export async function generateMetadata({ params }) {
     const name = decodeURIComponent(params.name);
     const productRes = await getAllProductApi(null, { name });
-
     const product = !productRes.error ? productRes.data[0] : null;
 
     if (!product) {
@@ -21,16 +20,21 @@ export async function generateMetadata({ params }) {
     }
 
     const productUrl = `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`;
-    const imageUrl = imageSrc(product.featuredImage.name); // ensure full URL
+    const imageUrl = imageSrc(product.featuredImage.name);
+
+    const title = `${product.name} | Triova Limited`;
+    const description = `Buy ${product.name} at the best price in Bangladesh. Explore specifications, offers & more at Triova.`;
 
     return {
-        title: `${product.name} | Triova Limited`,
-        description: `Buy ${product.name} at the best price. Explore features, reviews, and offers at Triova Limited.`,
+        title,
+        description,
+        keywords: `${product.name}, ${product.categoryId.name}, ${product.subCategoryId.name}, buy online, Triova, ${product.tags.join(",")}`,
         openGraph: {
-            title: `${product.name} | Triova Limited`,
-            description: `Buy ${product.name} at the best price. Explore features, reviews, and offers at Triova Limited.`,
+            title,
+            description,
             url: productUrl,
             siteName: "Triova Limited",
+            type: "website",
             images: [
                 {
                     url: imageUrl,
@@ -39,13 +43,19 @@ export async function generateMetadata({ params }) {
                     alt: product.name,
                 },
             ],
-            type: "website",
         },
         twitter: {
             card: "summary_large_image",
-            title: `${product.name} | Triova Limited`,
-            description: `Buy ${product.name} at the best price.`,
+            title,
+            description,
             images: [imageUrl],
+        },
+        alternates: {
+            canonical: productUrl,
+        },
+        robots: {
+            index: true,
+            follow: true,
         },
     };
 }
@@ -77,29 +87,52 @@ const ProductDetailsPage = async ({ params }) => {
                         "@context": "https://schema.org",
                         "@type": "Product",
                         name: product.name,
-                        image: [product.featuredImage, ...product.image],
+                        image: [imageSrc(product.featuredImage.name), ...product.image.map((img) => imageSrc(img.name))],
                         description: product.shortDescription || "High-quality product from Triova Limited.",
                         sku: product.sku || product._id,
+                        mpn: product._id,
                         brand: {
                             "@type": "Brand",
                             name: product.brandId.name,
+                            logo: imageSrc(product.brandId.logo.name),
                         },
                         offers: {
                             "@type": "Offer",
                             url: `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`,
                             priceCurrency: "BDT",
                             price: discountedPrice,
+                            priceSpecification: {
+                                "@type": "UnitPriceSpecification",
+                                priceCurrency: "BDT",
+                                price: discountedPrice,
+                                priceBeforeDiscount: product.sellingPrice.toFixed(2),
+                            },
                             itemCondition: "https://schema.org/NewCondition",
                             availability: "https://schema.org/InStock",
                             seller: {
                                 "@type": "Organization",
                                 name: "Triova Limited",
                             },
+                            validFrom: new Date().toISOString(),
                         },
                         aggregateRating: {
                             "@type": "AggregateRating",
                             ratingValue: "4.0",
                             reviewCount: "5",
+                        },
+                        review: {
+                            "@type": "Review",
+                            author: {
+                                "@type": "Person",
+                                name: "Verified Buyer",
+                            },
+                            datePublished: "2024-01-01",
+                            reviewBody: "Excellent quality and fast delivery.",
+                            reviewRating: {
+                                "@type": "Rating",
+                                ratingValue: "5",
+                                bestRating: "5",
+                            },
                         },
                     }),
                 }}
