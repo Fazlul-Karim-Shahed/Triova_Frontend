@@ -147,7 +147,7 @@ const Slider = () => {
                                     "@context": "https://schema.org",
                                     "@type": "Product",
                                     name: item.name,
-                                    image: [imageSrc(item.featuredImage?.name)],
+                                    image: [imageSrc(item.featuredImage?.name || "/fallback-product.png")],
                                     description: item.description || item.name,
                                     sku: item.sku || "",
                                     offers: {
@@ -168,7 +168,7 @@ const Slider = () => {
                                                 handlingTime: {
                                                     "@type": "QuantitativeValue",
                                                     minValue: 1,
-                                                    maxValue: 2,
+                                                    maxValue: 1,
                                                     unitCode: "d",
                                                 },
                                                 transitTime: {
@@ -177,6 +177,10 @@ const Slider = () => {
                                                     maxValue: 5,
                                                     unitCode: "d",
                                                 },
+                                            },
+                                            shippingDestination: {
+                                                "@type": "DefinedRegion",
+                                                addressCountry: "BD",
                                             },
                                         },
                                         hasMerchantReturnPolicy: {
