@@ -6,6 +6,7 @@ import { getAllProductApi } from "../api/SuperAdminApi/ProductApi";
 import EventPopup from "../components/Client/EventPopup/Eventpopup";
 import { imageSrc } from "../functions/CustomFunction";
 import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageWithLoader";
+import Head from "next/head";
 
 export default async function Home() {
     const productRes = await getAllProductApi(10);
@@ -22,8 +23,8 @@ export default async function Home() {
             return {
                 "@type": "Product",
                 name: item.name,
-                image: [imageSrc(item.featuredImage.name), ...item.image.map((img) => imageSrc(img.name))],
-                description: item.description?.substring(0, 500) || "Quality product from Triova Limited.",
+                image: [...(item.featuredImage?.name ? [imageSrc(item.featuredImage.name)] : []), ...item.image?.map((img) => imageSrc(img.name)).filter(Boolean)],
+                description: item.description?.substring(0, 500) || "Buy high-quality products from Triova Limited.",
                 sku: item.sku || item._id,
                 brand: {
                     "@type": "Brand",
@@ -33,7 +34,7 @@ export default async function Home() {
                     "@type": "Offer",
                     url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
                     priceCurrency: "BDT",
-                    price: discountedPrice, // ✅ number, not string
+                    price: discountedPrice.toFixed(2),
                     priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
                     itemCondition: "https://schema.org/NewCondition",
                     availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
@@ -43,8 +44,8 @@ export default async function Home() {
                     },
                     priceSpecification: {
                         "@type": "UnitPriceSpecification",
-                        price: discountedPrice,
-                        priceBeforeDiscount: originalPrice,
+                        price: discountedPrice.toFixed(2),
+                        priceBeforeDiscount: originalPrice.toFixed(2),
                         priceCurrency: "BDT",
                     },
                     shippingDetails: {
@@ -81,21 +82,18 @@ export default async function Home() {
                         merchantReturnDays: 7,
                         returnMethod: "https://schema.org/ReturnByMail",
                         returnFees: "https://schema.org/FreeReturn",
-                        refundType: "https://schema.org/FullRefund", // ✅ Added
+                        refundType: "https://schema.org/FullRefund",
                     },
                 },
                 aggregateRating: {
                     "@type": "AggregateRating",
-                    ratingValue: "4.3", // ✅ average rating (1–5)
-                    reviewCount: "12", // ✅ total number of reviews
+                    ratingValue: "4.3",
+                    reviewCount: "12",
                 },
                 review: [
                     {
                         "@type": "Review",
-                        author: {
-                            "@type": "Person",
-                            name: "Verified Buyer",
-                        },
+                        author: { "@type": "Person", name: "Verified Buyer" },
                         datePublished: "2024-06-15",
                         reviewRating: {
                             "@type": "Rating",
@@ -106,14 +104,17 @@ export default async function Home() {
                     },
                 ],
             };
+              
         }),
     };
       
 
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
-
+            import Head from "next/head"; // Inside your component return:
+            <Head>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
+            </Head>
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}
                 <div className="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:auto-rows-fr">
