@@ -98,7 +98,7 @@ export default async function Home() {
                 <div className="mt-14 mb-5">
                     <div className="md:text-3xl text-center mb-10 text-2xl font-extrabold">Top Selling Products</div>
 
-                    <Slider />
+                    {/* <Slider /> */}
                     <div className="text-center pt-5">
                         <Link href="/products" className="btn md:btn-md btn-sm btn-outline">
                             Show more
