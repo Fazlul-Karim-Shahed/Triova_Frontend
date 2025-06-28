@@ -140,7 +140,57 @@ const Slider = () => {
 
                 return (
                     <Head key={item._id}>
-                        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+                        <script
+                            type="application/ld+json"
+                            dangerouslySetInnerHTML={{
+                                __html: JSON.stringify({
+                                    "@context": "https://schema.org",
+                                    "@type": "Product",
+                                    name: item.name,
+                                    image: [imageSrc(item.featuredImage?.name)],
+                                    description: item.description || item.name,
+                                    sku: item.sku || "",
+                                    offers: {
+                                        "@type": "Offer",
+                                        priceCurrency: "BDT",
+                                        price: Number((item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2)),
+                                        availability: "https://schema.org/InStock",
+                                        url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
+                                        shippingDetails: {
+                                            "@type": "OfferShippingDetails",
+                                            shippingRate: {
+                                                "@type": "MonetaryAmount",
+                                                value: "50",
+                                                currency: "BDT",
+                                            },
+                                            deliveryTime: {
+                                                "@type": "ShippingDeliveryTime",
+                                                handlingTime: {
+                                                    "@type": "QuantitativeValue",
+                                                    minValue: 1,
+                                                    maxValue: 2,
+                                                    unitCode: "d",
+                                                },
+                                                transitTime: {
+                                                    "@type": "QuantitativeValue",
+                                                    minValue: 2,
+                                                    maxValue: 5,
+                                                    unitCode: "d",
+                                                },
+                                            },
+                                        },
+                                        hasMerchantReturnPolicy: {
+                                            "@type": "MerchantReturnPolicy",
+                                            applicableCountry: "BD",
+                                            returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                                            merchantReturnDays: 7,
+                                            returnMethod: "https://schema.org/ReturnByMail",
+                                            returnFees: "https://schema.org/FreeReturn",
+                                        },
+                                    },
+                                }),
+                            }}
+                        />
                     </Head>
                 );
             })}
