@@ -111,6 +111,7 @@ export default async function ProductPage({ searchParams }) {
                         priceBeforeDiscount: originalPrice,
                     },
                     validFrom: new Date().toISOString(),
+                    priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // +30 days
                 },
                 aggregateRating: {
                     "@type": "AggregateRating",

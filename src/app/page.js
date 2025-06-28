@@ -13,23 +13,78 @@ export default async function Home() {
 
     // Generate JSON-LD ItemList for SEO (server-side rendered)
 
-    const productLD = products.map((item) => ({
+    const productLD = {
         "@context": "https://schema.org",
-        "@type": "Product",
-        name: item.name,
-        image: imageSrc(item.featuredImage.name),
-        description: item.description || "Product from Triova Limited",
-        brand: {
-            "@type": "Brand",
-            name: item.brand || "Triova Limited",
-        },
-        offers: {
-            "@type": "Offer",
-            priceCurrency: "BDT",
-            price: (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2),
-            availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-        },
-    }));
+        "@graph": products.map((item) => {
+            const discountedPrice = (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2);
+
+            return {
+                "@type": "Product",
+                name: item.name,
+                image: [imageSrc(item.featuredImage.name), ...item.image.map((img) => imageSrc(img.name))],
+                description: (item.description || "Product from Triova Limited").slice(0, 500), // truncate long desc
+                sku: item.sku || item._id,
+                brand: {
+                    "@type": "Brand",
+                    name: item.brand?.name || "Triova Limited",
+                },
+                offers: {
+                    "@type": "Offer",
+                    url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
+                    priceCurrency: "BDT",
+                    price: discountedPrice,
+                    priceSpecification: {
+                        "@type": "UnitPriceSpecification",
+                        price: discountedPrice,
+                        priceCurrency: "BDT",
+                        priceBeforeDiscount: item.sellingPrice.toFixed(2),
+                    },
+                    itemCondition: "https://schema.org/NewCondition",
+                    availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                    priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // +30 days
+                    seller: {
+                        "@type": "Organization",
+                        name: "Triova Limited",
+                    },
+                    shippingDetails: {
+                        "@type": "OfferShippingDetails",
+                        shippingRate: {
+                            "@type": "MonetaryAmount",
+                            value: "60",
+                            currency: "BDT",
+                        },
+                        shippingDestination: {
+                            "@type": "DefinedRegion",
+                            addressCountry: "BD",
+                        },
+                        deliveryTime: {
+                            "@type": "ShippingDeliveryTime",
+                            handlingTime: {
+                                "@type": "QuantitativeValue",
+                                minValue: 0,
+                                maxValue: 1,
+                                unitCode: "d",
+                            },
+                            transitTime: {
+                                "@type": "QuantitativeValue",
+                                minValue: 2,
+                                maxValue: 5,
+                                unitCode: "d",
+                            },
+                        },
+                    },
+                    hasMerchantReturnPolicy: {
+                        "@type": "MerchantReturnPolicy",
+                        applicableCountry: "BD",
+                        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                        merchantReturnDays: 7,
+                        returnMethod: "https://schema.org/ReturnByMail",
+                        returnFees: "https://schema.org/FreeReturn",
+                    },
+                },
+            };
+        }),
+    };
 
     return (
         <>

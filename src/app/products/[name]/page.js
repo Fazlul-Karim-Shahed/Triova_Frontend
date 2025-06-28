@@ -79,7 +79,7 @@ const ProductDetailsPage = async ({ params }) => {
     return (
         <section className="py-10 relative">
             {/* ✅ JSON-LD Structured Data */}
-            <Script
+            <script
                 type="application/ld+json"
                 id="product-jsonld"
                 dangerouslySetInnerHTML={{
@@ -114,6 +114,7 @@ const ProductDetailsPage = async ({ params }) => {
                                 name: "Triova Limited",
                             },
                             validFrom: new Date().toISOString(),
+                            priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(), // 30 days from now
                         },
                         aggregateRating: {
                             "@type": "AggregateRating",
