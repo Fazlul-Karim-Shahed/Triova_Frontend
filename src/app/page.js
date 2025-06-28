@@ -23,7 +23,7 @@ export default async function Home() {
             return {
                 "@type": "Product",
                 name: item.name,
-                image: [...(item.featuredImage?.name ? [imageSrc(item.featuredImage.name)] : []), ...item.image?.map((img) => imageSrc(img.name)).filter(Boolean)],
+                image: imageSrc(item.featuredImage.name),
                 description: item.description?.substring(0, 500) || "Buy high-quality products from Triova Limited.",
                 sku: item.sku || item._id,
                 brand: {
