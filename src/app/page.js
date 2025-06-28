@@ -9,9 +9,70 @@ import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageW
 import Head from "next/head";
 
 export default async function Home() {
+    const res = await getAllProductApi(10);
+    const products = res?.data || [];
+
+    const productJsonLd = products.map((item) => ({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: item.name,
+        image: [imageSrc(item.featuredImage?.name || "/fallback-product.png")],
+        description: item.description || item.name,
+        sku: item.sku || "",
+        offers: {
+            "@type": "Offer",
+            priceCurrency: "BDT",
+            price: Number((item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2)),
+            availability: "https://schema.org/InStock",
+            url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
+            shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: {
+                    "@type": "MonetaryAmount",
+                    value: "50",
+                    currency: "BDT",
+                },
+                deliveryTime: {
+                    "@type": "ShippingDeliveryTime",
+                    handlingTime: {
+                        "@type": "QuantitativeValue",
+                        minValue: 1,
+                        maxValue: 1,
+                        unitCode: "d",
+                    },
+                    transitTime: {
+                        "@type": "QuantitativeValue",
+                        minValue: 2,
+                        maxValue: 5,
+                        unitCode: "d",
+                    },
+                },
+                shippingDestination: {
+                    "@type": "DefinedRegion",
+                    addressCountry: "BD",
+                },
+            },
+            hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                applicableCountry: "BD",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 7,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/FreeReturn",
+            },
+        },
+    }));
 
     return (
         <>
+            <Script
+                id="jsonld-products"
+                type="application/ld+json"
+                strategy="beforeInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(productJsonLd),
+                }}
+            />
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}
                 <div className="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:auto-rows-fr">
