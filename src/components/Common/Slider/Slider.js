@@ -216,35 +216,26 @@ const Slider = () => {
                     return (
                         <li key={imgKey} className={`${styles.card} inline-block mx-1`}>
                             <Link
-                                className="h-full mx-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border-2 border-gray-100 bg-white hover:shadow-lg"
-                                itemScope
-                                itemType="https://schema.org/Product"
                                 href={`/products/${encodeURIComponent(item.name)}`}
+                                className="h-full mx-5 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border-2 border-gray-100 bg-white hover:shadow-lg"
                             >
-                                <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl text-center" itemProp="image">
+                                <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl text-center">
                                     <ClientImageWithLoader
                                         width={300}
                                         height={300}
                                         src={imageSrc(item.featuredImage.name)}
                                         alt={item.name || "Product image"}
                                         className="object-cover transition-transform duration-300 hover:scale-105"
-                                        onError={(e) => {
-                                            e.currentTarget.src = "/fallback-product.png";
-                                        }}
                                     />
                                     {item.discount > 0 && <span className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-sm font-medium text-white">{item.discount}% OFF</span>}
                                 </div>
                                 <div className="mt-4 px-4">
-                                    <h5 itemProp="name" className="tracking-tight text-slate-900 truncate" title={item.name}>
+                                    <h5 className="tracking-tight text-slate-900 truncate" title={item.name}>
                                         {item.name}
                                     </h5>
-                                    <meta itemProp="sku" content={item.sku || ""} />
                                     <div className="mt-2 mb-5 flex items-center justify-between">
-                                        <p itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                                            <span className="text-xl font-semibold mr-2" itemProp="price">
-                                                BDT {(item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2)}
-                                            </span>
-                                            <meta itemProp="priceCurrency" content="BDT" />
+                                        <p>
+                                            <span className="text-xl font-semibold mr-2">BDT {(item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2)}</span>
                                             {item.discount > 0 && <span className="text-xs line-through">BDT {item.sellingPrice}</span>}
                                         </p>
                                     </div>
