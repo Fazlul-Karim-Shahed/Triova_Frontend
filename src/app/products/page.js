@@ -4,7 +4,6 @@ import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 import { getAllSubCategoryApi } from "@/src/api/SuperAdminApi/SubCategoryApi";
 import ProductShowPageWrapper from "@/src/components/Client/ProductShowPageWrapper/ProductShowPageWrapper";
 import { imageSrc } from "@/src/functions/CustomFunction";
-import { Metadata } from "next";
 import Script from "next/script";
 
 export async function generateMetadata({ searchParams }) {
@@ -59,7 +58,7 @@ export default async function ProductPage({ searchParams }) {
         description: item.description || "Product from Triova Limited",
         brand: {
             "@type": "Brand",
-            name: item.brand || "Triova Limited",
+            name: item.brandId.name || "Triova Limited",
         },
         offers: {
             "@type": "Offer",
@@ -71,6 +70,7 @@ export default async function ProductPage({ searchParams }) {
 
     return (
         <>
+            {/* {console.log(productLD)} */}
             <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
             <ProductShowPageWrapper initialProducts={products} initialSubCategory={subCategory} searchParams={allSearchParams} />
         </>
