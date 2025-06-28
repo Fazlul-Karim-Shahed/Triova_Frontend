@@ -10,6 +10,7 @@ export default function AllTasksPage() {
     const [error, setError] = useState("");
     const [updatingTaskId, setUpdatingTaskId] = useState(null);
     const [deletingTaskId, setDeletingTaskId] = useState(null);
+    const [showCompleted, setShowCompleted] = useState(false);
 
     const fetchTasks = async () => {
         setLoading(true);
@@ -47,25 +48,30 @@ export default function AllTasksPage() {
         setDeletingTaskId(null);
     };
 
+    const filteredTasks = tasks.filter((task) => task.status === (showCompleted ? "completed" : "pending"));
+
     return (
-        <div className="min-h-screen py-5">
+        <div className="min-h-screen py-5 px-4 sm:px-6">
             <h2 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-800 via-brand-600 to-pink-500 mb-10 drop-shadow-md">📋 Manage All Tasks</h2>
 
-            <div className="text-end">
-                <Link href={'/super-admin/dashboard/task/create'} className="btn btn-neutral btn-sm mb-10">create new task</Link>
+            <div className="flex justify-between flex-wrap items-center mb-6 gap-4">
+                <Link href="/super-admin/dashboard/task/create" className="btn btn-neutral btn-sm">
+                    + Create New Task
+                </Link>
+                <button onClick={() => setShowCompleted((prev) => !prev)} className="text-sm font-medium text-blue-600 hover:text-blue-800 underline">
+                    {showCompleted ? "🔄 Show Pending Tasks" : "✅ See Completed Tasks"}
+                </button>
             </div>
 
             {loading && <p className="text-center text-lg text-gray-500">Loading tasks...</p>}
             {error && <p className="text-center text-red-500">{error}</p>}
-            {!loading && !error && tasks.length === 0 && <p className="text-center text-gray-600 text-lg">No tasks found.</p>}
+            {!loading && !error && filteredTasks.length === 0 && <p className="text-center text-gray-600 text-lg">No {showCompleted ? "completed" : "pending"} tasks found.</p>}
 
-            {!loading && !error && tasks.length > 0 && (
+            {/* PENDING TASKS */}
+            {!loading && !error && !showCompleted && filteredTasks.length > 0 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-                    {tasks.map((task) => (
-                        <div
-                            key={task._id}
-                            className="col-span-1 lg:col-span-1 bg-white rounded-3xl shadow-xl overflow-hidden border-l-[6px] border-brand-500 transition-transform duration-300 hover:scale-[1.01]"
-                        >
+                    {filteredTasks.map((task) => (
+                        <div key={task._id} className="bg-white rounded-3xl shadow-xl overflow-hidden border-l-[6px] border-brand-500 transition-transform duration-300 hover:scale-[1.01]">
                             {/* Gradient Header */}
                             <div className="bg-gradient-to-r from-brand-500 to-brand-600 p-4 text-white font-semibold text-lg flex justify-between items-center">
                                 <span>{task.name}</span>
@@ -122,6 +128,44 @@ export default function AllTasksPage() {
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {/* COMPLETED TASKS TABLE */}
+            {!loading && !error && showCompleted && filteredTasks.length > 0 && (
+                <div className="overflow-auto max-w-7xl mx-auto">
+                    <table className="w-full text-sm border border-gray-200 shadow-xl rounded-xl overflow-hidden">
+                        <thead className="bg-gradient-to-r from-brand-500 to-brand-600 text-white text-left">
+                            <tr>
+                                <th className="p-3">Task</th>
+                                <th className="p-3">Deadline</th>
+                                <th className="p-3">Priority</th>
+                                <th className="p-3">Assigned To</th>
+                                <th className="p-3">Assigned By</th>
+                                <th className="p-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {filteredTasks.map((task) => (
+                                <tr key={task._id}>
+                                    <td className="p-3 font-semibold">{task.name}</td>
+                                    <td className="p-3">{new Date(task.deadline).toLocaleDateString()}</td>
+                                    <td className="p-3 capitalize">{task.priority}</td>
+                                    <td className="p-3">{task?.assignedTo?.firstName || "Unknown"}</td>
+                                    <td className="p-3">{task?.assignedBy?.firstName || "Unknown"}</td>
+                                    <td className="p-3">
+                                        <button
+                                            onClick={() => handleStatusChange(task._id, "pending")}
+                                            disabled={updatingTaskId === task._id}
+                                            className="text-brand-800 bg-brand-100 px-2 py-1 rounded-lg hover:bg-brand-200 transition-all duration-200 text-sm"
+                                        >
+                                            Mark as Pending
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>

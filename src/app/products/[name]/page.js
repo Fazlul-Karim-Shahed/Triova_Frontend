@@ -1,5 +1,6 @@
 import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 import ProductDetailsForm from "@/src/components/Client/ProductDetails/ProductDetailsForm";
+import SimilarProduct from "@/src/components/Client/ProductDetails/SimilarProduct";
 import ProductImageGallery from "@/src/components/Client/ProductImageGallery/ProductImageGallery";
 import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
 import { imageSrc } from "@/src/functions/CustomFunction";
@@ -78,8 +79,8 @@ const ProductDetailsPage = async ({ params }) => {
                             colorImages={
                                 product && product.colors && product.colors.length > 0
                                     ? product.colors.map((item) => ({
-                                        name: item.image
-                                    }))
+                                          name: item.image,
+                                      }))
                                     : []
                             }
                         />
@@ -134,49 +135,56 @@ const ProductDetailsPage = async ({ params }) => {
                 </div>
 
                 {/* Collapse Sections */}
-                <div className="mt-10">
-                    <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
-                        <input type="checkbox" id="collapse1" defaultChecked />
-                        <label htmlFor="collapse1" className="collapse-title font-semibold">
-                            Specification
-                        </label>
-                        <div className="collapse-content text-sm">
-                            <div dangerouslySetInnerHTML={{ __html: product.description }} />
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    <div className="col-span-full lg:col-span-8 mt-10">
+                        <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
+                            <input type="checkbox" id="collapse1" defaultChecked />
+                            <label htmlFor="collapse1" className="collapse-title font-semibold">
+                                Specification
+                            </label>
+                            <div className="collapse-content text-sm">
+                                <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                            </div>
+                        </div>
+
+                        <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
+                            <input type="checkbox" id="collapse2" />
+                            <label htmlFor="collapse2" className="collapse-title font-semibold">
+                                Direction
+                            </label>
+                            <div className="collapse-content text-sm">
+                                <ol className="list-decimal pl-4 mt-2 space-y-1">
+                                    <li>Clean with a damp cloth regularly.</li>
+                                    <li>Do not use harsh detergents or bleach.</li>
+                                    <li>Store in a cool, dry place when not in use.</li>
+                                    <li>Avoid prolonged exposure to direct sunlight.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
+                            <input type="checkbox" id="collapse3" />
+                            <label htmlFor="collapse3" className="collapse-title font-semibold">
+                                Warranty
+                            </label>
+                            <div className="collapse-content text-sm">
+                                <p>
+                                    This product comes with a <strong>1-year limited warranty</strong> covering:
+                                </p>
+                                <ul className="list-disc pl-4 mt-2 space-y-1">
+                                    <li>Manufacturing defects in materials or workmanship</li>
+                                    <li>Faulty zippers, seams, or handles</li>
+                                </ul>
+                                <p className="mt-2">
+                                    Warranty does not cover normal wear and tear, misuse, or accidental damage. For claims, please retain your purchase receipt and contact our support team.
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
-                        <input type="checkbox" id="collapse2" />
-                        <label htmlFor="collapse2" className="collapse-title font-semibold">
-                            Direction
-                        </label>
-                        <div className="collapse-content text-sm">
-                            <ol className="list-decimal pl-4 mt-2 space-y-1">
-                                <li>Clean with a damp cloth regularly.</li>
-                                <li>Do not use harsh detergents or bleach.</li>
-                                <li>Store in a cool, dry place when not in use.</li>
-                                <li>Avoid prolonged exposure to direct sunlight.</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div className="collapse collapse-arrow bg-base-100 border border-base-300 mb-5 shadow glass">
-                        <input type="checkbox" id="collapse3" />
-                        <label htmlFor="collapse3" className="collapse-title font-semibold">
-                            Warranty
-                        </label>
-                        <div className="collapse-content text-sm">
-                            <p>
-                                This product comes with a <strong>1-year limited warranty</strong> covering:
-                            </p>
-                            <ul className="list-disc pl-4 mt-2 space-y-1">
-                                <li>Manufacturing defects in materials or workmanship</li>
-                                <li>Faulty zippers, seams, or handles</li>
-                            </ul>
-                            <p className="mt-2">
-                                Warranty does not cover normal wear and tear, misuse, or accidental damage. For claims, please retain your purchase receipt and contact our support team.
-                            </p>
-                        </div>
+                    <div className="col-span-full md:col-span-4">
+                        <SimilarProduct subCategory={product.subCategoryId} />
                     </div>
                 </div>
             </div>
