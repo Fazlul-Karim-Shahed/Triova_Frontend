@@ -16,13 +16,14 @@ export default async function Home() {
     const productLD = {
         "@context": "https://schema.org",
         "@graph": products.map((item) => {
-            const discountedPrice = (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2);
+            const originalPrice = Number(item.sellingPrice);
+            const discountedPrice = Number((item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2));
 
             return {
                 "@type": "Product",
                 name: item.name,
                 image: [imageSrc(item.featuredImage.name), ...item.image.map((img) => imageSrc(img.name))],
-                description: item.description || "Product from Triova Limited", // truncate long desc
+                description: item.description?.substring(0, 500) || "Quality product from Triova Limited.",
                 sku: item.sku || item._id,
                 brand: {
                     "@type": "Brand",
@@ -32,25 +33,25 @@ export default async function Home() {
                     "@type": "Offer",
                     url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
                     priceCurrency: "BDT",
-                    price: discountedPrice,
-                    priceSpecification: {
-                        "@type": "UnitPriceSpecification",
-                        price: discountedPrice,
-                        priceCurrency: "BDT",
-                        priceBeforeDiscount: item.sellingPrice.toFixed(2),
-                    },
+                    price: discountedPrice, // ✅ number, not string
+                    priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
                     itemCondition: "https://schema.org/NewCondition",
                     availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-                    priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // +30 days
                     seller: {
                         "@type": "Organization",
                         name: "Triova Limited",
+                    },
+                    priceSpecification: {
+                        "@type": "UnitPriceSpecification",
+                        price: discountedPrice,
+                        priceBeforeDiscount: originalPrice,
+                        priceCurrency: "BDT",
                     },
                     shippingDetails: {
                         "@type": "OfferShippingDetails",
                         shippingRate: {
                             "@type": "MonetaryAmount",
-                            value: "60",
+                            value: 60,
                             currency: "BDT",
                         },
                         shippingDestination: {
@@ -85,6 +86,7 @@ export default async function Home() {
             };
         }),
     };
+      
 
     return (
         <>
