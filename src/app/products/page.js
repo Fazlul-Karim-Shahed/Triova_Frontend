@@ -71,7 +71,7 @@ export default async function ProductPage({ searchParams }) {
     return (
         <>
             {/* {console.log(productLD)} */}
-            <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
             <ProductShowPageWrapper initialProducts={products} initialSubCategory={subCategory} searchParams={allSearchParams} />
         </>
     );
