@@ -65,7 +65,7 @@ export default async function Home() {
 
     return (
         <>
-            <Script
+            <script
                 id="jsonld-products"
                 type="application/ld+json"
                 strategy="beforeInteractive"
