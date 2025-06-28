@@ -6,7 +6,6 @@ import { getAllProductApi } from "../api/SuperAdminApi/ProductApi";
 import EventPopup from "../components/Client/EventPopup/Eventpopup";
 import { imageSrc } from "../functions/CustomFunction";
 import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageWithLoader";
-import Script from "next/script";
 
 export default async function Home() {
     const productRes = await getAllProductApi(10);
@@ -89,7 +88,7 @@ export default async function Home() {
 
     return (
         <>
-            <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} />
 
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}
