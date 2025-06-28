@@ -94,17 +94,17 @@ const ProductDetailsPage = async ({ params }) => {
                         brand: {
                             "@type": "Brand",
                             name: product.brandId?.name || "Triova Limited",
-                            logo: product.brandId?.logo?.name ? imageSrc(product.brandId.logo.name) : undefined,
+                            logo: imageSrc(product.brandId?.logo?.name),
                         },
                         offers: {
                             "@type": "Offer",
                             url: `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`,
                             priceCurrency: "BDT",
-                            price: discountedPrice.toFixed(2), // Ensure it's a string formatted like "1798.00"
+                            price: discountedPrice,
                             priceSpecification: {
                                 "@type": "UnitPriceSpecification",
                                 priceCurrency: "BDT",
-                                price: discountedPrice.toFixed(2),
+                                price: discountedPrice,
                                 priceBeforeDiscount: product.sellingPrice.toFixed(2),
                             },
                             itemCondition: "https://schema.org/NewCondition",
@@ -115,8 +115,6 @@ const ProductDetailsPage = async ({ params }) => {
                             },
                             validFrom: new Date().toISOString(),
                             priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
-
-                            // ✅ ADDED shippingDetails
                             shippingDetails: {
                                 "@type": "OfferShippingDetails",
                                 shippingRate: {
@@ -144,8 +142,6 @@ const ProductDetailsPage = async ({ params }) => {
                                     },
                                 },
                             },
-
-                            // ✅ ADDED hasMerchantReturnPolicy
                             hasMerchantReturnPolicy: {
                                 "@type": "MerchantReturnPolicy",
                                 applicableCountry: "BD",
