@@ -12,8 +12,6 @@ export default async function Home() {
 
     return (
         <>
-            
-            {/* <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }} /> */}
             <main className="p-4 md:p-6">
                 {/* Grid Banners */}
                 <div className="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:auto-rows-fr">

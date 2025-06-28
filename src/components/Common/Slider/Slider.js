@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import { imageSrc } from "@/src/functions/CustomFunction";
 import styles from "./Slider.module.css";
 import ClientImageWithLoader from "../ImageLoader/ClientImageWithLoader";
@@ -103,7 +104,7 @@ const Slider = () => {
             wrapper.removeEventListener("mouseenter", () => clearInterval(autoScrollTimer));
             wrapper.removeEventListener("mouseleave", autoScroll);
         };
-    }, [extendedProducts]); // Only run after extendedProducts are set
+    }, [extendedProducts]);
 
     const scrollLeft = () => {
         if (carouselRef.current) carouselRef.current.scrollLeft -= cardWidthRef.current;
@@ -119,6 +120,31 @@ const Slider = () => {
 
     return (
         <div className={styles.wrapper} ref={wrapperRef} style={{ position: "relative" }}>
+            {/* JSON-LD structured data for SEO */}
+            {products.map((item) => {
+                const jsonLd = {
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    name: item.name,
+                    image: imageSrc(item.featuredImage?.name),
+                    description: item.description || item.name,
+                    sku: item.sku || "",
+                    offers: {
+                        "@type": "Offer",
+                        priceCurrency: "BDT",
+                        price: (item.sellingPrice - item.sellingPrice * (item.discount / 100)).toFixed(2),
+                        availability: "https://schema.org/InStock",
+                        url: `https://triova.vercel.app/products/${encodeURIComponent(item.name)}`,
+                    },
+                };
+
+                return (
+                    <Head key={item._id}>
+                        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+                    </Head>
+                );
+            })}
+
             <i
                 className={`z-50 cursor-pointer select-none ${styles.arrow} ${styles.leftArrow}`}
                 onClick={scrollLeft}
@@ -152,15 +178,7 @@ const Slider = () => {
                                             e.currentTarget.src = "/fallback-product.png";
                                         }}
                                     />
-                                    {item.discount > 0 && (
-                                        <span
-                                            style={{ color: "white" }}
-                                            className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-center text-sm font-medium text-white"
-                                            aria-label={`${item.discount}% off`}
-                                        >
-                                            {item.discount}% OFF
-                                        </span>
-                                    )}
+                                    {item.discount > 0 && <span className="absolute top-0 left-0 m-2 rounded-full bg-pink-600 px-2 text-sm font-medium text-white">{item.discount}% OFF</span>}
                                 </div>
                                 <div className="mt-4 px-4">
                                     <h5 itemProp="name" className="tracking-tight text-slate-900 truncate" title={item.name}>
@@ -176,26 +194,11 @@ const Slider = () => {
                                             {item.discount > 0 && <span className="text-xs line-through">BDT {item.sellingPrice}</span>}
                                         </p>
                                     </div>
-                                    <div className="my-2 flex gap-1 flex-wrap" aria-label="Available colors">
+                                    <div className="my-2 flex gap-1 flex-wrap mb-7" aria-label="Available colors">
                                         {item.colors?.map((c, idx) => (
-                                            <div
-                                                key={idx}
-                                                className="w-5 h-5 rounded-full border border-gray-300"
-                                                style={{ backgroundColor: c.colorCode || "#eee" }}
-                                                title={c.color}
-                                                aria-label={c.color}
-                                            ></div>
+                                            <div key={idx} className="w-5 h-5 rounded-full border border-gray-300" style={{ backgroundColor: c.colorCode || "#eee" }} title={c.color}></div>
                                         ))}
                                     </div>
-                                </div>
-                                <div className="flex m-3 justify-content-center w-fit">
-                                    {/* <Link
-                                        href={`/products/${encodeURIComponent(item.name)}`}
-                                        className="px-5 py-1 rounded-md bg-brand-600 text-white font-semibold hover:bg-brand-700 transition"
-                                        itemProp="url"
-                                    >
-                                        View More
-                                    </Link> */}
                                 </div>
                             </Link>
                         </li>
