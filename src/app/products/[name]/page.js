@@ -6,11 +6,47 @@ import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientIma
 import { imageSrc } from "@/src/functions/CustomFunction";
 import Script from "next/script";
 
+// ✅ SEO + Open Graph + Twitter Meta for social sharing
 export async function generateMetadata({ params }) {
     const name = decodeURIComponent(params.name);
+    const productRes = await getAllProductApi(null, { name });
+
+    const product = !productRes.error ? productRes.data[0] : null;
+
+    if (!product) {
+        return {
+            title: `Product Not Found | Triova Limited`,
+            description: `Sorry, we couldn't find the product you’re looking for.`,
+        };
+    }
+
+    const productUrl = `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`;
+    const imageUrl = imageSrc(product.featuredImage); // ensure full URL
+
     return {
-        title: `${name} | Triova Limited`,
-        description: `Buy ${name} at the best price. Explore features, reviews, and offers at Triova Limited.`,
+        title: `${product.name} | Triova Limited`,
+        description: `Buy ${product.name} at the best price. Explore features, reviews, and offers at Triova Limited.`,
+        openGraph: {
+            title: `${product.name} | Triova Limited`,
+            description: `Buy ${product.name} at the best price. Explore features, reviews, and offers at Triova Limited.`,
+            url: productUrl,
+            siteName: "Triova Limited",
+            images: [
+                {
+                    url: imageUrl,
+                    width: 800,
+                    height: 600,
+                    alt: product.name,
+                },
+            ],
+            type: "website",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${product.name} | Triova Limited`,
+            description: `Buy ${product.name} at the best price.`,
+            images: [imageUrl],
+        },
     };
 }
 
@@ -32,7 +68,7 @@ const ProductDetailsPage = async ({ params }) => {
 
     return (
         <section className="py-10 relative">
-            {/* ✅ SEO Structured Data */}
+            {/* ✅ JSON-LD Structured Data */}
             <Script
                 type="application/ld+json"
                 id="product-jsonld"
@@ -71,13 +107,12 @@ const ProductDetailsPage = async ({ params }) => {
 
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
-                    {/* Images (Client) */}
                     <div className="col-span-1 md:col-span-5 w-full h-full rounded-2xl">
                         <ProductImageGallery
                             featuredImage={product.featuredImage}
                             images={product.image}
                             colorImages={
-                                product && product.colors && product.colors.length > 0
+                                product?.colors?.length
                                     ? product.colors.map((item) => ({
                                           name: item.image,
                                       }))
@@ -86,7 +121,6 @@ const ProductDetailsPage = async ({ params }) => {
                         />
                     </div>
 
-                    {/* Product Details */}
                     <div className="col-span-1 md:col-span-7 flex flex-col justify-center max-lg:max-w-[608px] max-lg:mx-auto">
                         <p className="font-medium text-indigo-600 mb-4">
                             {product.categoryId.name} / {product.subCategoryId.name}
@@ -105,7 +139,6 @@ const ProductDetailsPage = async ({ params }) => {
                                 {product.discount > 0 && <span className="text-xs line-through ml-2">Tk {product.sellingPrice}</span>}
                             </h6>
                             <div className="flex items-center gap-2">
-                                {/* Rating */}
                                 <div className="flex items-center gap-1">
                                     {[...Array(4)].map((_, i) => (
                                         <svg key={i} width="20" height="20" fill="#FBBF24" viewBox="0 0 24 24">
@@ -133,8 +166,6 @@ const ProductDetailsPage = async ({ params }) => {
                         )}
                     </div>
                 </div>
-
-                {/* Collapse Sections */}
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                     <div className="col-span-full lg:col-span-8 mt-10">

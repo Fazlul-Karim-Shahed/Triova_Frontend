@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { imageSrc } from "@/src/functions/CustomFunction";
+import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
 
 export default function SimilarProduct({ subCategory }) {
     const [products, setProducts] = useState([]);
@@ -30,14 +31,14 @@ export default function SimilarProduct({ subCategory }) {
                 {products.map((product) => (
                     <Link
                         key={product._id}
-                        href={`/product/${product.slug || product._id}`}
+                        href={`/products/${product.name}`}
                         className="grid-cols-3 md:grid-cols-2 bg-white border border-gray-200 rounded-2xl shadow hover:shadow-md transition p-3"
                     >
                         <div className="w-full h-40 relative rounded-xl overflow-hidden mb-2">
-                            <Image src={imageSrc(product?.featuredImage?.name || "/placeholder.png")} alt={product.name} fill className="object-cover" />
+                            <ClientImageWithLoader src={imageSrc(product?.featuredImage?.name || "/placeholder.png")} alt={product.name} fill className="object-cover" />
                         </div>
-                        <h3 className="text-sm font-medium text-gray-700 truncate">{product.name}</h3>
-                        <p className="text-sm font-semibold text-primary mt-1">৳{product.price}</p>
+                        <h3 className="text-xs md:text-sm font-medium text-gray-700 truncate">{product.name}</h3>
+                        <p className="text-xs mdtext-sm font-semibold text-primary mt-1">৳{product.sellingPrice}</p>
                     </Link>
                 ))}
             </div>
