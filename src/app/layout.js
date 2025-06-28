@@ -53,6 +53,10 @@ export const metadata = {
         images: ["https://triova.vercel.app/Logo_Bg.png"],
     },
 
+    other: {
+        "google-site-verification": "9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y", // 👈 Add this
+    },
+
     verification: {
         google: "9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y",
     },
