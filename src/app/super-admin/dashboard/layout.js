@@ -37,6 +37,7 @@ const navItems = [
     { label: "Promo", href: "/super-admin/dashboard/promo", icon: faTag },
     { label: "Orders", href: "/super-admin/dashboard/order", icon: faBagShopping },
     { label: "Slider", href: "/super-admin/dashboard/slider", icon: faArrowRightArrowLeft },
+    { label: "Affiliate Program", href: "/super-admin/dashboard/affiliate-program", icon: faArrowRightArrowLeft },
     { label: "Media", href: "/super-admin/dashboard/media", icon: faFilm },
 ];
 

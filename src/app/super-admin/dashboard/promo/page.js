@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPromoApi, getAllPromoApi, deletPromoApi } from "@/src/api/SuperAdminApi/PromoApi";
 import { Modal } from "@/src/components/Common/Modal/Modal";
 import { getAllAdminApi } from "@/src/api/AuthApi";
+import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 
 export default function PromoPage() {
     const [formData, setFormData] = useState({
@@ -15,52 +16,69 @@ export default function PromoPage() {
         maxAmount: "",
         minOrder: "",
         isAffiliate: false,
-        owner: "",
+        owner: null,
+        commission: "",
+        products: [],
     });
 
     const [promos, setPromos] = useState([]);
     const [modalState, setModalState] = useState({ error: false, message: "", open: false, loading: 0 });
     const [admins, setAdmins] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        setModalState({ message: "Fetching all admins", open: 1, loading: 1 });
         getAllAdminApi().then((data) => {
-            if (data.error) {
-                setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
-            } else {
-                setAdmins(data.data);
-                setModalState({ error: data.error, message: data.message, open: 0, loading: 0 });
-            }
+            if (!data.error) setAdmins(data.data);
         });
+        fetchPromos();
+        fetchProducts();
     }, []);
 
-    const handleChange = (e) => {
-        if(e.target.name === "isAffiliate") setFormData({ ...formData, [e.target.name]: e.target.checked });
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const fetchPromos = async () => {
+        const data = await getAllPromoApi();
+        if (!data.error) setPromos(data.data);
     };
 
-    const fetchPromos = async () => {
-        setModalState({ message: "Fetching all promos", open: 1, loading: 1 });
-        const data = await getAllPromoApi();
-        if (!data.error) {
-            setModalState({ error: data.error, message: data.message, open: 0, loading: 0 });
-            setPromos(data.data);
-        } else {
-            setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
-        }
+    const fetchProducts = async () => {
+        const res = await getAllProductApi();
+        if (!res.error) setProducts(res.data);
+    };
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+    };
+
+    const toggleProduct = (id) => {
+        setFormData((prev) => ({
+            ...prev,
+            products: prev.products.includes(id) ? prev.products.filter((pid) => pid !== id) : [...prev.products, id],
+        }));
+    };
+
+    const selectAllProducts = () => {
+        setFormData((prev) => ({ ...prev, products: products.map((p) => p._id) }));
+    };
+
+    const unselectAllProducts = () => {
+        setFormData((prev) => ({ ...prev, products: [] }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const payload = new FormData();
-        for (let key in formData) payload.append(key, formData[key]);
+        Object.entries(formData).forEach(([key, val]) => {
+            if (key === "products") {
+                val.forEach((id) => payload.append("products[]", id));
+            } else {
+                payload.append(key, val);
+            }
+        });
 
-        setModalState({ message: "Creating promo code...", open: 1, loading: 1 });
         const res = await createPromoApi(payload);
-
         if (!res.error) {
-            setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
             setFormData({
                 code: "",
                 description: "",
@@ -69,64 +87,41 @@ export default function PromoPage() {
                 discount: "",
                 maxAmount: "",
                 minOrder: "",
+                isAffiliate: false,
                 owner: "",
+                commission: "",
+                products: [],
             });
             fetchPromos();
-        } else {
-            setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
         }
+        setModalState({ error: res.error, message: res.message, open: true, loading: 0 });
     };
 
     const handleDelete = async (id) => {
         if (!confirm("Are you sure you want to delete this promo?")) return;
-
-        setModalState({ message: "Deleting promo code...", open: 1, loading: 1 });
-
         const res = await deletPromoApi(id);
-        if (!res.error) {
-            setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
-            fetchPromos();
-        } else {
-            setModalState({ error: res.error, message: res.message, open: 1, loading: 0 });
-        }
+        if (!res.error) fetchPromos();
+        setModalState({ error: res.error, message: res.message, open: true, loading: 0 });
     };
-
-    useEffect(() => {
-        fetchPromos();
-    }, []);
 
     return (
         <div className="min-h-screen py-10">
-            <div className=" rounded-2xl">
+            <div className="rounded-2xl">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Create New Promo</h2>
 
-                <form onSubmit={handleSubmit} className="">
-                    {/* Custom Checkbox */}
+                <form onSubmit={handleSubmit}>
                     <div className="flex items-center mb-4">
-                        <input
-                            id="isAffiliate"
-                            name="isAffiliate"
-                            type="checkbox"
-                            checked={formData.isAffiliate}
-                            onChange={(e) => setFormData({ ...formData, isAffiliate: e.target.checked })}
-                            className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                        />
-                        <label htmlFor="isAffiliate" className="ml-2 block text-sm text-gray-700 font-medium">
+                        <input id="isAffiliate" name="isAffiliate" type="checkbox" checked={formData.isAffiliate} onChange={handleChange} className="h-5 w-5 text-indigo-600 border-gray-300 rounded" />
+                        <label htmlFor="isAffiliate" className="ml-2 block text-sm font-medium text-gray-700">
                             Affiliate Promo
                         </label>
                     </div>
 
-                    {/* Show admin selects if isAffiliate is true */}
                     {formData.isAffiliate && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Admin</label>
-                                <select
-                                    name="owner"
-                                    value={formData.admin}
-                                    onChange={handleChange}
-                                    className="mt-1 p-2 w-full rounded-lg bg-white/60 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-inner"
-                                >
+                                <select name="owner" value={formData.owner} onChange={handleChange} className="mt-1 p-2 w-full rounded-lg border border-gray-300" required>
                                     <option value="">Select Admin</option>
                                     {admins.map((admin) => (
                                         <option key={admin._id} value={admin._id}>
@@ -135,10 +130,15 @@ export default function PromoPage() {
                                     ))}
                                 </select>
                             </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Commission (%)</label>
+                                <input type="number" name="commission" value={formData.commission} onChange={handleChange} className="mt-1 p-2 w-full rounded-lg border border-gray-300" required />
+                            </div>
                         </div>
                     )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-4">
                         {[
                             { label: "Promo Code", name: "code" },
                             { label: "Description", name: "description" },
@@ -150,47 +150,80 @@ export default function PromoPage() {
                         ].map(({ label, name, type = "text" }) => (
                             <div key={name}>
                                 <label className="block text-sm font-medium text-gray-700">{label}</label>
-                                <input
-                                    type={type}
-                                    name={name}
-                                    value={formData[name]}
-                                    onChange={handleChange}
-                                    className="mt-1 p-2 w-full rounded-lg bg-white/60 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-inner"
-                                    required
-                                />
+                                <input type={type} name={name} value={formData[name]} onChange={handleChange} className="mt-1 p-2 w-full rounded-lg border border-gray-300" required />
                             </div>
                         ))}
+                    </div>
 
-                        <div className="md:col-span-2 mt-4">
-                            <button type="submit" disabled={modalState.loading} className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md">
-                                {modalState.loading ? "Creating..." : "Create Promo"}
-                            </button>
+                    {/* Dynamic Product Selection */}
+                    <div className="mt-6 space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                            <label className="text-sm font-medium text-gray-700">Select Products</label>
+                            <div className="flex gap-2">
+                                <input type="text" placeholder="🔍 Search products..." className="input input-sm input-bordered" onChange={(e) => setSearchTerm(e.target.value)} />
+                                <button type="button" className="btn btn-xs btn-outline" onClick={selectAllProducts}>
+                                    Select All
+                                </button>
+                                <button type="button" className="btn btn-xs btn-outline" onClick={unselectAllProducts}>
+                                    Unselect All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="overflow-auto max-h-64 border rounded-lg">
+                            <table className="table table-sm w-full text-sm">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {products
+                                        .filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                                        .map((product) => (
+                                            <tr key={product._id}>
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.products.includes(product._id)}
+                                                        onChange={() => toggleProduct(product._id)}
+                                                        className="checkbox checkbox-sm"
+                                                    />
+                                                </td>
+                                                <td>{product.name}</td>
+                                                <td>{product.sellingPrice}/-</td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+
+                    <button type="submit" className="mt-6 bg-indigo-600 text-white px-6 py-2 rounded-full">
+                        Create Promo
+                    </button>
                 </form>
             </div>
 
-            {/* Promo list */}
-            <div className="mx-auto mt-10">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">All Promos</h2>
+            <div className="mt-10">
+                <h2 className="text-2xl font-bold mb-4 text-center">All Promos</h2>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {promos?.length > 0 ? (
+                    {promos.length ? (
                         promos.map((promo) => (
-                            <div key={promo._id} className="bg-white/50 backdrop-blur-md p-6 rounded-xl border border-white/30 shadow-md relative group transition-all hover:shadow-lg">
-                                <h3 className="text-lg font-bold text-gray-800">{promo.code}</h3>
-                                <p className="text-sm text-gray-600 mb-2">{promo.description}</p>
-                                <p className="text-sm text-gray-500">
-                                    {new Date(promo.startDate).toLocaleDateString()} → {new Date(promo.endDate).toLocaleDateString()}
+                            <div key={promo._id} className="bg-white/60 p-6 rounded-xl shadow">
+                                <h3 className="text-lg font-bold">{promo.code}</h3>
+                                <p>{promo.description}</p>
+                                <p className="text-sm mt-2">
+                                    {promo.startDate?.slice(0, 10)} → {promo.endDate?.slice(0, 10)}
+                                    <br />
+                                    Discount: {promo.discount}%<br />
+                                    Max: ${promo.maxAmount} | Min Order: ${promo.minOrder}
+                                    <br />
+                                    {promo.commission && <>Commission: {promo.commission}%</>}
                                 </p>
-                                <p className="text-sm text-gray-700 mt-2">
-                                    <strong>Discount:</strong> {promo.discount}%<br />
-                                    <strong>Max:</strong> ${promo.maxAmount} <br />
-                                    <strong>Min Order:</strong> ${promo.minOrder}
-                                </p>
-                                <button
-                                    onClick={() => handleDelete(promo._id)}
-                                    className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition"
-                                >
+                                <button className="mt-2 text-red-500 text-sm hover:underline" onClick={() => handleDelete(promo._id)}>
                                     Delete
                                 </button>
                             </div>
@@ -201,13 +234,7 @@ export default function PromoPage() {
                 </div>
             </div>
 
-            <Modal
-                loading={modalState.loading}
-                open={modalState.open}
-                handleOpen={() => setModalState({ ...modalState, open: !modalState.open })}
-                error={modalState.error}
-                message={modalState.message}
-            />
+            <Modal loading={modalState.loading} open={modalState.open} handleOpen={() => setModalState({ ...modalState, open: false })} error={modalState.error} message={modalState.message} />
         </div>
     );
 }
