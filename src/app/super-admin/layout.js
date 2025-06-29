@@ -1,16 +1,16 @@
-import Footer from "@/src/components/Admin/Footer/Footer";
-import SuperAdminHeader from "@/src/components/Admin/SuperAdminHeader/SuperAdminHeader";
-import SuperAdminContext from "@/src/context/SuperAdminContext";
 
+import AdminHeader from "@/src/components/Admin/AdminHeader/AdminHeader";
+
+import SuperAdminContext from "@/src/context/SuperAdminContext";
 
 export default function Adminlayout({ children }) {
     return (
         <div>
             <SuperAdminContext>
-                <SuperAdminHeader />
+                <AdminHeader />
                 {children}
                 {/* <Footer /> */}
             </SuperAdminContext>
         </div>
-    )
+    );
 }

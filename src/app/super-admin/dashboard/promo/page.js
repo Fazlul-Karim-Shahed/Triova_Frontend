@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPromoApi, getAllPromoApi, deletPromoApi } from "@/src/api/SuperAdminApi/PromoApi";
 import { Modal } from "@/src/components/Common/Modal/Modal";
+import { getAllAdminApi } from "@/src/api/AuthApi";
 
 export default function PromoPage() {
     const [formData, setFormData] = useState({
@@ -13,12 +14,28 @@ export default function PromoPage() {
         discount: "",
         maxAmount: "",
         minOrder: "",
+        isAffiliate: false,
+        owner: "",
     });
 
     const [promos, setPromos] = useState([]);
     const [modalState, setModalState] = useState({ error: false, message: "", open: false, loading: 0 });
+    const [admins, setAdmins] = useState([]);
+
+    useEffect(() => {
+        setModalState({ message: "Fetching all admins", open: 1, loading: 1 });
+        getAllAdminApi().then((data) => {
+            if (data.error) {
+                setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
+            } else {
+                setAdmins(data.data);
+                setModalState({ error: data.error, message: data.message, open: 0, loading: 0 });
+            }
+        });
+    }, []);
 
     const handleChange = (e) => {
+        if(e.target.name === "isAffiliate") setFormData({ ...formData, [e.target.name]: e.target.checked });
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -52,6 +69,7 @@ export default function PromoPage() {
                 discount: "",
                 maxAmount: "",
                 minOrder: "",
+                owner: "",
             });
             fetchPromos();
         } else {
@@ -82,33 +100,72 @@ export default function PromoPage() {
             <div className=" rounded-2xl">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Create New Promo</h2>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                        { label: "Promo Code", name: "code" },
-                        { label: "Description", name: "description" },
-                        { label: "Start Date", name: "startDate", type: "date" },
-                        { label: "End Date", name: "endDate", type: "date" },
-                        { label: "Discount (%)", name: "discount", type: "number" },
-                        { label: "Max Amount", name: "maxAmount", type: "number" },
-                        { label: "Min Order", name: "minOrder", type: "number" },
-                    ].map(({ label, name, type = "text" }) => (
-                        <div key={name}>
-                            <label className="block text-sm font-medium text-gray-700">{label}</label>
-                            <input
-                                type={type}
-                                name={name}
-                                value={formData[name]}
-                                onChange={handleChange}
-                                className="mt-1 p-2 w-full rounded-lg bg-white/60 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-inner"
-                                required
-                            />
-                        </div>
-                    ))}
+                <form onSubmit={handleSubmit} className="">
+                    {/* Custom Checkbox */}
+                    <div className="flex items-center mb-4">
+                        <input
+                            id="isAffiliate"
+                            name="isAffiliate"
+                            type="checkbox"
+                            checked={formData.isAffiliate}
+                            onChange={(e) => setFormData({ ...formData, isAffiliate: e.target.checked })}
+                            className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label htmlFor="isAffiliate" className="ml-2 block text-sm text-gray-700 font-medium">
+                            Affiliate Promo
+                        </label>
+                    </div>
 
-                    <div className="md:col-span-2 mt-4">
-                        <button type="submit" disabled={modalState.loading} className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md">
-                            {modalState.loading ? "Creating..." : "Create Promo"}
-                        </button>
+                    {/* Show admin selects if isAffiliate is true */}
+                    {formData.isAffiliate && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Admin</label>
+                                <select
+                                    name="owner"
+                                    value={formData.admin}
+                                    onChange={handleChange}
+                                    className="mt-1 p-2 w-full rounded-lg bg-white/60 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-inner"
+                                >
+                                    <option value="">Select Admin</option>
+                                    {admins.map((admin) => (
+                                        <option key={admin._id} value={admin._id}>
+                                            {admin.firstName} {admin.lastName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[
+                            { label: "Promo Code", name: "code" },
+                            { label: "Description", name: "description" },
+                            { label: "Start Date", name: "startDate", type: "date" },
+                            { label: "End Date", name: "endDate", type: "date" },
+                            { label: "Discount (%)", name: "discount", type: "number" },
+                            { label: "Max Amount", name: "maxAmount", type: "number" },
+                            { label: "Min Order", name: "minOrder", type: "number" },
+                        ].map(({ label, name, type = "text" }) => (
+                            <div key={name}>
+                                <label className="block text-sm font-medium text-gray-700">{label}</label>
+                                <input
+                                    type={type}
+                                    name={name}
+                                    value={formData[name]}
+                                    onChange={handleChange}
+                                    className="mt-1 p-2 w-full rounded-lg bg-white/60 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-inner"
+                                    required
+                                />
+                            </div>
+                        ))}
+
+                        <div className="md:col-span-2 mt-4">
+                            <button type="submit" disabled={modalState.loading} className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-md">
+                                {modalState.loading ? "Creating..." : "Create Promo"}
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

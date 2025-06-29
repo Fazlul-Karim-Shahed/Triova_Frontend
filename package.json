@@ -23,6 +23,7 @@
         "flowbite": "^3.1.2",
         "formik": "^2.4.6",
         "jodit-react": "^4.1.2",
+        "js-cookie": "^3.0.5",
         "jszip": "^3.10.1",
         "jwt-decode": "^4.0.0",
         "next": "14.2.4",

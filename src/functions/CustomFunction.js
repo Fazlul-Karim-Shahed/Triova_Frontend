@@ -1,3 +1,5 @@
+import Cookie from "js-cookie";
+
 export const timeCheck = (startTime, endTime) => {
     if (new Date() >= new Date(startTime) && new Date() <= new Date(endTime)) {
         return true;
@@ -66,4 +68,22 @@ export const cleanObject = (obj) => {
     return newObj;
 };
 
+export const checkReferral = () => {
+    const triova_ref = Cookie.get("triova_ref");
+
+    if (triova_ref) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
 // <object width='100%' height='100%' data='${bufferToDataUrl(file.contentType, file.data)}'></object>
+
+export const toKebabCase = (str) => {
+    return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+};
+
+export const formatRole = (str) => {
+    return str.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()); // capitalize first letter
+}

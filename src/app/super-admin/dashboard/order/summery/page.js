@@ -93,7 +93,10 @@ export default function SummeryPage() {
         }
     };
 
-    const totalRevenue = order.reduce((acc, item) => acc + item.totalPrice, 0);
+    // ✅ Calculate revenue only from Delivered orders
+    const deliveredOrders = order.filter((o) => o.orderStatus === "Delivered");
+    const totalRevenue = deliveredOrders.reduce((acc, item) => acc + item.totalPrice, 0);
+
     const totalExpenses = expenses.reduce((acc, item) => acc + item.amount, 0);
     const profit = totalRevenue - totalExpenses;
 
@@ -142,19 +145,15 @@ export default function SummeryPage() {
             </form>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <Card title="Total Orders" value={order.length} netWorth={totalRevenue} />
+                <Card title="Total Orders" value={order.length} netWorth={order.reduce((acc, item) => acc + item.totalPrice, 0)} />
+
                 <Card
                     title="Pending Orders"
                     value={order.filter((o) => o.orderStatus === "Pending").length}
                     netWorth={order.filter((o) => o.orderStatus === "Pending" || o.orderStatus === "Shipped").reduce((acc, item) => acc + item.totalPrice, 0)}
                     color="red"
                 />
-                <Card
-                    title="Completed Orders"
-                    value={order.filter((o) => o.orderStatus === "Delivered").length}
-                    netWorth={order.filter((o) => o.orderStatus === "Delivered").reduce((acc, item) => acc + item.totalPrice, 0)}
-                    color="green"
-                />
+                <Card title="Completed Orders" value={deliveredOrders.length} netWorth={totalRevenue} color="green" />
                 <Card
                     title="Returned Orders"
                     value={order.filter((o) => o.orderStatus === "Returned" || o.orderStatus === "Pending Return").length}

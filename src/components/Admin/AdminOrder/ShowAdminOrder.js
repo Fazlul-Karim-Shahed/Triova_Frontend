@@ -113,8 +113,7 @@ function ShowAdminOrderContent({ orders, courier }) {
                     document.getElementById("order_details_modal").close();
                 }
             });
-        }
-        else {
+        } else {
             setModalState({ error: true, message: "Please select a delivery method", open: 1, loading: 0 });
         }
     };
@@ -156,6 +155,7 @@ function ShowAdminOrderContent({ orders, courier }) {
                             <th>Name</th>
                             <th>Mobile</th>
                             <th>Amount</th>
+                            <th>Promo</th>
                             <th>Payment</th>
                             <th>Date</th>
                             <th>Delivery</th>
@@ -170,6 +170,7 @@ function ShowAdminOrderContent({ orders, courier }) {
                                 <td>{item.name}</td>
                                 <td>{item.mobile}</td>
                                 <td>{item.totalPrice}</td>
+                                <td>{item.promoCode?.code || "--"}</td>
                                 <td>{item.paymentMethod}</td>
                                 <td>{new Date(item.orderDate).toLocaleDateString()}</td>
                                 <td>{item.deliveryMethod?.name || "N/A"}</td>
@@ -306,10 +307,10 @@ function ShowAdminOrderContent({ orders, courier }) {
                                                                     )}
                                                                     width={500}
                                                                     height={100}
-                                                                    className="w-40 h-40 rounded"
+                                                                    className="w-40 h-40 rounded object-cover"
                                                                 />
                                                             </td>
-                                                            <td>{item.productId.name}</td>
+                                                            <td className="max-w-sm">{item.productId.name}</td>
                                                             <td>{item.color}</td>
                                                             <td>{item.size}</td>
                                                             <td>{item.price}</td>
@@ -323,8 +324,16 @@ function ShowAdminOrderContent({ orders, courier }) {
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
-                                                    <td>Total Price</td>
-                                                    <td>{selectedOrder.totalPrice}</td>
+                                                    <td className="font-bold" colSpan={3}>Promo Code</td>
+                                                    <td colSpan={3}>{selectedOrder.promoCode.discount || "0"}%</td>
+                                                </tr>
+
+                                                <tr className={`hover:bg-green-50`}>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td className="font-bold" colSpan={3}>Total Price</td>
+                                                    <td colSpan={3}>{selectedOrder.totalPrice} BDT</td>
                                                 </tr>
                                             </tbody>
                                         </table>

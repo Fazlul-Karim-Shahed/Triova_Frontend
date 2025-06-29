@@ -83,9 +83,6 @@ export default function RootLayout({ children }) {
             </Head>
 
             <body className={`${inter.className} bg-white`}>
-                {/* Google Analytics */}
-                {/* Google Analytics */}
-
                 <ReduxProvider>
                     <ClientErrorBoundary>
                         <Preload />

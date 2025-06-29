@@ -21,6 +21,7 @@ export default function OrderPage() {
                 if (ordersRes.error || courierRes.error) {
                     setModalState({ error: true, message: ordersRes.message || courierRes.message, open: 1, loading: 0 });
                 } else {
+                    
                     setModalState({ error: false, message: "", open: 0, loading: 0 });
                     setOrders(ordersRes.data);
                     setCourier(courierRes.data);
@@ -32,6 +33,10 @@ export default function OrderPage() {
 
         fetchData();
     }, []);
+
+    console.log(orders);
+    console.log(courier);
+
 
     return (
         <div>

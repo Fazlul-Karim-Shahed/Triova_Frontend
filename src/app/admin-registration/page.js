@@ -105,8 +105,12 @@ export default function AdminRegistration() {
                             >
                                 <option value="">--Select--</option>
                                 <option value="employee">Employee</option>
-                                <option value="admin">Admin</option>
-                                <option value="superAdmin">Super Admin</option>
+                                {/* <option value="admin">Admin</option> */}
+                                {/* <option value="superAdmin">Super Admin</option> */}
+                                <option value="brandAmbassador">Brand Ambassador</option>
+                                <option value="promoter">Promoter</option>
+                                <option value="influencer">Influencer</option>
+                                <option value="others">Others</option>
                             </select>
                         </div>
 

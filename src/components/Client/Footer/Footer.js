@@ -77,7 +77,7 @@ export default function Footer() {
                     <div className="flex space-x-5">
                         {/* Facebook */}
                         <a
-                            href="https://web.facebook.com/people/Triova-Limited/61568890781626/"
+                            href="https://www.facebook.com/profile.php?id=61577623115502"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Facebook"

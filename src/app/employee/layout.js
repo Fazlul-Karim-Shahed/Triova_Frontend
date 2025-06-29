@@ -1,4 +1,5 @@
-import EmployeeHeader from "@/src/components/Admin/EmployeeHeader/EmployeeHeader";
+
+import AdminHeader from "@/src/components/Admin/AdminHeader/AdminHeader";
 import EmployeeContext from "@/src/context/EmployeeContext";
 
 
@@ -6,7 +7,7 @@ export default function Adminlayout({ children }) {
     return (
         <div>
             <EmployeeContext>
-                <EmployeeHeader />
+                <AdminHeader />
                 {children}
             </EmployeeContext>
         </div>

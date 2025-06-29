@@ -11,7 +11,7 @@ import { getAPromoApi } from "@/src/api/SuperAdminApi/PromoApi";
 export default function CheckoutPage() {
     const [cart, setCart] = useState([]);
     const [modalState, setModalState] = useState({ error: false, message: "", open: false });
-    const [promo, setPromo] = useState({ error: false, message: "", data: null });
+    const [promo, setPromo] = useState({ error: false, message: "", data: null, applied: false });
     const router = useRouter();
     const store = useSelector((state) => state.triova);
 
@@ -60,7 +60,7 @@ export default function CheckoutPage() {
                     ...state,
                     mainPrice: newCart.reduce((acc, item) => acc + item.quantity * item.product.sellingPrice, 0),
                     discountedAmount: newCart[0].product && newCart.reduce((acc, item) => acc + (item.quantity * item.product.sellingPrice * item.product.discount) / 100, 0),
-                    deliveryCharge: newCart[0].product && state.division == "dhaka" ? 0 : 120,
+                    deliveryCharge: state.division === "dhaka" ? 60 : 120,
                 });
             }
         });
@@ -104,8 +104,10 @@ export default function CheckoutPage() {
                 total: (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100) * item.quantity,
             })),
 
+            promoCode: !promo.error && promo.data ? promo.data._id : null,
+
             totalPrice: state.mainPrice - state.discountedAmount,
-            deliveryCharge: cart[0].product && state.division == "dhaka" ? 0 : 120,
+            deliveryCharge: state.division === "dhaka" ? 60 : 120,
 
             shippingAddress: state.house + " | " + state.city + " | " + state.division + ", " + state.postalCode,
             orderDate: new Date().toISOString(),
@@ -123,42 +125,48 @@ export default function CheckoutPage() {
     };
 
     const applyPromo = () => {
-        //console.log("Savings: ", state.discountedAmount);
-
-        // setState({
-        //     ...state,
-        //     discountedAmount: 0,
-        // });
+        if (promo.applied) {
+            return setPromo((prev) => ({
+                ...prev,
+                error: true,
+                message: "Promo already applied",
+            }));
+        }
 
         if (!state.promo) {
-            setState((prev) => ({ ...prev, discountedAmount: 0 }));
-            return setPromo({ error: true, message: "Apply a promo code", data: null });
+            return setPromo({ error: true, message: "Apply a promo code", data: null, applied: false });
         }
 
         getAPromoApi(state.promo).then((data) => {
-            //
             if (!data.error) {
                 const now = new Date();
                 const start = new Date(data.data.startDate);
                 const end = new Date(data.data.endDate);
 
                 if (now < start || now > end) {
-                    setState((prev) => ({ ...prev, discountedAmount: 0 }));
-                    return setPromo({ error: true, message: "Promo not valid now", data: null });
+                    return setPromo({ error: true, message: "Promo not valid now", data: null, applied: false });
                 }
-                if (state.mainPrice < data.data.minOrder) {
-                    setState((prev) => ({ ...prev, discountedAmount: 0 }));
-                    return setPromo({ error: true, message: `Minimum order is ৳ ${data.data.minOrder}`, data: null });
-                }
-                const discount = Math.min((state.mainPrice * data.data.discount) / 100, data.data.maxAmount);
 
-                setState({
-                    ...state,
-                    discountedAmount: discount,
+                if (state.mainPrice < data.data.minOrder) {
+                    return setPromo({ error: true, message: `Minimum order is ৳ ${data.data.minOrder}`, data: null, applied: false });
+                }
+
+                const alreadyDiscountedPrice = state.mainPrice - state.discountedAmount;
+                const promoDiscount = Math.min((alreadyDiscountedPrice * data.data.discount) / 100, data.data.maxAmount);
+
+                setState((prev) => ({
+                    ...prev,
+                    discountedAmount: prev.discountedAmount + promoDiscount,
+                }));
+
+                setPromo({
+                    error: false,
+                    message: `Promo applied! ৳${promoDiscount} off`,
+                    data: data.data,
+                    applied: true,
                 });
-                setPromo({ error: false, message: `Promo applied! ৳${discount} off`, data: data.data });
             } else {
-                setPromo({ error: data.error, message: data.message, data: null });
+                setPromo({ error: true, message: data.message, data: null, applied: false });
             }
         });
     };
@@ -416,7 +424,10 @@ export default function CheckoutPage() {
                                     <button
                                         onClick={() => applyPromo()}
                                         type="button"
-                                        class="flex items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        disabled={promo.applied} // 🔐 Prevent multiple clicks
+                                        class={`flex items-center justify-center rounded-lg ${
+                                            promo.applied ? "bg-gray-400 cursor-not-allowed" : "bg-primary-700 hover:bg-primary-800"
+                                        } px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800`}
                                     >
                                         Apply
                                     </button>
@@ -454,29 +465,27 @@ export default function CheckoutPage() {
                                 <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
                                     <dl class="flex items-center justify-between gap-4 py-3">
                                         <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Main price</dt>
-                                        <dd class="text-base font-medium text-gray-900 dark:text-white">${cart.length != 0 && state.mainPrice}</dd>
-                                    </dl>
-
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Savings</dt>
-                                        <dd class="text-base font-medium text-green-500"> - ${cart.length != 0 && state.discountedAmount}</dd>
-                                    </dl>
-
-                                    <dl class="flex items-center justify-between gap-4 py-3">
-                                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Delivery</dt>
-                                        <dd class="text-base font-medium text-gray-900 dark:text-white">${cart && cart.length > 0 && cart[0].product && state.division == "dhaka" ? 0 : 120}</dd>
+                                        <dd class="text-base font-medium text-gray-900 dark:text-white">৳ {cart.length != 0 && state.mainPrice}</dd>
                                     </dl>
 
                                     <dl class="flex items-center justify-between gap-4 py-3">
                                         <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Promo</dt>
-                                        <dd class="text-base font-medium text-gray-900 dark:text-white">$0</dd>
+                                        <dd class="text-base font-medium text-gray-900 dark:text-white"> {!promo.error && promo.data ? promo.data.discount : 0} %</dd>
+                                    </dl>
+
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Savings</dt>
+                                        <dd class="text-base font-medium text-green-500"> - ৳ {cart.length != 0 && state.discountedAmount}</dd>
+                                    </dl>
+
+                                    <dl class="flex items-center justify-between gap-4 py-3">
+                                        <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Delivery</dt>
+                                        <dd class="text-base font-medium text-gray-900 dark:text-white">৳{state.division === "dhaka" ? 60 : 120}</dd>
                                     </dl>
 
                                     <dl class="flex items-center justify-between gap-4 py-3">
                                         <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                                        <dd class="text-base font-bold text-gray-900 dark:text-white">
-                                            ${cart.length != 0 && state.mainPrice + (cart[0].product && state.division == "dhaka" ? 0 : 120) - state.discountedAmount}
-                                        </dd>
+                                        <dd class="text-base font-bold text-gray-900 dark:text-white">৳ {state.mainPrice + (state.division === "dhaka" ? 60 : 120) - state.discountedAmount}</dd>
                                     </dl>
                                 </div>
                             </div>

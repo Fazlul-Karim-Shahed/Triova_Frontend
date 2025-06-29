@@ -69,7 +69,16 @@ export default function MainHeader({ searchParams }) {
             }
         });
 
-        if (pathname === "/signin" || pathname === "/signup" || pathname.startsWith("/admin") || pathname.startsWith("/super-admin") || pathname.startsWith("/employee")) {
+        if (
+            pathname === "/signin" ||
+            pathname === "/signup" ||
+            pathname.startsWith("/admin") ||
+            pathname.startsWith("/super-admin") ||
+            pathname.startsWith("/employee") ||
+            pathname.startsWith("/promoter") ||
+            pathname.startsWith("/brand-ambassador") ||
+            pathname.startsWith("/influencer")
+        ) {
             return;
         } else {
             if (isMenuOpen) {
@@ -88,7 +97,16 @@ export default function MainHeader({ searchParams }) {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    if (pathname === "/signin" || pathname === "/signup" || pathname.startsWith("/admin") || pathname.startsWith("/super-admin") || pathname.startsWith("/employee")) {
+    if (
+        pathname === "/signin" ||
+        pathname === "/signup" ||
+        pathname.startsWith("/admin") ||
+        pathname.startsWith("/super-admin") ||
+        pathname.startsWith("/employee") ||
+        pathname.startsWith("/promoter") ||
+        pathname.startsWith("/brand-ambassador") ||
+        pathname.startsWith("/influencer")
+    ) {
         return null;
     }
 
@@ -97,6 +115,14 @@ export default function MainHeader({ searchParams }) {
         e.preventDefault();
         window.location.href = "/products?search=" + search;
     };
+
+    function toKebabCase(str) {
+        return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+    }
+
+    function formatRole(str) {
+        return str.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()); // capitalize first letter
+    }
 
     return (
         <div className="sticky top-0 z-50 bg-brand-50/20">
@@ -202,12 +228,11 @@ export default function MainHeader({ searchParams }) {
 
                                                 <hr />
 
-                                                {store.authenticated && (store.decodedToken.role === "superAdmin" || store.decodedToken.role === "admin" || store.decodedToken.role === "employee") && (
+                                                {store.authenticated && store.decodedToken.role != "user" && (
                                                     <div className="flex bg-red-100 font-bold items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-brand-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
-                                                        <Link href={store.decodedToken.role === "superAdmin" ? "/super-admin" : store.decodedToken.role === "admin" ? "/admin" : "employee"}>
-                                                            {" "}
+                                                        <Link href={`/${toKebabCase(store.decodedToken.role)}`}>
                                                             <FontAwesomeIcon className="me-2" icon={faLock} />
-                                                            {store.decodedToken.role === "superAdmin" ? "Super Admin" : store.decodedToken.role === "admin" ? "Admin" : "Employee"} panel
+                                                            {formatRole(store.decodedToken.role)} Panel
                                                         </Link>
                                                     </div>
                                                 )}
@@ -372,14 +397,14 @@ export default function MainHeader({ searchParams }) {
                                 <hr className="my-2" />
 
                                 <li>
-                                    {store.authenticated && (store.decodedToken.role === "superAdmin" || store.decodedToken.role === "admin" || store.decodedToken.role === "employee") && (
+                                    {store.authenticated && (store.decodedToken.role != "user" ) && (
                                         <Link
                                             className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                             onClick={handleToggle}
-                                            href={store.decodedToken.role === "superAdmin" ? "/super-admin" : store.decodedToken.role === "admin" ? "/admin" : "employee"}
+                                            href={`/${toKebabCase(store.decodedToken.role)}`}
                                         >
                                             <FontAwesomeIcon className="me-2" icon={faLock} />
-                                            {store.decodedToken.role === "superAdmin" ? "Super Admin" : store.decodedToken.role === "admin" ? "Admin" : "Employee"} panel
+                                            {formatRole(store.decodedToken.role)} Panel
                                         </Link>
                                     )}
                                 </li>
