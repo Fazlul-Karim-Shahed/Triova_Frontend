@@ -77,7 +77,7 @@ export default function CheckoutPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // setLoading(true);
+        setLoading(true);
 
         const regex = /^(?:\+?88)?01[3-9]\d{8}$/;
 
@@ -95,39 +95,39 @@ export default function CheckoutPage() {
 
 
 
-        // createOrderApi({
-        //     ...state,
-        //     orderList: cart.map((item) => ({
-        //         productId: item.productId,
-        //         quantity: item.quantity,
-        //         color: item.color ? item.color : "",
-        //         size: item.size,
-        //         price: item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100,
-        //         total: (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100) * item.quantity,
-        //     })),
+        createOrderApi({
+            ...state,
+            orderList: cart.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+                color: item.color ? item.color : "",
+                size: item.size,
+                price: item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100,
+                total: (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100) * item.quantity,
+            })),
 
-        //     promoCode: !promo.error && promo.data ? promo.data._id : null,
-        //     reffer: !promo.error && promo.data ? promo.data.owner?._id : null,
-        //     commission: !promo.error && promo.data ? promo.data.owner?.commissionRate : 0,
+            promoCode: !promo.error && promo.data ? promo.data._id : null,
+            reffer: !promo.error && promo.data ? promo.data.owner?._id : null,
+            commission: !promo.error && promo.data ? promo.data.owner?.commissionRate : 0,
 
-        //     totalPrice: state.mainPrice - state.discountedAmount,
-        //     deliveryCharge: state.division === "dhaka" ? 60 : 120,
+            totalPrice: state.mainPrice - state.discountedAmount,
+            deliveryCharge: state.division === "dhaka" ? 60 : 120,
 
-        //     shippingAddress: state.house + " | " + state.city + " | " + state.division + ", " + state.postalCode,
-        //     orderDate: new Date().toISOString(),
-        // }).then((data) => {
-        //     //console.log(data);
-        //     setLoading(false);
-        //     setModalState({ error: data.error, message: data.message, open: true });
-        //     if (!data.error) {
-        //         localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
-        //         setCart([]);
-        //         saveOrder(data.data._id);
-        //         if (store.authenticated) {
-        //             router.push("/mytriova/history");
-        //         }
-        //     }
-        // });
+            shippingAddress: state.house + " | " + state.city + " | " + state.division + ", " + state.postalCode,
+            orderDate: new Date().toISOString(),
+        }).then((data) => {
+            //console.log(data);
+            setLoading(false);
+            setModalState({ error: data.error, message: data.message, open: true });
+            if (!data.error) {
+                localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
+                setCart([]);
+                saveOrder(data.data._id);
+                if (store.authenticated) {
+                    router.push("/mytriova/history");
+                }
+            }
+        });
     };
 
     const applyPromo = () => {
