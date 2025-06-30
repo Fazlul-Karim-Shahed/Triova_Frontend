@@ -95,87 +95,111 @@ export default function CheckoutPage() {
 
 
 
-        createOrderApi({
-            ...state,
-            orderList: cart.map((item) => ({
-                productId: item.productId,
-                quantity: item.quantity,
-                color: item.color ? item.color : "",
-                size: item.size,
-                price: item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100,
-                total: (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100) * item.quantity,
-            })),
+        // createOrderApi({
+        //     ...state,
+        //     orderList: cart.map((item) => ({
+        //         productId: item.productId,
+        //         quantity: item.quantity,
+        //         color: item.color ? item.color : "",
+        //         size: item.size,
+        //         price: item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100,
+        //         total: (item.product.sellingPrice - (item.product.sellingPrice * item.product.discount) / 100) * item.quantity,
+        //     })),
 
-            promoCode: !promo.error && promo.data ? promo.data._id : null,
-            reffer: !promo.error && promo.data ? promo.data.owner?._id : null,
-            commission: !promo.error && promo.data ? promo.data.owner?.commissionRate : 0,
+        //     promoCode: !promo.error && promo.data ? promo.data._id : null,
+        //     reffer: !promo.error && promo.data ? promo.data.owner?._id : null,
+        //     commission: !promo.error && promo.data ? promo.data.owner?.commissionRate : 0,
 
-            totalPrice: state.mainPrice - state.discountedAmount,
-            deliveryCharge: state.division === "dhaka" ? 60 : 120,
+        //     totalPrice: state.mainPrice - state.discountedAmount,
+        //     deliveryCharge: state.division === "dhaka" ? 60 : 120,
 
-            shippingAddress: state.house + " | " + state.city + " | " + state.division + ", " + state.postalCode,
-            orderDate: new Date().toISOString(),
-        }).then((data) => {
-            //console.log(data);
-            setLoading(false);
-            setModalState({ error: data.error, message: data.message, open: true });
-            if (!data.error) {
-                localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
-                setCart([]);
-                saveOrder(data.data._id);
-                if (store.authenticated) {
-                    router.push("/mytriova/history");
-                }
-            }
-        });
+        //     shippingAddress: state.house + " | " + state.city + " | " + state.division + ", " + state.postalCode,
+        //     orderDate: new Date().toISOString(),
+        // }).then((data) => {
+        //     //console.log(data);
+        //     setLoading(false);
+        //     setModalState({ error: data.error, message: data.message, open: true });
+        //     if (!data.error) {
+        //         localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
+        //         setCart([]);
+        //         saveOrder(data.data._id);
+        //         if (store.authenticated) {
+        //             router.push("/mytriova/history");
+        //         }
+        //     }
+        // });
     };
 
     const applyPromo = () => {
         if (promo.applied) {
-            return setPromo((prev) => ({
-                ...prev,
+            return setPromo({
+                ...promo,
                 error: true,
                 message: "Promo already applied",
-            }));
+            });
         }
 
-        if (!state.promo) {
-            return setPromo({ error: true, message: "Apply a promo code", data: null, applied: false });
+        if (!state.promo.trim()) {
+            return setPromo({ error: true, message: "Enter a promo code", data: null, applied: false });
         }
 
-        getAPromoApi(state.promo).then((data) => {
-            if (!data.error) {
-                const now = new Date();
-                const start = new Date(data.data.startDate);
-                const end = new Date(data.data.endDate);
-
-                if (now < start || now > end) {
-                    return setPromo({ error: true, message: "Promo not valid now", data: null, applied: false });
-                }
-
-                if (state.mainPrice < data.data.minOrder) {
-                    return setPromo({ error: true, message: `Minimum order is ৳ ${data.data.minOrder}`, data: null, applied: false });
-                }
-
-                const alreadyDiscountedPrice = state.mainPrice - state.discountedAmount;
-                const promoDiscount = Math.min((alreadyDiscountedPrice * data.data.discount) / 100, data.data.maxAmount);
-
-                setState((prev) => ({
-                    ...prev,
-                    discountedAmount: prev.discountedAmount + promoDiscount,
-                }));
-
-                setPromo({
-                    error: false,
-                    message: `Promo applied! ৳${promoDiscount} off`,
-                    data: data.data,
-                    applied: true,
-                });
-            } else {
-                setPromo({ error: true, message: data.message, data: null, applied: false });
+        getAPromoApi(state.promo.trim()).then((data) => {
+            if (data.error) {
+                return setPromo({ error: true, message: data.message, data: null, applied: false });
             }
+
+            const promoData = data.data;
+            const now = new Date();
+            const start = new Date(promoData.startDate);
+            const end = new Date(promoData.endDate);
+
+            // 1. Check date validity
+            if (now < start || now > end) {
+                return setPromo({ error: true, message: "Promo is not active now", data: null, applied: false });
+            }
+
+            // 2. Check minimum order
+            const alreadyDiscountedPrice = state.mainPrice - state.discountedAmount;
+            if (alreadyDiscountedPrice < promoData.minOrder) {
+                return setPromo({
+                    error: true,
+                    message: `Minimum order value must be ৳${promoData.minOrder}`,
+                    data: null,
+                    applied: false,
+                });
+            }
+
+            // 3. Check that ALL cart products are in promoData.products
+            const promoProductIds = promoData.products.map((p) => p.toString());
+            const allCartProductsValid = cart.every((item) => promoProductIds.includes(item.productId));
+
+            if (!allCartProductsValid) {
+                return setPromo({
+                    error: true,
+                    message: `Some items aren't eligible for this promo.`,
+                    data: null,
+                    applied: false,
+                });
+            }
+
+            // ✅ Passed all checks — apply discount
+            const promoDiscount = Math.min((alreadyDiscountedPrice * promoData.discount) / 100, promoData.maxAmount);
+
+            setState((prev) => ({
+                ...prev,
+                discountedAmount: prev.discountedAmount + promoDiscount,
+            }));
+
+            setPromo({
+                error: false,
+                message: `Promo applied! ৳${promoDiscount.toFixed(2)} off`,
+                data: promoData,
+                applied: true,
+            });
         });
     };
+    
+    
 
     return (
         <div>
