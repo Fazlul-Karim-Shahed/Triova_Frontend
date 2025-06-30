@@ -93,8 +93,6 @@ export default function CheckoutPage() {
             return;
         }
 
-
-
         createOrderApi({
             ...state,
             orderList: cart.map((item) => ({
@@ -198,8 +196,6 @@ export default function CheckoutPage() {
             });
         });
     };
-    
-    
 
     return (
         <div>
