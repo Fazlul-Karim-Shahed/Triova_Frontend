@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Montserrat } from "next/font/google";
 import Footer from "../components/Client/Footer/Footer";
 import "./globals.css";
-import ClientErrorBoundary from "./ClientErrorBoundary";
+import ClientErrorBoundary from "./xxxClientErrorBoundaryxxx";
 import Head from "next/head";
 import Script from "next/script";
 

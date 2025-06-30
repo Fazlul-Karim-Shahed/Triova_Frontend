@@ -40,6 +40,7 @@ export default function CheckoutPage() {
         orderNotes: "",
         deliveryCharge: 0,
         promo: "",
+        
     });
 
     useEffect(() => {
@@ -105,6 +106,8 @@ export default function CheckoutPage() {
             })),
 
             promoCode: !promo.error && promo.data ? promo.data._id : null,
+            reffer: !promo.error && promo.data ? promo.data.owner?._id : null,
+            commission: !promo.error && promo.data ? promo.data.commission : 0,
 
             totalPrice: state.mainPrice - state.discountedAmount,
             deliveryCharge: state.division === "dhaka" ? 60 : 120,
@@ -119,7 +122,10 @@ export default function CheckoutPage() {
                 localStorage.removeItem(process.env.NEXT_PUBLIC_LOCAL_CART_NAME);
                 setCart([]);
                 saveOrder(data.data._id);
-                router.push("/mytriova/history");
+                if (store.authenticated) {
+                    router.push("/mytriova/history");
+                }
+                
             }
         });
     };

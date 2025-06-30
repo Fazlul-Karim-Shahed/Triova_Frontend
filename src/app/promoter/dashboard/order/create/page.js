@@ -94,6 +94,7 @@ export default function CreateOrderPage({ category }) {
                 ...formData,
                 discount: value != "" ? promos.find((promo) => promo._id === value).discount : 0,
                 promoCode: value,
+
             });
         } else {
             setFormData({
@@ -271,7 +272,9 @@ export default function CreateOrderPage({ category }) {
             discountedAmount: Math.round(discountedAmount + total * (formData.discount / 100)),
             orderTaker: store.decodedToken ? store.decodedToken.firstName + store.decodedToken.lastName : "",
             orderTakerRole: store.decodedToken ? store.decodedToken.role : "user",
-            promoCode: formData.promoCode,
+            promoCode: formData.promoCode != "" ? formData.promoCode : null,
+            reffer: formData.promoCode != "" ? promos.find((promo) => promo._id === formData.promoCode).owner._id : null,
+            commission: formData.promoCode != "" ? promos.find((promo) => promo._id === formData.promoCode).commission : 0,
         }).then((data) => {
             setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
         });

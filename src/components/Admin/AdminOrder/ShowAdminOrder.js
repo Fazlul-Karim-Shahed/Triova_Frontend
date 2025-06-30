@@ -325,7 +325,7 @@ function ShowAdminOrderContent({ orders, courier }) {
                                                     <td></td>
                                                     <td></td>
                                                     <td className="font-bold" colSpan={3}>Promo Code</td>
-                                                    <td colSpan={3}>{selectedOrder.promoCode.discount || "0"}%</td>
+                                                    <td colSpan={3}>{selectedOrder.promoCode?.discount || "0"}% ({selectedOrder.promoCode?.code})</td>
                                                 </tr>
 
                                                 <tr className={`hover:bg-green-50`}>

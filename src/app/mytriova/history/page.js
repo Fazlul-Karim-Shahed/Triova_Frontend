@@ -21,11 +21,13 @@ const YourOrders = () => {
         setLoading(true);
         getAProfileApi(store.decodedToken._id, store.decodedToken.role).then((data) => {
             setLoading(false);
+            console.log(data);
             if (!data.error) {
                 getAllOrdersApi({ mobile: data.data.mobile }).then((data) => {
+                    console.log(data);
                     if (!data.error) {
                         setOrders(data.data);
-                        //console.log(data.data);
+                        
                     }
                 });
             }

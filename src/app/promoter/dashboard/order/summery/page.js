@@ -10,6 +10,8 @@ export default function SummeryPage() {
     const [order, setOrder] = useState([]);
     const [data, setData] = useState([]);
     const store = useSelector((state) => state.triova);
+    const userId = store?.decodedToken?._id;
+
     const [state, setState] = useState({
         startDate: "",
         endDate: "",
@@ -18,9 +20,10 @@ export default function SummeryPage() {
     });
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setState({
             ...state,
-            [e.target.name]: e.target.name === "day" ? Number(e.target.value) : e.target.value,
+            [name]: name === "day" ? Number(value) : value,
         });
     };
 
@@ -40,49 +43,46 @@ export default function SummeryPage() {
         const endDate = state.day ? normalizeDate(new Date()) : state.endDate ? normalizeDate(state.endDate) : normalizeDate(new Date());
 
         if (!orderRes.error) {
-            const filteredOrders = orderRes.data.filter((order) => order.promoCode?.owner?._id === store.decodedToken._id);
+            const filteredOrders = orderRes.data.filter((order) => order.reffer?._id === userId);
+
             setOrder(filteredOrders);
 
-            let arr = [];
+            const chartData = [];
 
             for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
                 const day = date.getDate();
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
-                const label = `${year}-${month}-${day}`;
+                const label = `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
 
-                const orderCount = filteredOrders.filter((o) => {
+                const dailyOrders = filteredOrders.filter((o) => {
                     const d = normalizeDate(o.createdAt);
-                    return d.getDate() === day && d.getMonth() + 1 === month && d.getFullYear() === year && o.orderStatus !== "Returned" && o.orderStatus !== "Pending Return";
-                }).length;
+                    return d.getDate() === day && d.getMonth() + 1 === month && d.getFullYear() === year;
+                });
 
-                const returnCount = filteredOrders.filter((o) => {
-                    const d = normalizeDate(o.createdAt);
-                    return d.getDate() === day && d.getMonth() + 1 === month && d.getFullYear() === year && (o.orderStatus === "Returned" || o.orderStatus === "Pending Return");
-                }).length;
+                const orderCount = dailyOrders.filter((o) => o.orderStatus !== "Returned" && o.orderStatus !== "Pending Return").length;
 
-                arr.push([label, orderCount, returnCount]);
+                const returnCount = dailyOrders.filter((o) => o.orderStatus === "Returned" || o.orderStatus === "Pending Return").length;
+
+                chartData.push([label, orderCount, returnCount]);
             }
 
-            setData(arr);
+            setData(chartData);
         } else {
             setOrder([]);
             setData([]);
         }
     };
 
+    // Calculate Total Revenue (all referred orders)
     const totalRevenue = order.reduce((acc, item) => acc + item.totalPrice, 0);
 
-    // My Payment Calculation (10% commission)
-    const COMMISSION_PERCENT = 10;
+    // Calculate commission based on individual order.commission %
     const deliveredOrders = order.filter((o) => o.orderStatus === "Delivered");
 
     const myPayment = deliveredOrders.reduce((acc, o) => {
-        const orderTotal = o.orderList.reduce((sum, item) => {
-            const sellingPrice = item?.productId?.sellingPrice || 0;
-            return sum + (sellingPrice * COMMISSION_PERCENT) / 100;
-        }, 0);
-        return acc + orderTotal;
+        const rate = o.commission || 0;
+        return acc + o.totalPrice * (rate / 100);
     }, 0);
 
     const options = {
@@ -96,8 +96,8 @@ export default function SummeryPage() {
             <form onSubmit={handleSubmit} className="mb-5 grid md:grid-cols-7 gap-5">
                 <div>
                     <label className="font-medium">Select Range</label>
-                    <select disabled={state.startDate !== "" || state.endDate !== ""} className="mt-2 w-full input input-bordered input-sm me-4" name="day" value={state.day} onChange={handleChange}>
-                        <option value={null}>---Select---</option>
+                    <select disabled={state.startDate || state.endDate} className="mt-2 w-full input input-bordered input-sm me-4" name="day" value={state.day || ""} onChange={handleChange}>
+                        <option value="">---Select---</option>
                         <option value="7">Last 7 days</option>
                         <option value="15">Last 15 days</option>
                         <option value="30">Last 1 Month</option>
@@ -137,19 +137,14 @@ export default function SummeryPage() {
                     netWorth={order.filter((o) => o.orderStatus === "Pending" || o.orderStatus === "Shipped").reduce((acc, item) => acc + item.totalPrice, 0)}
                     color="red"
                 />
-                <Card
-                    title="Completed Orders"
-                    value={order.filter((o) => o.orderStatus === "Delivered").length}
-                    netWorth={order.filter((o) => o.orderStatus === "Delivered").reduce((acc, item) => acc + item.totalPrice, 0)}
-                    color="green"
-                />
+                <Card title="Completed Orders" value={deliveredOrders.length} netWorth={deliveredOrders.reduce((acc, item) => acc + item.totalPrice, 0)} color="green" />
                 <Card
                     title="Returned Orders"
                     value={order.filter((o) => o.orderStatus === "Returned" || o.orderStatus === "Pending Return").length}
                     netWorth={order.filter((o) => o.orderStatus === "Returned" || o.orderStatus === "Pending Return").reduce((acc, item) => acc + item.totalPrice, 0)}
                     color="red"
                 />
-                <Card title="My Payment" value="" netWorth={myPayment} color="yellow" />
+                <Card title="My Payment" value="" netWorth={myPayment} color="yellow" percentage />
             </div>
 
             {order.length > 0 && (
@@ -176,7 +171,7 @@ export default function SummeryPage() {
     );
 }
 
-const Card = ({ title, value, netWorth, color = "gray" }) => {
+const Card = ({ title, value, netWorth, color = "gray", percentage = false }) => {
     const bgColor = {
         red: "bg-red-50 text-red-800",
         green: "bg-green-50 text-green-800",
@@ -187,7 +182,7 @@ const Card = ({ title, value, netWorth, color = "gray" }) => {
     return (
         <div className={`p-4 ${bgColor} border rounded-lg text-center`}>
             <p className="text-sm mb-3">
-                {title} {"(10%)"}{" "}
+                {title} {percentage && "(based on individual commission %)"}
             </p>
             {value !== "" && <p className="text-2xl font-semibold">{value}</p>}
             <p className="text-sm font-bold">Net Worth Tk {netWorth.toFixed(2)} /=</p>

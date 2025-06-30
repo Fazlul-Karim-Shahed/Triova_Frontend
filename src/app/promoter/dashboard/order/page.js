@@ -34,12 +34,13 @@ export default function OrderPage() {
         async function fetchData() {
             setModalState({ message: "Fetching order data...", open: true, loading: 1 });
             try {
-                const [ordersRes] = await Promise.all([getAllOrdersApi({})]);
+                const [ordersRes] = await Promise.all([getAllOrdersApi()]);
 
                 if (ordersRes.error) {
                     setModalState({ error: true, message: ordersRes.message });
                 } else {
-                    const filteredOrders = ordersRes.data.filter((order) => order.promoCode?.owner?._id === store?.decodedToken?._id);
+                    // console.log(ordersRes);
+                    const filteredOrders = ordersRes.data.filter((order) => order.reffer?._id === store?.decodedToken?._id);
                     setAllOrders(filteredOrders); // Save original list
                     setOrderList(filteredOrders); // Display filtered list
                     setModalState({ error: false, message: "", open: false, loading: 0 });
@@ -165,6 +166,7 @@ export default function OrderPage() {
                             <th>Mobile</th>
                             <th>Amount</th>
                             <th>Promo</th>
+                            <th>Commoission</th>
                             <th>Payment</th>
                             <th>Date</th>
                             <th>Delivery</th>
@@ -180,7 +182,8 @@ export default function OrderPage() {
                                 <td>{item.mobile}</td>
                                 <td>{item.totalPrice}</td>
                                 <td>{item.promoCode?.code || "N/A"}</td>
-                                <td>{item.paymentMethod}</td>
+                                <td>{item.orderStatus === 'Delivered' ? item.commission : "--"}%</td>
+                                <td>{ item.orderStatus === 'Delivered' ? (item.totalPrice * (item.commission / 100)).toFixed(2) : "--"}</td>
                                 <td>{new Date(item.orderDate).toLocaleDateString()}</td>
                                 <td>{item.deliveryMethod?.name || "N/A"}</td>
                                 <td>{item.orderStatus}</td>

@@ -1,8 +1,6 @@
 "use client";
 
-import { getAllAdminApi } from "@/src/api/AuthApi";
 import { getAllOrdersApi } from "@/src/api/SuperAdminApi/OrderApi";
-import { getAllPromoApi } from "@/src/api/SuperAdminApi/PromoApi";
 import React, { useEffect, useState } from "react";
 
 export default function page() {
@@ -10,49 +8,45 @@ export default function page() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const adminRes = await getAllAdminApi();
-            const promoRes = await getAllPromoApi();
             const orderRes = await getAllOrdersApi({ promoFinder: true });
 
-            if (!adminRes.error && !promoRes.error && !orderRes.error) {
-                const promos = promoRes.data;
-                const orders = orderRes.data.filter((order) => order.orderStatus === "Delivered"); // 🔥 Only delivered orders
+            if (!orderRes.error) {
+                const deliveredOrders = orderRes.data.filter(
+                    (order) => order.orderStatus === "Delivered" && order.reffer // only if there's a referring employee
+                );
 
                 const summary = {};
 
-                promos.forEach((promo) => {
-                    if (promo.owner) {
-                        const ownerId = promo.owner._id;
-                        if (!summary[ownerId]) {
-                            summary[ownerId] = {
-                                employee: promo.owner,
-                                role: promo.owner.role,
-                                totalOrders: 0,
-                                totalAmount: 0,
-                            };
-                        }
+                deliveredOrders.forEach((order) => {
+                    const ref = order.reffer;
+                    const ownerId = ref._id;
 
-                        orders.forEach((order) => {
-                            if (order.promoCode && order.promoCode._id === promo._id) {
-                                summary[ownerId].totalOrders += 1;
-                                summary[ownerId].totalAmount += order.totalPrice;
-                            }
-                        });
+                    if (!summary[ownerId]) {
+                        summary[ownerId] = {
+                            employee: ref,
+                            role: order.orderTakerRole || "N/A",
+                            totalOrders: 0,
+                            totalAmount: 0,
+                            commission: 0,
+                        };
                     }
+
+                    const commissionRate = order.commission || 0;
+                    const orderCommission = order.totalPrice * (commissionRate / 100);
+
+                    summary[ownerId].totalOrders += 1;
+                    summary[ownerId].totalAmount += order.totalPrice;
+                    summary[ownerId].commission += orderCommission;
                 });
 
-                const finalData = Object.values(summary).map((emp) => ({
-                    ...emp,
-                    commission: emp.totalAmount * 0.1,
-                }));
-
-                setEmployeeData(finalData);
+                setEmployeeData(Object.values(summary));
             }
         };
 
         fetchData();
     }, []);
-    
+
+    console.log(employeeData);
 
     return (
         <div className="p-4">
@@ -66,15 +60,17 @@ export default function page() {
                             <th className="px-4 py-2 border">Role</th>
                             <th className="px-4 py-2 border">Promo Orders</th>
                             <th className="px-4 py-2 border">Total Order Amount</th>
-                            <th className="px-4 py-2 border">Commission (10%)</th>
+                            <th className="px-4 py-2 border">Commission</th>
                         </tr>
                     </thead>
                     <tbody>
                         {employeeData.map((emp, idx) => (
                             <tr key={idx} className="text-center">
-                                <td className="px-4 py-2 border">{emp.employee.name}</td>
-                                <td className="px-4 py-2 border">{emp.employee.email}</td>
-                                <td className="px-4 py-2 border">{emp.role}</td>
+                                <td className="px-4 py-2 border">
+                                    {emp.employee?.firstName} {emp.employee?.lastName}
+                                </td>
+                                <td className="px-4 py-2 border">{emp.employee?.email || "N/A"}</td>
+                                <td className="px-4 py-2 border">{emp.employee.role}</td>
                                 <td className="px-4 py-2 border">{emp.totalOrders}</td>
                                 <td className="px-4 py-2 border">৳{emp.totalAmount.toFixed(2)}</td>
                                 <td className="px-4 py-2 border text-green-600 font-semibold">৳{emp.commission.toFixed(2)}</td>
