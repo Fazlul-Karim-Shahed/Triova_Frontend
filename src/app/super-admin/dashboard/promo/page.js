@@ -17,7 +17,6 @@ export default function PromoPage() {
         minOrder: "",
         isAffiliate: false,
         owner: null,
-        commission: "",
         products: [],
     });
 
@@ -89,7 +88,6 @@ export default function PromoPage() {
                 minOrder: "",
                 isAffiliate: false,
                 owner: "",
-                commission: "",
                 products: [],
             });
             fetchPromos();
@@ -129,11 +127,6 @@ export default function PromoPage() {
                                         </option>
                                     ))}
                                 </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Commission (%)</label>
-                                <input type="number" name="commission" value={formData.commission} onChange={handleChange} className="mt-1 p-2 w-full rounded-lg border border-gray-300" required />
                             </div>
                         </div>
                     )}
@@ -221,7 +214,7 @@ export default function PromoPage() {
                                     Discount: {promo.discount}%<br />
                                     Max: ${promo.maxAmount} | Min Order: ${promo.minOrder}
                                     <br />
-                                    {promo.commission && <>Commission: {promo.commission}%</>}
+                                    {promo.owner && <>Commission: {promo.owner.commissionRate}%</>}
                                 </p>
                                 <button className="mt-2 text-red-500 text-sm hover:underline" onClick={() => handleDelete(promo._id)}>
                                     Delete

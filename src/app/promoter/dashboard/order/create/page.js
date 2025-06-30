@@ -274,7 +274,7 @@ export default function CreateOrderPage({ category }) {
             orderTakerRole: store.decodedToken ? store.decodedToken.role : "user",
             promoCode: formData.promoCode != "" ? formData.promoCode : null,
             reffer: formData.promoCode != "" ? promos.find((promo) => promo._id === formData.promoCode).owner._id : null,
-            commission: formData.promoCode != "" ? promos.find((promo) => promo._id === formData.promoCode).commission : 0,
+            commission: formData.promoCode != "" ? promos.find((promo) => promo._id === formData.promoCode).owner?.commissionRate : 0,
         }).then((data) => {
             setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
         });
