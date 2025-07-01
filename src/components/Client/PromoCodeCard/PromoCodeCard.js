@@ -24,7 +24,7 @@ export default function PromoCodeCard() {
                         const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
                         const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
 
-                        return today >= startDate && today <= endDate;
+                        return today >= startDate && today <= endDate && promo.isAffiliate === false;
                     });
 
                     setPromos(filteredPromos);

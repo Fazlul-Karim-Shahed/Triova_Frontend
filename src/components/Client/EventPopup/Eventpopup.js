@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { imageSrc } from "@/src/functions/CustomFunction";
 import { getAllEventApi } from "@/src/api/SuperAdminApi/EventApi";
 import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
+import Link from "next/link";
 
 export default function EventPopup() {
     const [show, setShow] = useState(false);
@@ -34,7 +35,9 @@ export default function EventPopup() {
             <div className="relative w-full max-w-3xl rounded-xl overflow-hidden animate-popup-fade">
                 {/* Promotional Image */}
                 <div className="w-full relative h-[350px] sm:h-[400px] md:h-[450px] lg:h-[550px]">
-                    <ClientImageWithLoader src={imageSrc(currentEvent.promotionalImage.name)} alt="Promotion" className="w-full h-full object-contain rounded-xl" />
+                    <Link href={`/events/${currentEvent.name}`}>
+                        <ClientImageWithLoader src={imageSrc(currentEvent.promotionalImage.name)} alt="Promotion" className="w-full h-full object-contain rounded-xl" />
+                    </Link>
                     {/* Close Button (inside image) */}
                     <button
                         onClick={() => setShow(false)}

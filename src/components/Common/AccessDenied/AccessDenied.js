@@ -1,27 +1,21 @@
-import React from 'react';
-import Styles from './AccessDenied.module.css';
-import Link from 'next/link';
+"use client";
+import Link from "next/link";
+import React from "react";
 
 export default function AccessDenied() {
     return (
-        <div style={{
-            backgroundImage: "url(https://getwallpapers.com/wallpaper/full/6/5/4/1420574-hacker-background-1920x1080-laptop.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center", backgroundAttachment: "fixed"}} className='bg-black h-screen w-screen'>
-            <div className={Styles['w3-display-middle']}>
-                <h1 className={`${Styles['w3-jumbo']} ${Styles['w3-animate-top']} ${Styles['w3-center']}`}>
-                    <code className=' text-red-500'>Access Denied!</code>
-                </h1>
-                <hr className={`${Styles['w3-border-white']} ${Styles['w3-animate-left']}`} style={{ margin: 'auto', width: '50%' }} />
-                <h3 className={`${Styles['w3-center']} ${Styles['w3-animate-right']} text-white text-sm md:text-2xl mt-4`}>You don&apos;t have permission to view this page.</h3>
-                {/* <h3 className={`${Styles['w3-center']} ${Styles['w3-animate-zoom']} text-xl md:text-3xl my-4`}>🚫🚫🚫🚫</h3> */}
-                <h3 className={`${Styles['w3-center']} ${Styles['w3-animate-zoom']} text-xl md:text-3xl my-4`}>🔒🔒🔒🔒🔒</h3>
-                <h6 className={`${Styles['w3-center']} ${Styles['w3-animate-zoom']}`}>
-                    <strong className='text-red-500 font-semibold md:text-base text-sm'>Error Code: 403 forbidden</strong> <br />
-                    <div className='my-10'>
-                        <Link href='/' className=' text-blue-400 font-semibold text-sm underline'>Go Back</Link>
-                   </div>
-                </h6>
+        <div className="min-h-screen w-full backdrop-blur-lg bg-black bg-[url('https://static.vecteezy.com/system/resources/previews/000/151/791/large_2x/falling-numbers-matrix-background-vector.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center p-4">
+            <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-[0_0_30px_5px_rgba(0,255,255,0.2)] p-8 md:p-12 max-w-md w-full text-center animate-fade-in-up text-white">
+                <div className="text-red-500 text-5xl md:text-6xl font-bold drop-shadow-md mb-4 animate-pulse">ACCESS DENIED</div>
+                <p className="text-lg md:text-xl text-gray-300 mb-3">You do not have the necessary permissions to view this page.</p>
+                <p className="text-sm text-gray-400 mb-6">
+                    <span className="text-red-400">Error 403:</span> Forbidden Access
+                </p>
+                <Link href="/signin" className="inline-block bg-cyan-500 hover:bg-cyan-600 transition px-6 py-2 rounded-full font-semibold text-black shadow-md hover:shadow-cyan-400/50">
+                    🔐 Return to Login
+                </Link>
+                <div className="mt-8 text-2xl animate-fade-in-up-slow">🚫🚫🚫🚫🚫</div>
             </div>
         </div>
     );
 }
-
