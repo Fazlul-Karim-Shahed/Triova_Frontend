@@ -40,7 +40,7 @@ async function generateSitemap() {
 </urlset>`;
 
         // Write sitemap.xml to public folder
-        fs.writeFileSync(path.join(__dirname, "../public/sitemap.xml"), sitemap.trim());
+        fs.writeFileSync(path.join(__dirname, "../public/mysitemap.xml"), sitemap.trim());
         console.log("✅ Sitemap generated successfully!");
     } catch (error) {
         console.error("❌ Failed to generate sitemap:", error.message);
