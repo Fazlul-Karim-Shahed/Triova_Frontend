@@ -10,7 +10,7 @@ export default function Design() {
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/50 backdrop-blur-lg border border-rose-200 text-left">
                     <p className="text-lg text-gray-800 mb-6">
-                        At <strong>Triova Limited</strong>, our in-house design team transforms ideas into visually captivating experiences. Whether you're launching a fashion brand or refreshing your
+                        At <strong>Triova BD</strong>, our in-house design team transforms ideas into visually captivating experiences. Whether you're launching a fashion brand or refreshing your
                         existing style, we provide creative solutions that align perfectly with your business goals.
                     </p>
 

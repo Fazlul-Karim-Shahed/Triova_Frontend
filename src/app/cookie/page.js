@@ -10,7 +10,7 @@ export default function CookiePolicy() {
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/50 backdrop-blur-lg border border-amber-200 text-left">
                     <p className="text-lg text-gray-800 mb-6">
-                        At <strong>Triova Limited</strong>, we use cookies and similar tracking technologies to enhance your browsing experience, personalize content, and analyze website traffic. This
+                        At <strong>Triova BD</strong>, we use cookies and similar tracking technologies to enhance your browsing experience, personalize content, and analyze website traffic. This
                         policy outlines how and why we use cookies on our platform.
                     </p>
 

@@ -23,8 +23,8 @@ export default function ContactForm() {
                 <header>
                     <h1 className="text-5xl font-extrabold text-cyan-700 mb-8 drop-shadow-lg">Contact Us</h1>
                     <p className="text-lg text-gray-700 mb-12 max-w-xl mx-auto shadow-md rounded-3xl p-6 bg-white/70 backdrop-blur-md">
-                        Have questions or need assistance? Reach out to the Triova Limited team anytime! Email us at <strong>triovabd@gmail.com</strong> or call <strong>+880 1312379588</strong>. Or
-                        use the contact form below.
+                        Have questions or need assistance? Reach out to the Triova BD team anytime! Email us at <strong>triovabd@gmail.com</strong> or call <strong>+880 1312379588</strong>. Or use the
+                        contact form below.
                     </p>
                 </header>
 

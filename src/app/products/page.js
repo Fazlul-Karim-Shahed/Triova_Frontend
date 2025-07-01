@@ -6,9 +6,9 @@ import { imageSrc } from "@/src/functions/CustomFunction";
 export async function generateMetadata({ searchParams }) {
     const { search = "", category = "", subcategory = "" } = searchParams || {};
 
-    const title = search ? `${search} | Triova Limited` : category || subcategory ? `${category || subcategory} Products | Triova Limited` : "All Products | Triova Limited";
+    const title = search ? `${search} | Triova BD` : category || subcategory ? `${category || subcategory} Products | Triova BD` : "All Products | Triova BD";
 
-    const description = `Browse our collection of ${search || category || subcategory || "latest"} products at the best prices and premium quality. Shop now from Triova Limited.`;
+    const description = `Browse our collection of ${search || category || subcategory || "latest"} products at the best prices and premium quality. Shop now from Triova BD.`;
 
     const keywords = `${search}, ${category}, ${subcategory}, Triova, buy online, best price, ecommerce in Bangladesh`;
 
@@ -20,14 +20,14 @@ export async function generateMetadata({ searchParams }) {
             title,
             description,
             url: `https://triova.vercel.app/products`,
-            siteName: "Triova Limited",
+            siteName: "Triova BD",
             type: "website",
             images: [
                 {
                     url: "https://triova.vercel.app/logo.png", // Replace with your OG image
                     width: 1200,
                     height: 630,
-                    alt: "Triova Limited Products",
+                    alt: "Triova BD Products",
                 },
             ],
         },
@@ -81,11 +81,11 @@ export default async function ProductPage({ searchParams }) {
                 "@type": "Product",
                 name: item.name,
                 image: [imageSrc(item.featuredImage.name), ...item.image.map((img) => imageSrc(img.name))],
-                description: item.description?.substring(0, 500) || "Quality product from Triova Limited.",
+                description: item.description?.substring(0, 500) || "Quality product from Triova BD.",
                 sku: item.sku || item._id,
                 brand: {
                     "@type": "Brand",
-                    name: item.brand?.name || "Triova Limited",
+                    name: item.brand?.name || "Triova BD",
                 },
                 offers: {
                     "@type": "Offer",
@@ -97,7 +97,7 @@ export default async function ProductPage({ searchParams }) {
                     availability: item.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
                     seller: {
                         "@type": "Organization",
-                        name: "Triova Limited",
+                        name: "Triova BD",
                     },
                     priceSpecification: {
                         "@type": "UnitPriceSpecification",

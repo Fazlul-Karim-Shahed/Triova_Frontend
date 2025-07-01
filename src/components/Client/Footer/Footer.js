@@ -23,7 +23,7 @@ export default function Footer() {
                     <div>
                         <Image src={Logo} width={100} alt="Logo" className="mb-4 -ms-2" />
                         <p className="text-sm">
-                            <strong>Triova Limited</strong>
+                            <strong>Triova BD</strong>
                             <br />
                             Bangladesh's largest online shopping mall since 2025
                         </p>

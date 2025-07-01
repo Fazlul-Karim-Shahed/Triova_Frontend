@@ -14,11 +14,11 @@ const inter = Montserrat({ subsets: ["latin"], weight: "400", display: "swap", v
 // SEO config using Next.js Metadata API
 export const metadata = {
     metadataBase: new URL("https://triova.vercel.app/"),
-    title: "Triova Limited - Shop Top Brands with Discounts",
-    description: "Explore Triova Limited for trendy fashion, top accessories, and best offers in Bangladesh.",
-    keywords: ["fashion", "ecommerce", "Bangladesh", "Triova", "clothing", "accessories", "Triova Limited", "palsbd", "pals fashion"],
-    authors: [{ name: "Triova Limited", url: "https://triova.vercel.app/" }],
-    creator: "Triova Limited",
+    title: "Triova BD - Shop Top Brands with Discounts",
+    description: "Explore Triova BD for trendy fashion, top accessories, and best offers in Bangladesh.",
+    keywords: ["fashion", "ecommerce", "Bangladesh", "Triova", "clothing", "accessories", "Triova BD", "palsbd", "pals fashion"],
+    authors: [{ name: "Triova BD", url: "https://triova.vercel.app/" }],
+    creator: "Triova BD",
     robots: "index, follow",
     icons: {
         icon: "/favicon.ico",
@@ -27,14 +27,14 @@ export const metadata = {
         title: "Triova - Redefine the future fashion",
         description: "Discover exclusive deals on trusted brands with Triova. Shop now and save big!",
         url: "https://triova.vercel.app/",
-        siteName: "Triova Limited",
+        siteName: "Triova BD",
         type: "website",
         images: [
             {
                 url: "https://triova.vercel.app/Logo_Bg.png",
                 width: 384,
                 height: 384,
-                alt: "Triova Limited Logo",
+                alt: "Triova BD Logo",
             },
         ],
     },
@@ -74,7 +74,7 @@ export default function RootLayout({ children }) {
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "Organization",
-                            name: "Triova Limited",
+                            name: "Triova BD",
                             url: "https://triova.vercel.app",
                             logo: "https://triova.vercel.app/Logo_Bg.png",
                         }),

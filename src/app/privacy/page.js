@@ -9,8 +9,8 @@ export default function Privacy() {
 
                 <div className="glassmorphic-card text-left p-10 rounded-3xl shadow-2xl bg-white/70 backdrop-blur-lg border border-gray-200">
                     <p className="text-gray-800 text-lg mb-6">
-                        At <strong>Triova Limited</strong>, your privacy is our top priority. We are committed to safeguarding your personal information and maintaining transparency in how we collect,
-                        use, and protect it.
+                        At <strong>Triova BD</strong>, your privacy is our top priority. We are committed to safeguarding your personal information and maintaining transparency in how we collect, use,
+                        and protect it.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">1. Information We Collect</h2>

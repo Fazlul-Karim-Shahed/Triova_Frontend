@@ -1,21 +1,20 @@
-
 export default function About() {
     return (
         <main className="min-h-screen bg-white text-gray-800 py-12 px-4 md:px-8">
             <div className="max-w-5xl mx-auto">
                 <header className="text-center mb-12">
-                    <h1 className="text-5xl font-extrabold text-gray-900 mb-6">About Triova Limited</h1>
+                    <h1 className="text-5xl font-extrabold text-gray-900 mb-6">About Triova BD</h1>
                     <p className="text-xl text-gray-600">Your Fashion Companion in Bangladesh</p>
                 </header>
 
                 <section className="glass p-8 rounded-3xl shadow-xl backdrop-blur-lg bg-white/60">
                     <p className="text-lg leading-relaxed mb-6">
-                        At <strong>Triova Limited</strong>, we believe fashion is more than clothing—it's a form of self-expression. As a proudly Bangladeshi online fashion destination, we bring the
-                        latest trends and timeless pieces directly to your doorstep. Our curated collections are designed for comfort, confidence, and style.
+                        At <strong>Triova BD</strong>, we believe fashion is more than clothing—it's a form of self-expression. As a proudly Bangladeshi online fashion destination, we bring the latest
+                        trends and timeless pieces directly to your doorstep. Our curated collections are designed for comfort, confidence, and style.
                     </p>
                     <p className="text-lg leading-relaxed mb-6">
                         We are committed to providing a seamless online shopping experience with reliable delivery, secure payment options, and attentive customer care. From trendy apparel to everyday
-                        essentials, Triova Limited is your trusted source for all things fashion.
+                        essentials, Triova BD is your trusted source for all things fashion.
                     </p>
                     <p className="text-lg leading-relaxed">
                         Join thousands of happy shoppers across Bangladesh who trust us for quality, affordability, and authenticity. With every order, you become a part of the Triova family.

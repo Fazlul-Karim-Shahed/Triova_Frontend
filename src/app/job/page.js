@@ -5,12 +5,12 @@ export default function Jobs() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-100 p-5">
             <div className="max-w-5xl mx-auto text-center">
-                <h1 className="text-5xl font-extrabold text-indigo-700 mb-8 drop-shadow-lg">Careers at Triova Limited</h1>
+                <h1 className="text-5xl font-extrabold text-indigo-700 mb-8 drop-shadow-lg">Careers at Triova BD</h1>
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/50 backdrop-blur-lg border border-indigo-200 text-left">
                     <p className="text-lg text-gray-800 mb-6">
-                        At <strong>Triova Limited</strong>, we’re more than just an e-commerce platform — we’re a movement shaping the future of fashion and digital retail in Bangladesh. Our mission
-                        is to empower talent, embrace innovation, and build a company culture rooted in excellence and creativity.
+                        At <strong>Triova BD</strong>, we’re more than just an e-commerce platform — we’re a movement shaping the future of fashion and digital retail in Bangladesh. Our mission is to
+                        empower talent, embrace innovation, and build a company culture rooted in excellence and creativity.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-indigo-700 mt-6 mb-3">Why Work With Us?</h2>

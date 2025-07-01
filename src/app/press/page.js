@@ -10,8 +10,8 @@ export default function PressKit() {
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/60 backdrop-blur-lg border border-indigo-200 text-left">
                     <p className="text-lg text-gray-800 mb-6">
-                        Welcome to the official Triova Limited Press Kit — your one-stop destination for brand assets, media tools, and press-ready content. Whether you're writing about us,
-                        collaborating on a feature, or just showcasing our story, these materials will help you represent Triova Limited beautifully and accurately.
+                        Welcome to the official Triova BD Press Kit — your one-stop destination for brand assets, media tools, and press-ready content. Whether you're writing about us, collaborating
+                        on a feature, or just showcasing our story, these materials will help you represent Triova BD beautifully and accurately.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-indigo-700 mt-6 mb-3">What’s Inside</h2>

@@ -9,13 +9,12 @@ export default function Terms() {
 
                 <div className="glassmorphic-card text-left p-10 rounded-3xl shadow-2xl bg-white/70 backdrop-blur-lg border border-gray-200">
                     <p className="text-gray-800 text-lg mb-6">
-                        By accessing or using Triova Limited’s website, mobile app, or services, you agree to comply with and be bound by the following terms and conditions. Please read them
-                        carefully.
+                        By accessing or using Triova BD’s website, mobile app, or services, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">1. Acceptance of Terms</h2>
                     <p className="text-gray-700 mb-6">
-                        These Terms of Use form a legally binding agreement between you and Triova Limited. If you do not agree with any part of these terms, you may not use our services.
+                        These Terms of Use form a legally binding agreement between you and Triova BD. If you do not agree with any part of these terms, you may not use our services.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">2. Eligibility</h2>
@@ -30,8 +29,8 @@ export default function Terms() {
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">4. Intellectual Property</h2>
                     <p className="text-gray-700 mb-6">
-                        All content on Triova Limited (including logos, graphics, and product listings) is protected by copyright and intellectual property laws. You may not reuse or redistribute
-                        content without our written permission.
+                        All content on Triova BD (including logos, graphics, and product listings) is protected by copyright and intellectual property laws. You may not reuse or redistribute content
+                        without our written permission.
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">5. Order Acceptance & Cancellation</h2>
@@ -40,7 +39,7 @@ export default function Terms() {
                     </p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">6. Limitation of Liability</h2>
-                    <p className="text-gray-700 mb-6">Triova Limited is not liable for any indirect, incidental, or consequential damages arising from your use of our services.</p>
+                    <p className="text-gray-700 mb-6">Triova BD is not liable for any indirect, incidental, or consequential damages arising from your use of our services.</p>
 
                     <h2 className="text-2xl font-semibold text-gray-700 mb-3">7. Modifications</h2>
                     <p className="text-gray-700 mb-6">We may update these terms from time to time. Continued use of our services after changes means you accept the new terms.</p>

@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
 
     if (!product) {
         return {
-            title: `Product Not Found | Triova Limited`,
+            title: `Product Not Found | Triova BD`,
             description: `Sorry, we couldn't find the product you’re looking for.`,
         };
     }
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
     const productUrl = `https://triova.vercel.app/products/${encodeURIComponent(product.name)}`;
     const imageUrl = imageSrc(product.featuredImage.name);
 
-    const title = `${product.name} | Triova Limited`;
+    const title = `${product.name} | Triova BD`;
     const description = `Buy ${product.name} at the best price in Bangladesh. Explore specifications, offers & more at Triova.`;
 
     return {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
             title,
             description,
             url: productUrl,
-            siteName: "Triova Limited",
+            siteName: "Triova BD",
             type: "website",
             images: [
                 {
@@ -88,12 +88,12 @@ const ProductDetailsPage = async ({ params }) => {
                         "@type": "Product",
                         name: product.name,
                         image: [imageSrc(product.featuredImage?.name), ...product.image?.map((img) => imageSrc(img.name)).filter(Boolean)],
-                        description: product.shortDescription || "High-quality product from Triova Limited.",
+                        description: product.shortDescription || "High-quality product from Triova BD.",
                         sku: product.sku || product._id,
                         mpn: product._id,
                         brand: {
                             "@type": "Brand",
-                            name: product.brandId?.name || "Triova Limited",
+                            name: product.brandId?.name || "Triova BD",
                             logo: imageSrc(product.brandId?.logo?.name),
                         },
                         offers: {
@@ -111,7 +111,7 @@ const ProductDetailsPage = async ({ params }) => {
                             availability: "https://schema.org/InStock",
                             seller: {
                                 "@type": "Organization",
-                                name: "Triova Limited",
+                                name: "Triova BD",
                             },
                             validFrom: new Date().toISOString(),
                             priceValidUntil: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),

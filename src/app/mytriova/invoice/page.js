@@ -138,7 +138,7 @@ const InvoiceTemplate = ({ order }) => {
                             <tbody>
                                 <tr>
                                     <td className="w-half align-top text-neutral-600">
-                                        <p className="font-bold">Triova Limited</p>
+                                        <p className="font-bold">Triova BD</p>
                                         +88 01312379588 <br />
                                         24/3A Khilkhet, Dhaka, 1229 <br />
                                         Bangladesh <br />
@@ -256,7 +256,7 @@ const InvoiceTemplate = ({ order }) => {
                     </div>
 
                     <footer>
-                        Triova Limited © {new Date().getFullYear()} | All rights reserved
+                        Triova BD © {new Date().getFullYear()} | All rights reserved
                         <span className="text-slate-300 px-2">|</span>
                         triovabd@gmail.com
                         <span className="text-slate-300 px-2">|</span>

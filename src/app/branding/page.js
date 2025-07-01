@@ -11,7 +11,7 @@ export default function Branding() {
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/40 backdrop-blur-lg border border-brand-200 mb-12">
                     <p className="text-xl leading-relaxed text-gray-900 mb-6">
-                        At <strong>Triova Limited</strong>, we believe a strong brand is the foundation of lasting success. Our expert branding services help you build a memorable identity that truly
+                        At <strong>Triova BD</strong>, we believe a strong brand is the foundation of lasting success. Our expert branding services help you build a memorable identity that truly
                         reflects your vision and values.
                     </p>
                     <p className="text-lg text-gray-800 mb-6">
@@ -21,9 +21,7 @@ export default function Branding() {
                         Let us help you craft a consistent, authentic brand presence that stands out in Bangladesh’s competitive fashion market and builds customer loyalty.
                     </p>
 
-                    <button className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3 rounded-full transition-shadow shadow-brand-400 hover:shadow-brand-600">
-                        Get in Touch
-                    </button>
+                    <button className="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3 rounded-full transition-shadow shadow-brand-400 hover:shadow-brand-600">Get in Touch</button>
                 </div>
 
                 {/* Download Section */}
@@ -31,7 +29,7 @@ export default function Branding() {
                     <h2 className="text-3xl font-semibold text-brand-700 mb-4">Download Our Branding Portfolio</h2>
                     <p className="text-gray-700 mb-6">Explore our recent branding projects to see how we elevate identities with creative design and strategy.</p>
 
-                    <ClientImageWithLoader src={"Logo_Bg.png"} alt="Triova Limited Logo" width={"100%"} height={"100%"} className="w-full h-full" />
+                    <ClientImageWithLoader src={"Logo_Bg.png"} alt="Triova BD Logo" width={"100%"} height={"100%"} className="w-full h-full" />
 
                     {/* Replace href with your actual file */}
                     {/* <a

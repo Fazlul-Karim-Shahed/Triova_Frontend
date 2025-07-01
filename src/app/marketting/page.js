@@ -10,7 +10,7 @@ export default function Marketing() {
 
                 <div className="glassmorphic-card p-10 rounded-3xl shadow-2xl bg-white/60 backdrop-blur-lg border border-pink-200 text-left">
                     <p className="text-lg text-gray-800 mb-6">
-                        At <strong>Triova Limited</strong>, we offer powerful marketing solutions to amplify your brand’s voice, build loyal customers, and drive real business results. From fashion
+                        At <strong>Triova BD</strong>, we offer powerful marketing solutions to amplify your brand’s voice, build loyal customers, and drive real business results. From fashion
                         startups to large online retailers, our strategies are designed to deliver visibility, engagement, and sales.
                     </p>
 
