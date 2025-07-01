@@ -38,7 +38,7 @@ export default function EventPage({ params }) {
     return (
         <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white to-gray-100 min-h-screen">
             {/* Event Header */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-stretch md:max-h-32">
                 {/* Image Section */}
                 <div className="lg:col-span-4 rounded-2xl overflow-hidden shadow-xl relative group">
                     <ClientImageWithLoader
