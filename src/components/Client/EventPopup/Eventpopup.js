@@ -35,7 +35,7 @@ export default function EventPopup() {
             <div className="relative w-full max-w-3xl rounded-xl overflow-hidden animate-popup-fade">
                 {/* Promotional Image */}
                 <div className="w-full relative h-[350px] sm:h-[400px] md:h-[450px] lg:h-[550px]">
-                    <Link href={`/events/${currentEvent.name}`}>
+                    <Link href={`/event/${currentEvent.name}`}>
                         <ClientImageWithLoader src={imageSrc(currentEvent.promotionalImage.name)} alt="Promotion" className="w-full h-full object-contain rounded-xl" />
                     </Link>
                     {/* Close Button (inside image) */}
