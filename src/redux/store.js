@@ -9,6 +9,7 @@ const triovaSlice = createSlice({
         decodedToken: null,
         authenticated: false,
         cart: 0,
+        settings: {},
     },
     reducers: {
         preloadAuth: (state, actions) => {
@@ -17,10 +18,13 @@ const triovaSlice = createSlice({
         getReduxCart: (state, actions) => {
             state.cart = actions.payload.cart;
         },
+        getSettngs: (state, actions) => {
+            state.settings = actions.payload.settings;
+        },
     },
 });
 
-export const { preloadAuth, getReduxCart } = triovaSlice.actions;
+export const { preloadAuth, getReduxCart, getSettngs } = triovaSlice.actions;
 
 const store = configureStore({
     reducer: {

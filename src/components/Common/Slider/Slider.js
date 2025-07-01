@@ -5,6 +5,7 @@ import Link from "next/link";
 import { imageSrc } from "@/src/functions/CustomFunction";
 import styles from "./Slider.module.css";
 import ClientImageWithLoader from "../ImageLoader/ClientImageWithLoader";
+import { getSettingsApi } from "@/src/api/SuperAdminApi/SettingsApi";
 import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 
 const Slider = () => {
@@ -15,9 +16,10 @@ const Slider = () => {
     const cardWidthRef = useRef(300);
 
     useEffect(() => {
-        getAllProductApi(10).then((data) => {
+        getSettingsApi().then((data) => {
             if (!data.error) {
-                setProducts(data.data);
+                // console.log(data.data.bestSelling);
+                setProducts(data.data.bestSelling);
             } else {
                 setProducts([]);
             }
