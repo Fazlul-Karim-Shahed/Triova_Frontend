@@ -13,7 +13,6 @@ export default async function Home() {
     let settings = await getSettingsApi();
     settings = settings.error === false && settings.data ? settings.data : null;
 
-    
 
     return (
         <>
