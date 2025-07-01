@@ -22,7 +22,7 @@ async function generateSitemap() {
   <url>
     <loc>${baseUrl}/${path}</loc>
     <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
+    <priority>1</priority>
   </url>`
       )
       .join("")}
@@ -33,7 +33,7 @@ async function generateSitemap() {
     <loc>${baseUrl}/products/${encodeURIComponent(product.name)}</loc>
     <lastmod>${new Date(product.updatedAt || product.createdAt || new Date()).toISOString()}</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
+    <priority>1</priority>
   </url>`
       )
       .join("")}
