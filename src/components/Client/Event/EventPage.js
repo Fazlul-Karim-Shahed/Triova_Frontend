@@ -38,25 +38,23 @@ export default function EventPage({ params }) {
     return (
         <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white to-gray-100 min-h-screen">
             {/* Event Header */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-stretch md:max-h-32">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-stretch">
                 {/* Image Section */}
-                <div className="lg:col-span-4 rounded-2xl overflow-hidden shadow-xl relative group">
+                <div className="lg:col-span-2 relative rounded-2xl overflow-hidden shadow-lg">
                     <ClientImageWithLoader
                         src={event.promotionalImage?.secure_url || "https://triova.vercel.app/Logo_Bg.png"}
                         alt={event.name}
-                        className="w-full h-80 lg:h-full object-cover transition-transform group-hover:scale-105 duration-700"
+                        className="w-full h-64 lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-6">
-                        <h1 className="text-3xl md:text-4xl font-bold">{event.name}</h1>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                        <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">{event.name}</h1>
                     </div>
                 </div>
 
                 {/* Description Section */}
-                <div className="lg:col-span-8 items-center hidden md:block">
-                    <div className="p-6">
-                        <h2 className="text-2xl font-semibold mb-4">Event Description</h2>
-                        <p className="text-gray-700 leading-relaxed">{event.description}</p>
-                    </div>
+                <div className="lg:col-span-10 rounded-2xl shadow-md flex flex-col justify-center bg-gradient-to-br from-[#f0f4ff] via-white to-[#e4f1ff] p-8">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900 tracking-wide">✨ Event Description</h2>
+                    <p className="text-gray-800 text-md md:text-lg leading-relaxed font-medium">{event.description}</p>
                 </div>
             </div>
 
