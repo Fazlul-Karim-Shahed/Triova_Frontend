@@ -1,15 +1,15 @@
 "use client";
 
 import { deleteProductApi } from "@/src/api/SuperAdminApi/ProductApi";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Modal } from "../../Common/Modal/Modal";
 import { imageSrc } from "@/src/functions/CustomFunction";
+import Link from "next/link";
 import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
 
 export default function ShowProduct({ product }) {
     const [modalState, setModalState] = useState({ error: false, message: "", open: false, loading: false });
+    const [searchTerm, setSearchTerm] = useState("");
 
     const deleteProduct = (id) => {
         if (window.confirm("Are you sure you want to delete this product?")) {
@@ -20,31 +20,43 @@ export default function ShowProduct({ product }) {
         }
     };
 
+    const filteredProducts = product?.data?.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <div>
             {!product.error ? (
-                <div className="overflow-x-auto rounded-lg">
-                    <table className="table border">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th></th>
-                                {/* <th>Batch</th> */}
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Stock</th>
-                                <th>Price</th>
-                                <th>Discount</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {product.data.map((item, index) => {
-                                return (
+                <>
+                    {/* Search Input */}
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            placeholder="Search product by name..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+                        />
+                    </div>
+
+                    {/* Product Table */}
+                    <div className="overflow-x-auto rounded-lg">
+                        <table className="table border">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    <th></th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Discount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredProducts.map((item, index) => (
                                     <tr key={index} className="hover:bg-green-50">
                                         <td>
                                             <ClientImageWithLoader quality={100} width={100} height={100} className="rounded" src={imageSrc(item.featuredImage.name)} alt={item.name.slice(0, 10)} />
                                         </td>
-                                        {/* <td>{item.batchId.name}</td> */}
                                         <td className="w-32 truncate text-sm" title={item.name}>
                                             {item.name.length > 25 ? item.name.slice(0, 25) + "..." : item.name}
                                         </td>
@@ -61,11 +73,13 @@ export default function ShowProduct({ product }) {
                                             </button>
                                         </td>
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                                ))}
+                            </tbody>
+                        </table>
+
+                        {filteredProducts.length === 0 && <p className="text-center py-6 text-gray-500">No products found.</p>}
+                    </div>
+                </>
             ) : (
                 <p>{product.message}</p>
             )}
