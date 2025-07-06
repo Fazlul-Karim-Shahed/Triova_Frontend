@@ -36,7 +36,7 @@ export default function ProductShowPageWrapper({ initialProducts, initialSubCate
         
     }, [searchParams]);
 
-    // if (loading) return <Spinner message="Loading Products data..." />;
+    if (loading) return <Spinner message="Loading Products data..." />;
 
     return (
         <div className="mx-auto px-4 py-10 bg-gradient-to-b from-white/30 to-white/10 backdrop-blur-md">
