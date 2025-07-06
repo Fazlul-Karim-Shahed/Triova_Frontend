@@ -54,11 +54,11 @@ export const metadata = {
     },
 
     other: {
-        "google-site-verification": "heuWYnGOKgUq813UakBvI-oh5dJLszSPv_0DIz77niM", // 👈 Add this
+        "google-site-verification": "9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y", // 👈 Add this
     },
 
     verification: {
-        google: "heuWYnGOKgUq813UakBvI-oh5dJLszSPv_0DIz77niM",
+        google: "9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y",
     },
 };
 
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <Head>
-                <meta name="google-site-verification" content="heuWYnGOKgUq813UakBvI-oh5dJLszSPv_0DIz77niM" />
+                <meta name="google-site-verification" content="9gdYTAp_lZEZBpe-PrdVDA7WidwKCMiqyoqNg_DVE9Y" />
 
                 <Script
                     type="application/ld+json"
