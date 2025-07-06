@@ -72,7 +72,7 @@ export default function BottomHeader({ departments, categories }) {
 
                         {/* Department Dropdown */}
                         {showDepartment && (
-                            <ul tabIndex={0} className="absolute z-20 mt-2 w-64 max-h-[550px] overflow-y-auto bg-white/90 backdrop-blur-lg shadow-xl p-3 rounded-b-xl border border-gray-200">
+                            <ul tabIndex={0} className="absolute z-20 mt-2 w-64 max-h-[550px] overflow-y-auto bg-white/100 backdrop-blur-lg shadow-xl p-3 rounded-es-xl border border-gray-200">
                                 {department.map((item) => (
                                     <li key={item.id} onMouseEnter={() => getCategory(item)} className="py-2 px-3 text-brand-900 rounded hover:bg-brand-200 cursor-pointer transition">
                                         {item.name}
@@ -83,18 +83,15 @@ export default function BottomHeader({ departments, categories }) {
 
                         {/* Category & Subcategory Panel */}
                         {showDepartment && showCategory && (
-                            <div
-                                tabIndex={0}
-                                className="fixed ml-64 mt-2 bg-white/90 backdrop-blur-md w-[800px] max-h-[550px] overflow-y-auto px-8 py-5 rounded-b-xl shadow-2xl z-30 border border-gray-200"
-                            >
+                            <div tabIndex={0} className="fixed ml-64 mt-2 bg-white/100 backdrop-blur-md w-[800px] max-h-[550px] overflow-y-auto px-8 py-5 rounded-b-xl  z-30 border border-gray-200">
                                 <ul className="grid grid-cols-3 gap-6">
                                     {selectedCategory.map((category) => (
                                         <li className="mb-4" key={category._id}>
                                             <div className="text-md font-semibold text-brand-900 mb-3">{category.name}</div>
-                                            <Link href={{ pathname: "/products", query: { category: category.name } }} className="text-brand-600 text-sm font-medium hover:underline">
+                                            <Link href={{ pathname: "/products", query: { category: category.name } }} className="text-brand-600 text-sm font-medium  hover:font-semibold">
                                                 View All
                                             </Link>
-                                            <div className="mt-3 space-y-1">
+                                            <div className="mt-1 space-y-2">
                                                 {allSubCategory
                                                     .filter((sub) => sub.categoryId._id === category._id)
                                                     .map((item) => (
@@ -105,7 +102,7 @@ export default function BottomHeader({ departments, categories }) {
                                                                 setShowCategory(false);
                                                             }}
                                                             href={{ pathname: "/products", query: { subcategory: item.name } }}
-                                                            className="block text-sm text-brand-700 hover:underline"
+                                                            className="block text-sm text-brand-900 hover:font-semibold"
                                                         >
                                                             {item.name}
                                                         </Link>
@@ -121,7 +118,7 @@ export default function BottomHeader({ departments, categories }) {
                         {showDepartment && showCategory && selectedDeartment?.promotionalImage && (
                             <div
                                 tabIndex={0}
-                                className="fixed ml-[1056px] mt-2 bg-white/90 backdrop-blur-md w-[300px] max-h-[550px] overflow-y-auto px-4 py-5 rounded-b-xl shadow-2xl z-30 border border-gray-200"
+                                className="fixed ml-[1056px] mt-2 bg-white/100 backdrop-blur-md w-[300px] max-h-[550px] overflow-y-auto px-4 py-5 rounded-br-xl z-30 border border-gray-200"
                             >
                                 <ClientImageWithLoader className="w-full h-40 object-cover rounded-lg shadow-md" src={imageSrc(selectedDeartment.promotionalImage.name)} alt="Promo" />
                                 <div className="text-base font-semibold my-4 text-brand-800">{selectedDeartment.promotionalDescription}</div>
