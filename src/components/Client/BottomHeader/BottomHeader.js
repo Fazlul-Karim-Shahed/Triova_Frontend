@@ -46,7 +46,7 @@ export default function BottomHeader({ departments, categories }) {
             if (allCategory.length === 0) setAllCategory(categories);
             if (allSubCategory.length === 0) {
                 getAllSubCategoryApi().then((data) => {
-                    if (!data.error) setAllSubCategory(data.data);
+                    if (!data.error) setAllSubCategory(data.data.filter((item) => item.visible));
                 });
             }
         }
