@@ -216,7 +216,7 @@ export default function CreateProduct({ departments, categories, subCategories, 
             image: images,
             colors: formData.colors.map((item) => ({ color: item.color, stock: item.stock, colorCode: item.colorCode, image: item.image.name })),
         }).then((data) => {
-            //console.log(data)
+            console.log(data)
             setModalState({ error: data.error, message: data.message, open: 1, loading: 0 });
         });
     };
