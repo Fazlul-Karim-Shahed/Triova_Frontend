@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllSubCategoryApi } from "@/src/api/SuperAdminApi/SubCategoryApi";
+import { getAllSubCategoryApi, getSubCategoryByCategoryApi } from "@/src/api/SuperAdminApi/SubCategoryApi";
 import { faArrowUpShortWide } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
@@ -18,10 +18,10 @@ export default function ProductFilterSM({ products, categoryId }) {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        if (categoryId) {
-            getAllSubCategoryApi({ categoryId }).then((data) => {
+        if (products?.length) {
+            getSubCategoryByCategoryApi(products[0].categoryId._id).then((data) => {
                 if (!data.error) {
-                    setSubCategory(data.data);
+                    setSubCategory(data.data.filter((item) => item.visible));
                 }
             });
         }

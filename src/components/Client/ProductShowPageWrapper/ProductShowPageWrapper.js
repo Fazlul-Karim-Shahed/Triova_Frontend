@@ -46,7 +46,7 @@ export default function ProductShowPageWrapper({ initialProducts, initialSubCate
 
             <div className="grid grid-cols-12 gap-6">
                 <div className="hidden lg:block col-span-3">
-                    <div className="sticky top-20 bg-white/20 backdrop-blur-md rounded-xl px-4">
+                    <div className="sticky top-40 bg-white/20 backdrop-blur-md rounded-xl px-4">
                         <ProductFilter products={products} categoryId={subCategory} searchParams={Object.fromEntries(searchParams.entries())} />
                     </div>
                 </div>

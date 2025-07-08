@@ -1,13 +1,15 @@
 "use client";
 
-import { getAllSubCategoryApi } from "@/src/api/SuperAdminApi/SubCategoryApi";
+import { getSubCategoryByCategoryApi } from "@/src/api/SuperAdminApi/SubCategoryApi";
 import { faArrowUpShortWide } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ProductFilter({ products, categoryId, searchParams, onFilterChange }) {
+    console.log(searchParams)
     const [subBrands, setSubBrands] = useState([]);
     const [brands, setBrands] = useState([]);
     const [color, setColor] = useState([]);
@@ -17,10 +19,10 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
     const router = useRouter();
 
     useEffect(() => {
-        if (categoryId) {
-            getAllSubCategoryApi({ categoryId }).then((data) => {
+        if (products?.length) {
+            getSubCategoryByCategoryApi(products[0].categoryId._id).then((data) => {
                 if (!data.error) {
-                    setSubCategory(data.data);
+                    setSubCategory(data.data.filter((item) => item.visible));
                 }
             });
         }
@@ -58,7 +60,7 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
     };
 
     return (
-        <div className="sticky top-28">
+        <div className="">
             <Formik
                 initialValues={initialFilterValues}
                 enableReinitialize
@@ -70,36 +72,31 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                         }
                     }
                     router.push(`/products?${new URLSearchParams(query).toString()}`);
-                    
+
                     if (typeof onFilterChange === "function") {
                         onFilterChange(query);
                     }
                 }}
             >
                 {({ handleChange, handleSubmit, setValues, values }) => (
-                    <form onSubmit={handleSubmit} className="bg-white/70 border-2 border-gray-200 text-sm rounded-2xl p-5  backdrop-blur-md">
-                        <div className="mb-6">
-                            <div className="flex items-center text-xl font-semibold text-gray-800">
-                                <FontAwesomeIcon icon={faArrowUpShortWide} className="me-3 text-gray-500" />
-                                All Filters
-                            </div>
+                    <form onSubmit={handleSubmit} className="bg-white/80 border border-gray-200 rounded-xl p-3 space-y-3">
+                        <div className="flex items-center font-semibold text-gray-700 mb-4">
+                            <FontAwesomeIcon icon={faArrowUpShortWide} className="me-2 text-gray-500" />
+                            Filters
                         </div>
 
                         {subCategory.length > 0 && (
-                            <div className="mb-4">
-                                <label className="text-gray-700 font-semibold block mb-1">Department</label>
-                                <div className="text-sm underline text-emerald-600">{subCategory[0].departmentId.name}</div>
+                            <div>
+                                {/* <div className="text-[12px] font-semibold text-gray-500 mb-1">Department</div> */}
+                                <Link href={`/products?department=${subCategory[0].departmentId.name}`} className=" text-emerald-600 hover:underline">
+                                    {subCategory[0].departmentId.name}
+                                </Link>
                             </div>
                         )}
 
-                        <div className="mb-4">
-                            <label className="text-gray-700 font-semibold block mb-1">Sub-Category</label>
-                            <select
-                                name="subcategory"
-                                value={values.subcategory}
-                                onChange={handleChange}
-                                className="w-full p-2 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
-                            >
+                        <div>
+                            <label className="block text-[12px] font-semibold text-gray-600 mb-1">Sub-Category</label>
+                            <select name="subcategory" value={values.subcategory} onChange={handleChange} className="w-full p-1 rounded border border-gray-300">
                                 <option value="">Select</option>
                                 {subCategory.map((item) => (
                                     <option key={item._id} value={item.name}>
@@ -109,25 +106,11 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                             </select>
                         </div>
 
-                        <div className="mb-4 text-gray-700">
-                            <label className="font-semibold block mb-1">Price</label>
-                            <div className="flex gap-2 items-center">
-                                <input
-                                    type="number"
-                                    name="min"
-                                    placeholder="Min"
-                                    value={values.min}
-                                    onChange={handleChange}
-                                    className="w-20 px-2 py-1 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
-                                />
-                                <input
-                                    type="number"
-                                    name="max"
-                                    placeholder="Max"
-                                    value={values.max}
-                                    onChange={handleChange}
-                                    className="w-20 px-2 py-1 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
-                                />
+                        <div>
+                            <label className="block text-[12px] font-semibold text-gray-600 mb-1">Price</label>
+                            <div className="flex gap-2">
+                                <input type="number" name="min" placeholder="Min" value={values.min} onChange={handleChange} className="w-1/2 p-1 rounded border border-gray-300" />
+                                <input type="number" name="max" placeholder="Max" value={values.max} onChange={handleChange} className="w-1/2 p-1 rounded border border-gray-300" />
                             </div>
                         </div>
 
@@ -137,14 +120,9 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                             { name: "color", label: "Color", options: color },
                             { name: "size", label: "Size", options: size },
                         ].map((field) => (
-                            <div className="mb-4" key={field.name}>
-                                <label className="text-gray-700 font-semibold block mb-1">{field.label}</label>
-                                <select
-                                    name={field.name}
-                                    value={values[field.name]}
-                                    onChange={handleChange}
-                                    className="w-full p-2 rounded-lg bg-white border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
-                                >
+                            <div key={field.name}>
+                                <label className="block text-[12px] font-semibold text-gray-600 mb-1">{field.label}</label>
+                                <select name={field.name} value={values[field.name]} onChange={handleChange} className="w-full p-1 rounded border border-gray-300">
                                     <option value="">Select</option>
                                     {field.options.map((opt) => (
                                         <option key={opt} value={opt}>
@@ -155,11 +133,10 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                             </div>
                         ))}
 
-                        <div className="pt-2 flex flex-row gap-3">
-                            <button type="submit" className="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-600 text-white font-medium shadow-md hover:opacity-90 transition">
-                                Apply Filters
+                        <div className="flex gap-2 pt-2">
+                            <button type="submit" className="w-full py-1.5 rounded bg-emerald-500 text-white font-medium hover:opacity-90">
+                                Apply
                             </button>
-
                             <button
                                 type="button"
                                 onClick={() => {
@@ -173,14 +150,14 @@ export default function ProductFilter({ products, categoryId, searchParams, onFi
                                         subcategory: "",
                                     };
                                     setValues(emptyFilters);
-                                    router.push("/products");
+                                    router.push(`/products?department=${subCategory[0].departmentId.name}`);
                                     if (typeof onFilterChange === "function") {
                                         onFilterChange({});
                                     }
                                 }}
-                                className="w-full py-2 px-4 rounded-xl border border-emerald-400 text-emerald-600 hover:bg-emerald-50 font-medium transition"
+                                className="w-full py-1.5 rounded border border-emerald-500 text-emerald-600 font-medium hover:bg-emerald-50"
                             >
-                                Clear Filters
+                                Clear
                             </button>
                         </div>
                     </form>
