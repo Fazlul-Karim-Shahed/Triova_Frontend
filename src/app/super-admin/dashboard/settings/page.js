@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { updateSettingsApi, getSettingsApi } from "@/src/api/SuperAdminApi/SettingsApi";
 import { getAllProductApi } from "@/src/api/SuperAdminApi/ProductApi";
 import { Modal } from "@/src/components/Common/Modal/Modal";
+import ClientImageWithLoader from "@/src/components/Common/ImageLoader/ClientImageWithLoader";
+import { imageSrc } from "@/src/functions/CustomFunction";
 
 export default function SettingsPage() {
     const [coverPhoto, setCoverPhoto] = useState(null);
@@ -136,10 +138,11 @@ export default function SettingsPage() {
                             </div>
                         </div>
 
-                        <div className="overflow-auto max-h-64 border rounded-lg">
+                        <div className="overflow-auto max-h-[500px] border rounded-lg">
                             <table className="table table-sm w-full text-sm">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th>Product</th>
                                         <th>Price</th>
@@ -158,6 +161,10 @@ export default function SettingsPage() {
                                                         onChange={() => toggleProduct(product._id)}
                                                         disabled={loadingSubmit}
                                                     />
+                                                </td>
+                                                {console.log(product.featuredImage)}
+                                                <td>
+                                                    <ClientImageWithLoader src={imageSrc(product?.featuredImage?.name || "/placeholder.png")} alt={product.name} className="w-36 object-cover rounded" />
                                                 </td>
                                                 <td>{product.name}</td>
                                                 <td>{product.sellingPrice}/-</td>
