@@ -31,6 +31,12 @@ import { useSelector } from "react-redux";
 import BottomHeader from "../BottomHeader/BottomHeader";
 import { getAllEventApi } from "@/src/api/SuperAdminApi/EventApi";
 
+import algoliasearch from "algoliasearch/lite";
+import ClientImageWithLoader from "../../Common/ImageLoader/ClientImageWithLoader";
+import { imageSrc } from "@/src/functions/CustomFunction";
+const searchClient = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY);
+const index = searchClient.initIndex("products");
+
 export default function MainHeader({ searchParams }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
@@ -40,9 +46,29 @@ export default function MainHeader({ searchParams }) {
     const [events, setEvents] = useState([]);
     const [categories, setCategories] = useState([]);
     const [search, setSearch] = useState("");
+    const [results, setResults] = useState([]);
+    const debounceTimer = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     const pathname = usePathname();
     const store = useSelector((state) => state.triova);
+
+    const wrapperRef = useRef(null);
+
+    // ✅ Close dropdown on outside click
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setResults([]);
+                setLoading(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -110,7 +136,23 @@ export default function MainHeader({ searchParams }) {
         return null;
     }
 
-    const handleChange = (e) => setSearch(e.target.value);
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setSearch(value);
+
+        if (debounceTimer.current) clearTimeout(debounceTimer.current);
+        debounceTimer.current = setTimeout(async () => {
+            if (value.trim()) {
+                setLoading(true); // ✅ show loading
+                const res = await index.search(value, { hitsPerPage: 5 });
+                setResults(res.hits);
+                setLoading(false); // ✅ hide loading
+            } else {
+                setResults([]);
+                setLoading(false); // ✅ hide loading
+            }
+        }, 400);
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
         window.location.href = "/products?search=" + search;
@@ -133,29 +175,76 @@ export default function MainHeader({ searchParams }) {
                     </Link>
                     <div className="flex md:order-2">
                         <div className="relative hidden md:block md:flex items-center">
-                            <div className="me-3 relative">
+                            <div className="relative z-50 me-3" ref={wrapperRef}>
                                 <form onSubmit={handleSubmit} className="relative">
                                     <input
                                         onChange={handleChange}
                                         value={search}
                                         type="text"
                                         id="search-navbar"
-                                        className="w-[350px] lg:w-[550px] px-5 py-3  pr-14 text-sm text-gray-800 rounded-full 
-                       bg-white/30 backdrop-blur-md border border-brand-700  placeholder-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-700 focus:border-brand-700 transition-all duration-300 hover:shadow-md"
+                                        className="w-[350px] lg:w-[550px] px-5 py-3 pr-14 text-sm text-gray-800 rounded-full 
+                    bg-white/30 backdrop-blur-md border border-brand-700 placeholder-brand-500 
+                    focus:outline-none focus:ring-2 focus:ring-brand-700 focus:border-brand-700 
+                    transition-all duration-300 hover:shadow-md"
                                         placeholder="Search at Triova's largest store"
                                     />
+
+                                    {/* 🔄 Spinner inside button */}
                                     <button
                                         type="submit"
                                         className="absolute inset-y-0 end-0 flex items-center justify-center px-4 
-                       text-brand-700 hover:text-white hover:bg-brand-700 rounded-full 
-                       transition-colors duration-300"
+                    text-brand-700 hover:text-white hover:bg-brand-700 rounded-full 
+                    transition-colors duration-300"
                                     >
-                                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                        </svg>
+                                        {loading ? (
+                                            <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                            </svg>
+                                        ) : (
+                                            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                            </svg>
+                                        )}
                                         <span className="sr-only">Search</span>
                                     </button>
                                 </form>
+
+                                {/* 🔍 Suggestions Dropdown */}
+                                {(results.length > 0 || loading) && (
+                                    <ul className="absolute w-full mt-2 bg-white shadow-lg rounded-lg overflow-hidden border border-brand-700 max-h-72 overflow-y-auto">
+                                        {loading && <li className="px-4 py-3 text-sm text-brand-700">Searching...</li>}
+                                        {!loading &&
+                                            results.map((item) => (
+                                                <li
+                                                    key={item.objectID}
+                                                    className="px-4 py-3 text-sm hover:bg-brand-50 cursor-pointer transition border-b"
+                                                    onClick={() => {
+                                                        window.location.href = `/products/${item.name}`;
+                                                    }}
+                                                >
+                                                    <div className="grid grid-cols-12 items-center gap-3">
+                                                        <div className="col-span-2">
+                                                            <ClientImageWithLoader className="w-20 rounded object-contain" src={imageSrc(item.image)} alt={item.name} />
+                                                        </div>
+                                                        <div className="col-span-10">
+                                                            <p className="font-medium text-brand-700 truncate">{item.name}</p>
+                                                            {/* {console.log(item.sellingPrice)} */}
+                                                            <p className="text-brand-500 truncate mt-2">
+                                                                <span className="text font-semibold mr-2">
+                                                                    ৳ {((Number(item?.sellingPrice) || 0) - ((Number(item?.sellingPrice) || 0) * (Number(item?.discount) || 0)) / 100).toFixed(0)}
+                                                                </span>
+
+                                                                {console.log(item)}
+
+                                                                {Number(item?.discount) > 0 && <span className="text-xs line-through">{Number(item?.sellingPrice).toFixed(2)}</span>}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                    </ul>
+                                )}
                             </div>
 
                             <div>
@@ -397,7 +486,7 @@ export default function MainHeader({ searchParams }) {
                                 <hr className="my-2" />
 
                                 <li>
-                                    {store.authenticated && (store.decodedToken.role != "user" ) && (
+                                    {store.authenticated && store.decodedToken.role != "user" && (
                                         <Link
                                             className="md:hidden block py-2 px-3 text-gray-900 rounded hover:bg-brand-100 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-green-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                             onClick={handleToggle}
