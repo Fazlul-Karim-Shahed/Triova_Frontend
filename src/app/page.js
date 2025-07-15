@@ -20,7 +20,7 @@ export default async function Home() {
                 {/* Grid Banners */}
                 <div className="grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:auto-rows-fr">
                     <div className="col-span-2 md:col-span-4 lg:col-span-4 row-span-1 md:row-span-2 bg-white text-white flex justify-center items-center rounded-lg relative overflow-hidden">
-                        <ClientImageWithLoader src={settings && imageSrc(settings.coverPhoto.name)} alt="Promo GIF" className="w-full h-full object-cover" />
+                        <ClientImageWithLoader src={settings && settings.coverPhoto && imageSrc(settings.coverPhoto.name)} alt="Promo GIF" className="w-full h-full object-cover" />
                     </div>
                     <div className="col-span-2 lg:col-span-2 md:row-span-2 rounded-lg">
                         <HeroSlider />
