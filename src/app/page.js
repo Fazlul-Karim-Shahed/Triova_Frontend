@@ -8,7 +8,6 @@ import { imageSrc } from "../functions/CustomFunction";
 import ClientImageWithLoader from "../components/Common/ImageLoader/ClientImageWithLoader";
 import Head from "next/head";
 import { getSettingsApi } from "../api/SuperAdminApi/SettingsApi";
-import Messenger from "../components/Client/Facebook/Messenger";
 
 export default async function Home() {
     let settings = await getSettingsApi();
@@ -57,7 +56,7 @@ export default async function Home() {
                 </div>
 
                 <EventPopup />
-                <Messenger />
+                
             </main>
         </>
     );

@@ -8,6 +8,7 @@ import "./globals.css";
 import ClientErrorBoundary from "./xxxClientErrorBoundaryxxx";
 import Head from "next/head";
 import Script from "next/script";
+import Messenger from "../components/Client/Facebook/Messenger";
 
 const inter = Montserrat({ subsets: ["latin"], weight: "400", display: "swap", variable: "--font-montserrat" });
 
@@ -90,6 +91,7 @@ export default function RootLayout({ children }) {
                         {children}
                         <Footer />
                     </ClientErrorBoundary>
+                    <Messenger />
                 </ReduxProvider>
             </body>
         </html>
