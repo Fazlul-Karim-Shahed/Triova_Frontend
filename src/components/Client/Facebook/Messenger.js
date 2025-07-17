@@ -5,7 +5,7 @@ import { FacebookProvider, CustomChat } from "react-facebook";
 
 export default function Messenger() {
     return (
-        <FacebookProvider appId="1308415430848951" chatSupport>
+        <FacebookProvider appId="361765999937307" chatSupport>
             {console.log("messenger added")}
             <CustomChat pageId="747421228445481" minimized={true} />
         </FacebookProvider>
