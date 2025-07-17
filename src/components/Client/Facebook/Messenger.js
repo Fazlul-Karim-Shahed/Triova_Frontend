@@ -7,7 +7,7 @@ export default function Messenger() {
     return (
         <FacebookProvider appId="361765999937307" chatSupport>
             {console.log("messenger added")}
-            <CustomChat pageId="747421228445481" minimized={true} />
+            <CustomChat pageId="747421228445481" minimized={false} />
         </FacebookProvider>
     );
 }
