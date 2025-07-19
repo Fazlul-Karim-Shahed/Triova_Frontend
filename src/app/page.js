@@ -14,6 +14,7 @@ export default async function Home() {
     let settings = await getSettingsApi();
     settings = settings.error === false && settings.data ? settings.data : null;
 
+
     return (
         <>
             <main className="p-4 md:p-6">
@@ -57,9 +58,8 @@ export default async function Home() {
 
                 <EventPopup />
 
-                <div>
-                    <Messenger />
-                </div>
+                <Messenger />
+                
             </main>
         </>
     );

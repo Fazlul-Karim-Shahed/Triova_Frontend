@@ -1,34 +1,33 @@
 "use client";
 import { useEffect } from "react";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 
 export default function MessengerChat() {
-    useEffect(() => {
-        if (document.getElementById("facebook-jssdk")) return;
-
-        window.fbAsyncInit = function () {
-            window.FB.init({
-                xfbml: true,
-                version: "v17.0",
-            });
-        };
-
-        const script = document.createElement("script");
-        script.id = "facebook-jssdk";
-        script.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-        document.body.appendChild(script);
-    }, []);
+    // useEffect(() => {
+    //     console.log("[MessengerChat] Component mounted");
+    //     const checkFB = () => {
+    //         if (window.FB) {
+    //             console.log("[MessengerChat] FB SDK is loaded");
+    //             window.FB.XFBML.parse();
+    //         } else {
+    //             console.log("[MessengerChat] FB not ready yet, retrying...");
+    //             setTimeout(checkFB, 1000);
+    //         }
+    //     };
+    //     checkFB();
+    // }, []);
 
     return (
-        <>
-            <div id="fb-root"></div>
-            <div
-                className="fb-customerchat"
-                attribution="biz_inbox"
-                page_id="747421228445481"
-                theme_color="#0084FF"
-                logged_in_greeting="Hi! How can we help you?"
-                logged_out_greeting="Hi! Please log in to chat with us."
-            ></div>
-        </>
+        // <div
+        //     id="fb-customer-chat"
+        //     className="fb-customerchat"
+        //     page_id="747421228445481"
+        //     attribution="biz_inbox"
+        //     theme_color="#0084FF"
+        //     logged_in_greeting="Hi! How can we help?"
+        //     logged_out_greeting="Please log in to chat."
+        // />
+
+        <FloatingWhatsApp phoneNumber={"+8801521537962"} accountName={"Triova"} allowEsc key="whatsapp" />
     );
 }
