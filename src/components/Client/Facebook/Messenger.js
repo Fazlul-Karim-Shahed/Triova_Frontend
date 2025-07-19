@@ -28,6 +28,6 @@ export default function MessengerChat() {
         //     logged_out_greeting="Please log in to chat."
         // />
 
-        <FloatingWhatsApp phoneNumber={"+8801521537962"} accountName={"Triova"} allowEsc key="whatsapp" />
+        <FloatingWhatsApp phoneNumber={"+8801521537962"} accountName={"Triova"} allowEsc key="whatsapp" chatMessage={"Hello sir! \nWelcome to Triova 🤝 \n\nHow can I help you?"} />
     );
 }
