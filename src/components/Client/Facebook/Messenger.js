@@ -1,16 +1,14 @@
 "use client";
-
 import { useEffect } from "react";
 
 export default function MessengerChat() {
     useEffect(() => {
-        // Load the SDK only once
         if (document.getElementById("facebook-jssdk")) return;
 
         window.fbAsyncInit = function () {
             window.FB.init({
                 xfbml: true,
-                version: "v17.0", // or latest available version
+                version: "v17.0",
             });
         };
 
@@ -23,8 +21,6 @@ export default function MessengerChat() {
     return (
         <>
             <div id="fb-root"></div>
-
-            {/* This div must be placed where you want the Messenger chat to appear */}
             <div
                 className="fb-customerchat"
                 attribution="biz_inbox"
